@@ -36,6 +36,10 @@ public class LogUtils {
         }
     }
 
+    /**
+     * 处理自定义异常
+     * @param ex 自定义异常类
+     */
     public static void processExceptionLog(StoreException ex){
         try{
             SystemLogSetting systemLogSetting = new SystemLogSetting();
