@@ -10,6 +10,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 public class LogUtils {
+    /**
+     * 处理系统异常
+     * @param ex 异常对象
+     */
     public static void processExceptionLog(Exception ex){
         try{
             SystemLogSetting systemLogSetting = new SystemLogSetting();
