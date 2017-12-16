@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.johnny.store.mapper.BrandMapper" >
+    <resultMap id="BaseResultMap" type="com.johnny.store.entity.BrandEntity" >
+        <id column="BrandID" property="brandID" jdbcType="INTEGER" />
+        <result column="BrandCN" property="brandCN" jdbcType="NVARCHAR" />
+        <result column="BrandEN" property="brandEN" jdbcType="VARCHAR" />
+        <result column="InUser" property="inUser" jdbcType="VARCHAR" />
+        <result column="InDate" property="inDate" jdbcType="TIMESTAMP" />
+        <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
+        <result column="LastEditDate" property="lastEditDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="searchList" resultMap="BaseResultMap">
+        SELECT
+            BrandID,
+            BrandCN,
+            BrandEN,
+            InUser,
+            InDate,
+            LastEditUser,
+            LastEditDate
+        FROM PetShop.Brand
+    </select>
+    <select id="search" resultMap="BaseResultMap">
+        SELECT
+        BrandID,
+        BrandCN,
+        BrandEN,
+        InUser,
+        InDate,
+        LastEditUser,
+        LastEditDate
+        FROM PetShop.Brand
+        WHERE BrandID = #{brandID,jdbcType=INTEGER}
+    </select>
+    <select id="searchByName" resultMap="BaseResultMap">
+        SELECT
+        BrandID,
+        BrandCN,
+        BrandEN,
+        InUser,
+        InDate,
+        LastEditUser,
+        LastEditDate
+        FROM PetShop.Brand
+        WHERE (BrandCN = #{brandName,jdbcType=NVARCHAR} OR BrandEN = #{brandName,jdbcType=VARCHAR})
+    </select>
+    <insert id="insert" parameterType="com.johnny.store.entity.BrandEntity" >
+        INSERT INTO PetShop.Brand (
+            BrandCN,
+            BrandEN,
+            InUser,
+            LastEditUser
+        )
+        VALUES (
+            #{brandCN, jdbcType=NVARCHAR},
+            #{brandEN, jdbcType=VARCHAR},
+            #{inUser, jdbcType=VARCHAR},
+            #{lastEditUser, jdbcType=VARCHAR}
+        )
+    </insert>
+    <update id="update" parameterType="com.johnny.store.entity.BrandEntity" >
+        UPDATE PetShop.Brand SET
+            BrandCN = #{brandCN,jdbcType=NVARCHAR},
+            BrandEN = #{brandEN,jdbcType=VARCHAR},
+            LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+        WHERE BrandID = #{brandID,jdbcType=INTEGER}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer" >
+        DELETE FROM PetShop.Brand
+        WHERE BrandID = #{brandID,jdbcType=INTEGER}
+    </delete>
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_131" class="java.beans.XMLDecoder">
+    <object class="java.util.ArrayList">
+        <void method="add">
+            <object class="com.johnny.store.config.ResponseSetting">
+                <void property="responseCode">
+                    <string>1000</string>
+                </void>
+                <void property="responseMessage">
+                    <string>success</string>
+                </void>
+                <void property="responseOption">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseOption</class>
+                        <string>No</string>
+                    </object>
+                </void>
+                <void property="responseType">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseTypeEnum</class>
+                        <string>Success</string>
+                    </object>
+                </void>
+                <void property="result">
+                    <boolean>true</boolean>
+                </void>
+            </object>
+        </void>
+        <void method="add">
+            <object class="com.johnny.store.config.ResponseSetting">
+                <void property="responseCode">
+                    <string>2F01</string>
+                </void>
+                <void property="responseMessage">
+                    <string>failed</string>
+                </void>
+                <void property="responseOption">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseOption</class>
+                        <string>Customer</string>
+                    </object>
+                </void>
+                <void property="responseType">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseTypeEnum</class>
+                        <string>Failed</string>
+                    </object>
+                </void>
+            </object>
+        </void>
+        <void method="add">
+            <object class="com.johnny.store.config.ResponseSetting">
+                <void property="responseCode">
+                    <string>3E01</string>
+                </void>
+                <void property="responseMessage">
+                    <string>exception</string>
+                </void>
+                <void property="responseOption">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseOption</class>
+                        <string>Admin</string>
+                    </object>
+                </void>
+                <void property="responseType">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseTypeEnum</class>
+                        <string>Exception</string>
+                    </object>
+                </void>
+            </object>
+        </void>
+        <void method="add">
+            <object class="com.johnny.store.config.ResponseSetting">
+                <void property="responseCode">
+                    <string>3E02</string>
+                </void>
+                <void property="responseMessage">
+                    <string>Access database exception</string>
+                </void>
+                <void property="responseOption">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseOption</class>
+                        <string>Admin</string>
+                    </object>
+                </void>
+                <void property="responseType">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseTypeEnum</class>
+                        <string>Exception</string>
+                    </object>
+                </void>
+            </object>
+        </void>
+        <void method="add">
+            <object class="com.johnny.store.config.ResponseSetting">
+                <void property="responseCode">
+                    <string>3E99</string>
+                </void>
+                <void property="responseMessage">
+                    <string>Unknown exception</string>
+                </void>
+                <void property="responseOption">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseOption</class>
+                        <string>Admin</string>
+                    </object>
+                </void>
+                <void property="responseType">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseTypeEnum</class>
+                        <string>Exception</string>
+                    </object>
+                </void>
+            </object>
+        </void>
+    </object>
+</java>

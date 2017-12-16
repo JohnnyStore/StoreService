@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.johnny.store.mapper.BrandMapper" >
+    <resultMap id="SystemLogResultMap" type="com.johnny.store.entity.SystemLogEntity" >
+        <id column="LogID" property="logID" jdbcType="INTEGER" />
+        <result column="Priority" property="priority" jdbcType="NVARCHAR" />
+        <result column="ErrorTime" property="errorTime" jdbcType="TIMESTAMP" />
+        <result column="ErrorCode" property="errorCode" jdbcType="CHAR" />
+        <result column="ErrorType" property="errorType" jdbcType="VARCHAR" />
+        <result column="ErrorOption" property="errorOption" jdbcType="VARCHAR" />
+        <result column="ErrorMessage" property="errorMessage" jdbcType="VARCHAR" />
+        <result column="ErrorDetail" property="errorDetail" jdbcType="VARCHAR" />
+        <result column="Status" property="status" jdbcType="CHAR" />
+        <result column="InUser" property="inUser" jdbcType="VARCHAR" />
+        <result column="InDate" property="inDate" jdbcType="TIMESTAMP" />
+        <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
+        <result column="LastEditDate" property="lastEditDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="searchLogList" resultMap="SystemLogResultMap">
+        SELECT
+            LogID,
+            Priority,
+            ErrorTime,
+            ErrorCode,
+            ErrorType,
+            ErrorOption,
+            ErrorMessage,
+            ErrorDetail,
+            Status,
+            InUser,
+            InDate,
+            LastEditUser,
+            LastEditDate
+        FROM PetShop.SystemLog
+        ORDER BY ErrorTime DESC
+    </select>
+    <select id="searchLog" resultMap="SystemLogResultMap">
+        SELECT
+            LogID,
+            Priority,
+            ErrorTime,
+            ErrorCode,
+            ErrorType,
+            ErrorOption,
+            ErrorMessage,
+            ErrorDetail,
+            Status,
+            InUser,
+            InDate,
+            LastEditUser,
+            LastEditDate
+        FROM PetShop.SystemLog
+        WHERE LogID = #{logID,jdbcType=INTEGER}
+    </select>
+    <insert id="insertLog" parameterType="com.johnny.store.entity.SystemLogEntity" >
+        INSERT INTO PetShop.SystemLog (
+            Priority,
+            ErrorTime,
+            ErrorCode,
+            ErrorType,
+            ErrorOption,
+            ErrorMessage,
+            ErrorDetail,
+            Status
+        )
+        VALUES (
+            #{priority, jdbcType=VARCHAR},
+            #{errorTime, jdbcType=VARCHAR},
+            #{errorCode, jdbcType=CHAR},
+            #{errorType, jdbcType=VARCHAR},
+            #{errorOption, jdbcType=VARCHAR},
+            #{errorMessage, jdbcType=VARCHAR},
+            #{errorDetail, jdbcType=VARCHAR},
+            #{status, jdbcType=CHAR}
+        )
+    </insert>
+    <update id="updateStatus" parameterType="com.johnny.store.entity.SystemLogEntity" >
+        UPDATE PetShop.SystemLog SET
+            Status = #{status,jdbcType=CHAR},
+            LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+        WHERE LogID = #{logID,jdbcType=INTEGER}
+    </update>
+</mapper>
