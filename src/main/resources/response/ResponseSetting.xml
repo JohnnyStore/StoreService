@@ -11,7 +11,7 @@
                 </void>
                 <void property="responseOption">
                     <object class="java.lang.Enum" method="valueOf">
-                        <class>com.johnny.store.enums.ResponseOption</class>
+                        <class>com.johnny.store.enums.ResponseOptionEnum</class>
                         <string>No</string>
                     </object>
                 </void>
@@ -36,7 +36,7 @@
                 </void>
                 <void property="responseOption">
                     <object class="java.lang.Enum" method="valueOf">
-                        <class>com.johnny.store.enums.ResponseOption</class>
+                        <class>com.johnny.store.enums.ResponseOptionEnum</class>
                         <string>Customer</string>
                     </object>
                 </void>
@@ -58,7 +58,7 @@
                 </void>
                 <void property="responseOption">
                     <object class="java.lang.Enum" method="valueOf">
-                        <class>com.johnny.store.enums.ResponseOption</class>
+                        <class>com.johnny.store.enums.ResponseOptionEnum</class>
                         <string>Admin</string>
                     </object>
                 </void>
@@ -80,7 +80,7 @@
                 </void>
                 <void property="responseOption">
                     <object class="java.lang.Enum" method="valueOf">
-                        <class>com.johnny.store.enums.ResponseOption</class>
+                        <class>com.johnny.store.enums.ResponseOptionEnum</class>
                         <string>Admin</string>
                     </object>
                 </void>
@@ -102,7 +102,7 @@
                 </void>
                 <void property="responseOption">
                     <object class="java.lang.Enum" method="valueOf">
-                        <class>com.johnny.store.enums.ResponseOption</class>
+                        <class>com.johnny.store.enums.ResponseOptionEnum</class>
                         <string>Admin</string>
                     </object>
                 </void>
