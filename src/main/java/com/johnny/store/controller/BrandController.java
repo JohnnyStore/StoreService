@@ -29,6 +29,11 @@ public class BrandController {
         return brandServiceImpl.existCheck(brandName);
     }
 
+    /**
+     * 添加新品牌
+     * @param brandDTO
+     * @return
+     */
     @RequestMapping(value="/api/brand", method = RequestMethod.POST)
     public UnifiedResponse addBrand(@RequestBody BrandDTO brandDTO){
         return brandServiceImpl.add(brandDTO);
