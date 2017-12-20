@@ -6,6 +6,9 @@ import com.johnny.store.service.impl.BrandServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 商品品牌yangyajing
+ */
 @RestController
 public class BrandController {
     @Autowired
