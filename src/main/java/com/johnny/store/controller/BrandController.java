@@ -6,6 +6,9 @@ import com.johnny.store.service.impl.BrandServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 商品品牌yangyajing
+ */
 @RestController
 public class BrandController {
     @Autowired
@@ -26,6 +29,11 @@ public class BrandController {
         return brandServiceImpl.existCheck(brandName);
     }
 
+    /**
+     * 添加新品牌
+     * @param brandDTO
+     * @return
+     */
     @RequestMapping(value="/api/brand", method = RequestMethod.POST)
     public UnifiedResponse addBrand(@RequestBody BrandDTO brandDTO){
         return brandServiceImpl.add(brandDTO);
