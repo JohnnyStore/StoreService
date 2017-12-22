@@ -11,9 +11,9 @@ public class BrandController {
     @Autowired
     private BrandServiceImpl brandServiceImpl;
 
-    @RequestMapping(value = "/api/brand", method = RequestMethod.GET)
-    public UnifiedResponse getAllBrand(){
-        return brandServiceImpl.findList();
+    @RequestMapping(value = "/api/brand/{pageNumber}/{pageSize}", method = RequestMethod.GET)
+    public UnifiedResponse getAllBrand(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize){
+        return brandServiceImpl.findList(pageNumber, pageSize);
     }
 
     @RequestMapping(value = "/api/brand/{brandId}", method = RequestMethod.GET)

@@ -11,9 +11,9 @@ public class SystemLogController {
     @Autowired
     private SystemLogServiceImpl systemLogServiceImpl;
 
-    @RequestMapping(value = "/api/systemLog", method = RequestMethod.GET)
-    public UnifiedResponse getAllBrand(){
-        return systemLogServiceImpl.findList();
+    @RequestMapping(value = "/api/systemLog/{pageIndex}/{pageSize}", method = RequestMethod.GET)
+    public UnifiedResponse getAllBrand(@PathVariable("pageIndex") int pageIndex, @PathVariable("pageSize") int pageSize){
+        return systemLogServiceImpl.findList(pageIndex, pageSize);
     }
 
     @RequestMapping(value = "/api/systemLog/{logId}", method = RequestMethod.GET)

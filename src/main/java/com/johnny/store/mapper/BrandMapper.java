@@ -5,7 +5,10 @@ import java.util.List;
 
 @Mapper
 public interface BrandMapper {
-    List<BrandEntity> searchList();
+
+    int searchTotalCount();
+
+    List<BrandEntity> searchList(int startIndex, int pageSize);
 
     BrandEntity search(int brandID);
 

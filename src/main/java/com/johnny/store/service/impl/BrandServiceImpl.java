@@ -22,20 +22,22 @@ public class BrandServiceImpl implements BrandService {
     private BrandMapper brandMapper;
 
     @Override
-    public UnifiedResponse findList() {
+    public UnifiedResponse findList(int pageNumber, int pageSize) {
         try {
+            int startIndex = (pageNumber - 1) * pageSize;
             List<BrandVO> modelList = new ArrayList<>();
-            List<BrandEntity> entityList =  brandMapper.searchList();
-            if(entityList.isEmpty()){
-                return UnifiedResponseManager.buildSuccessResponse(null);
+            int totalCount = brandMapper.searchTotalCount();
+            if(totalCount == 0){
+                return UnifiedResponseManager.buildSuccessResponse(0, null);
             }
+            List<BrandEntity> entityList =  brandMapper.searchList(startIndex, pageSize);
             for (BrandEntity entity : entityList) {
                 BrandVO model = new BrandVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
                 model.setBrandID(entity.getBrandID());
                 modelList.add(model);
             }
-            return UnifiedResponseManager.buildSuccessResponse(modelList);
+            return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());

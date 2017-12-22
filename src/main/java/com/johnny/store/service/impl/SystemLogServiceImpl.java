@@ -24,12 +24,13 @@ public class SystemLogServiceImpl implements SystemLogService {
     private SystemLogMapper systemLogMapper;
 
     @Override
-    public UnifiedResponse findList() {
+    public UnifiedResponse findList(int pageIndex, int pageSize) {
         try {
+            int startIndex = (pageIndex - 1) * pageSize;
             List<SystemLogVO> modelList = new ArrayList<>();
             List<SystemLogEntity> entityList =  systemLogMapper.searchLogList();
             if(entityList.isEmpty()){
-                return UnifiedResponseManager.buildSuccessResponse(null);
+                return UnifiedResponseManager.buildSuccessResponse(0,null);
             }
             for (SystemLogEntity entity : entityList) {
                 SystemLogVO model = new SystemLogVO();

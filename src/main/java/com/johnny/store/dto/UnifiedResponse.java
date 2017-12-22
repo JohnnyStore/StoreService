@@ -9,6 +9,8 @@ public class UnifiedResponse<T> {
     private ResponseTypeEnum responseType;
     private boolean result;
     private ResponseOptionEnum responseOption;
+    private int totalCount;
+    private int affectCount;
     private T responseData;
 
     public String getResponseCode() {
@@ -57,5 +59,21 @@ public class UnifiedResponse<T> {
 
     public void setResponseData(T responseData) {
         this.responseData = responseData;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public int getAffectCount() {
+        return affectCount;
+    }
+
+    public void setAffectCount(int affectCount) {
+        this.affectCount = affectCount;
     }
 }

@@ -10,7 +10,12 @@
         <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
         <result column="LastEditDate" property="lastEditDate" jdbcType="TIMESTAMP" />
     </resultMap>
-    <select id="searchList" resultMap="BaseResultMap">
+    <select id="searchTotalCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1) AS TotalCount
+        FROM PetShop.Brand;
+    </select>
+    <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
             BrandID,
             BrandCN,
@@ -20,6 +25,8 @@
             LastEditUser,
             LastEditDate
         FROM PetShop.Brand
+        ORDER BY InDate DESC
+        LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
     <select id="search" resultMap="BaseResultMap">
         SELECT
