@@ -17,6 +17,25 @@ public class UnifiedResponseManager {
             unifiedResponse.setResult(responseSetting.isResult());
             unifiedResponse.setResponseType(responseSetting.getResponseType());
             unifiedResponse.setResponseOption(responseSetting.getResponseOption());
+            unifiedResponse.setTotalCount(data != null? 1 : 0);
+            unifiedResponse.setResponseData(data);
+            return unifiedResponse;
+        }catch (Exception ex){
+            LogUtils.processExceptionLog(ex);
+            return buildErrorResponse(ResponseCodeConsts.BuildResponseException);
+        }
+    }
+
+    public static <T> UnifiedResponse buildSuccessResponse(String responseCode, T data){
+        try{
+            UnifiedResponse<T> unifiedResponse = new UnifiedResponse<>();
+            ResponseSetting responseSetting = ConfigManager.getResponseSetting(responseCode);
+            unifiedResponse.setResponseCode(responseSetting.getResponseCode());
+            unifiedResponse.setResponseMessage(responseSetting.getResponseMessage());
+            unifiedResponse.setResult(responseSetting.isResult());
+            unifiedResponse.setResponseType(responseSetting.getResponseType());
+            unifiedResponse.setResponseOption(responseSetting.getResponseOption());
+            unifiedResponse.setTotalCount(data != null? 1 : 0);
             unifiedResponse.setResponseData(data);
             return unifiedResponse;
         }catch (Exception ex){

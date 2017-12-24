@@ -29,6 +29,131 @@
         <void method="add">
             <object class="com.johnny.store.config.ResponseSetting">
                 <void property="responseCode">
+                    <string>1001</string>
+                </void>
+                <void property="responseMessage">
+                    <string>登陆成功</string>
+                </void>
+                <void property="responseOption">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseOptionEnum</class>
+                        <string>No</string>
+                    </object>
+                </void>
+                <void property="responseType">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseTypeEnum</class>
+                        <string>Success</string>
+                    </object>
+                </void>
+                <void property="result">
+                    <boolean>true</boolean>
+                </void>
+            </object>
+        </void>
+        <void method="add">
+            <object class="com.johnny.store.config.ResponseSetting">
+                <void property="responseCode">
+                    <string>1002</string>
+                </void>
+                <void property="responseMessage">
+                    <string>用户名或密码错误</string>
+                </void>
+                <void property="responseOption">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseOptionEnum</class>
+                        <string>Customer</string>
+                    </object>
+                </void>
+                <void property="responseType">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseTypeEnum</class>
+                        <string>Failed</string>
+                    </object>
+                </void>
+                <void property="result">
+                    <boolean>true</boolean>
+                </void>
+            </object>
+        </void>
+        <void method="add">
+            <object class="com.johnny.store.config.ResponseSetting">
+                <void property="responseCode">
+                    <string>1003</string>
+                </void>
+                <void property="responseMessage">
+                    <string>账号正在审核</string>
+                </void>
+                <void property="responseOption">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseOptionEnum</class>
+                        <string>Admin</string>
+                    </object>
+                </void>
+                <void property="responseType">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseTypeEnum</class>
+                        <string>Failed</string>
+                    </object>
+                </void>
+                <void property="result">
+                    <boolean>true</boolean>
+                </void>
+            </object>
+        </void>
+        <void method="add">
+            <object class="com.johnny.store.config.ResponseSetting">
+                <void property="responseCode">
+                    <string>1004</string>
+                </void>
+                <void property="responseMessage">
+                    <string>账号审核未通过</string>
+                </void>
+                <void property="responseOption">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseOptionEnum</class>
+                        <string>Customer</string>
+                    </object>
+                </void>
+                <void property="responseType">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseTypeEnum</class>
+                        <string>Failed</string>
+                    </object>
+                </void>
+                <void property="result">
+                    <boolean>true</boolean>
+                </void>
+            </object>
+        </void>
+        <void method="add">
+            <object class="com.johnny.store.config.ResponseSetting">
+                <void property="responseCode">
+                    <string>1005</string>
+                </void>
+                <void property="responseMessage">
+                    <string>账号被冻结</string>
+                </void>
+                <void property="responseOption">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseOptionEnum</class>
+                        <string>Customer</string>
+                    </object>
+                </void>
+                <void property="responseType">
+                    <object class="java.lang.Enum" method="valueOf">
+                        <class>com.johnny.store.enums.ResponseTypeEnum</class>
+                        <string>Failed</string>
+                    </object>
+                </void>
+                <void property="result">
+                    <boolean>true</boolean>
+                </void>
+            </object>
+        </void>
+        <void method="add">
+            <object class="com.johnny.store.config.ResponseSetting">
+                <void property="responseCode">
                     <string>2F01</string>
                 </void>
                 <void property="responseMessage">

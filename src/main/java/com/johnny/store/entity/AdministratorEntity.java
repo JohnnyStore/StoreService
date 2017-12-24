@@ -2,7 +2,7 @@ package com.johnny.store.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class AdministratorEntity implements Serializable {
+public class AdministratorEntity {
 	private int administratorID;
 	private String administratorName;
 	private String account;
@@ -10,29 +10,11 @@ public class AdministratorEntity implements Serializable {
 	private String cellphone;
 	private String email;
 	private String customerRole;
+	private String status;
 	private String inUser;
-	private Timestamp inDate;
+	private String inDate;
 	private String lastEditUser;
-	private Timestamp lastEditDate;
-
-	public AdministratorEntity(){
-		super();
-	}
-
-	public AdministratorEntity(int administratorID, String administratorName, String account, String password, String cellphone, String email, String customerRole, String inUser, Timestamp inDate, String lastEditUser, Timestamp lastEditDate){
-		super();
-		this.administratorID = administratorID;
-		this.administratorName = administratorName;
-		this.account = account;
-		this.password = password;
-		this.cellphone = cellphone;
-		this.email = email;
-		this.customerRole = customerRole;
-		this.inUser = inUser;
-		this.inDate = inDate;
-		this.lastEditUser = lastEditUser;
-		this.lastEditDate = lastEditDate;
-	}
+	private String lastEditDate;
 
 	public int getAdministratorID() {
 		return this.administratorID;
@@ -90,6 +72,14 @@ public class AdministratorEntity implements Serializable {
 		this.customerRole = customerRole;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public String getInUser() {
 		return this.inUser;
 	}
@@ -98,11 +88,11 @@ public class AdministratorEntity implements Serializable {
 		this.inUser = inUser;
 	}
 
-	public Timestamp getInDate() {
+	public String getInDate() {
 		return this.inDate;
 	}
 
-	public void setInDate(Timestamp inDate) {
+	public void setInDate(String inDate) {
 		this.inDate = inDate;
 	}
 
@@ -114,12 +104,11 @@ public class AdministratorEntity implements Serializable {
 		this.lastEditUser = lastEditUser;
 	}
 
-	public Timestamp getLastEditDate() {
+	public String getLastEditDate() {
 		return this.lastEditDate;
 	}
 
-	public void setLastEditDate(Timestamp lastEditDate) {
+	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
-
 }
