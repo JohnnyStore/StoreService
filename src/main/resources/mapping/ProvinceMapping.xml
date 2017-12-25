@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.johnny.store.mapper.ProvinceMapper" >
+    <resultMap id="BaseResultMapOfProvince" type="com.johnny.store.entity.ProvinceEntity" >
+        <id column="ProvinceID" property="provinceID" jdbcType="INTEGER" />
+        <result column="CountryID" property="countryID" jdbcType="INTEGER" />
+        <result column="ProvinceNameCN" property="provinceNameCN" jdbcType="NVARCHAR" />
+        <result column="ProvinceNameEN" property="provinceNameEN" jdbcType="VARCHAR" />
+        <result column="InUser" property="inUser" jdbcType="VARCHAR" />
+        <result column="InDate" property="inDate" jdbcType="TIMESTAMP" />
+        <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
+        <result column="LastEditDate" property="lastEditDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="searchList" resultMap="BaseResultMapOfProvince">
+        SELECT
+        ProvinceID,
+        CountryID,
+        ProvinceNameCN,
+        ProvinceNameEN,
+        InUser,
+        InDate,
+        LastEditUser,
+        LastEditDate
+        FROM PetShop.province
+    </select>
+    <select id="searchTotalCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1) AS TotalCount
+        FROM PetShop.province;
+    </select>
+    <select id="search" resultMap="BaseResultMapOfProvince">
+        SELECT
+        ProvinceID,
+        CountryID,
+        ProvinceNameCN,
+        ProvinceNameEN,
+        InUser,
+        InDate,
+        LastEditUser,
+        LastEditDate
+        FROM PetShop.province
+        WHERE ProvinceID = #{provinceID,jdbcType=INTEGER}
+        ORDER BY InDate DESC
+        LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
+    </select>
+    <select id="searchByName" resultMap="BaseResultMapOfProvince">
+        SELECT
+        ProvinceID,
+        CountryID,
+        ProvinceNameCN,
+        ProvinceNameEN,
+        InUser,
+        InDate,
+        LastEditUser,
+        LastEditDate
+        FROM PetShop.province
+        WHERE (ProvinceNameCN = #{provinceName,jdbcType=NVARCHAR} OR ProvinceNameEN = #{provinceName,jdbcType=VARCHAR})
+    </select>
+    <insert id="insert" parameterType="com.johnny.store.entity.ProvinceEntity" >
+        INSERT INTO PetShop.province (
+        CountryID,
+        ProvinceNameCN,
+        ProvinceNameEN,
+        InUser,
+        LastEditUser
+        )
+        VALUES (
+        #{countryID, jdbcType=INTEGER},
+        #{provinceNameCN, jdbcType=NVARCHAR},
+        #{provinceNameEN, jdbcType=VARCHAR},
+        #{inUser, jdbcType=VARCHAR},
+        #{lastEditUser, jdbcType=VARCHAR}
+        )
+    </insert>
+    <update id="update" parameterType="com.johnny.store.entity.ProvinceEntity" >
+        UPDATE PetShop.province SET
+        CountryID = #{countryID, jdbcType=INTEGER},
+        ProvinceNameCN = #{provinceNameCN, jdbcType=NVARCHAR},
+        ProvinceNameEN = #{provinceNameEN, jdbcType=VARCHAR},
+        LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+        WHERE ProvinceID = #{provinceID,jdbcType=INTEGER}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer" >
+        DELETE FROM PetShop.province
+        WHERE ProvinceID = #{provinceID,jdbcType=INTEGER}
+    </delete>
+</mapper>

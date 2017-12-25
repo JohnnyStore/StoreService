@@ -9,10 +9,6 @@ public class BrandVO {
     private String lastEditUser;
     private String lastEditDate;
 
-    /**
-     *
-     * @return
-     */
     public int getBrandID() {
         return brandID;
     }
