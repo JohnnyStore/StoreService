@@ -13,7 +13,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM PetShop.country;
+        FROM Luvpet.country;
     </select>
     <select id="searchList" resultMap="BaseResultMapOfCountry">
         SELECT
@@ -24,7 +24,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM PetShop.Country
+        FROM Luvpet.Country
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
@@ -37,7 +37,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM PetShop.Country
+        FROM Luvpet.Country
         WHERE CountryID = #{countryID,jdbcType=INTEGER}
     </select>
     <select id="searchByName" resultMap="BaseResultMapOfCountry">
@@ -49,11 +49,11 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM PetShop.Country
+        FROM Luvpet.Country
         WHERE (CountryNameCN = #{countryName,jdbcType=NVARCHAR} OR CountryNameEN = #{countryName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.CountryEntity" >
-        INSERT INTO PetShop.Country (
+        INSERT INTO Luvpet.Country (
         CountryNameCN,
         CountryNameEN,
         InUser,
@@ -67,14 +67,14 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.CountryEntity" >
-        UPDATE PetShop.Country SET
+        UPDATE Luvpet.Country SET
         CountryNameCN = #{countryNameCN,jdbcType=NVARCHAR},
         CountryNameEN = #{countryNameEN,jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE CountryID = #{countryID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM PetShop.Country
+        DELETE FROM Luvpet.Country
         WHERE CountryID = #{countryID,jdbcType=INTEGER}
     </delete>
 </mapper>

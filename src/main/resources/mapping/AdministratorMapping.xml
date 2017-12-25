@@ -145,9 +145,9 @@
     </update>
     <update id="approve" parameterType="com.johnny.store.entity.BrandEntity" >
         UPDATE Luvpet.Administrator SET
-        Status = #{status,jdbcType=VARCHAR},
-        CustomerRole = #{customerRole,jdbcType=VARCHAR},
-        LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+            Status = #{status,jdbcType=VARCHAR},
+            CustomerRole = #{customerRole,jdbcType=VARCHAR},
+            LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE AdministratorID = #{administratorID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >

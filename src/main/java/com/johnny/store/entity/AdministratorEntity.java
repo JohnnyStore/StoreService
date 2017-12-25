@@ -1,6 +1,4 @@
 package com.johnny.store.entity;
-import java.io.Serializable;
-import java.sql.Timestamp;
 
 /**
  * 管理员信息实体类

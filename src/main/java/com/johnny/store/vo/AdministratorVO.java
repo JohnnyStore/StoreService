@@ -1,5 +1,8 @@
 package com.johnny.store.vo;
 
+/**
+ * 管理员信息VO
+ */
 public class AdministratorVO {
     private int administratorID;
     private String administratorName;

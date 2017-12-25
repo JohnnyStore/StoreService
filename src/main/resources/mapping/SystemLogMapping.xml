@@ -31,7 +31,7 @@
             InDate,
             LastEditUser,
             LastEditDate
-        FROM PetShop.SystemLog
+        FROM Luvpet.SystemLog
         ORDER BY ErrorTime DESC
     </select>
     <select id="searchLog" resultMap="SystemLogResultMap">
@@ -49,11 +49,11 @@
             InDate,
             LastEditUser,
             LastEditDate
-        FROM PetShop.SystemLog
+        FROM Luvpet.SystemLog
         WHERE LogID = #{logID,jdbcType=INTEGER}
     </select>
     <insert id="insertLog" parameterType="com.johnny.store.entity.SystemLogEntity" >
-        INSERT INTO PetShop.SystemLog (
+        INSERT INTO Luvpet.SystemLog (
             Priority,
             ErrorTime,
             ErrorCode,
@@ -75,7 +75,7 @@
         )
     </insert>
     <update id="updateStatus" parameterType="com.johnny.store.entity.SystemLogEntity" >
-        UPDATE PetShop.SystemLog SET
+        UPDATE Luvpet.SystemLog SET
             Status = #{status,jdbcType=CHAR},
             LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE LogID = #{logID,jdbcType=INTEGER}

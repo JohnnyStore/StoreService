@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 管理员信息业务层
+ * 管理员信息逻辑层
  */
 @Service
 public class AdministratorServiceImpl implements AdministratorService {

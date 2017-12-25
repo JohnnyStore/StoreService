@@ -22,6 +22,7 @@ public class UnifiedResponseManager {
             unifiedResponse.setResponseOption(responseSetting.getResponseOption());
             unifiedResponse.setTotalCount(data != null? 1 : 0);
             unifiedResponse.setResponseData(data);
+
             return unifiedResponse;
         }catch (Exception ex){
             LogUtils.processExceptionLog(ex);
@@ -40,6 +41,7 @@ public class UnifiedResponseManager {
             unifiedResponse.setResponseOption(responseSetting.getResponseOption());
             unifiedResponse.setTotalCount(data != null? 1 : 0);
             unifiedResponse.setResponseData(data);
+
             return unifiedResponse;
         }catch (Exception ex){
             LogUtils.processExceptionLog(ex);

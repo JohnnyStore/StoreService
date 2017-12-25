@@ -1,4 +1,5 @@
 package com.johnny.store.dto;
+
 /**
  * 管理员信息传递
  */
