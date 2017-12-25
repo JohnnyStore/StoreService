@@ -1,6 +1,6 @@
 package com.johnny.store.entity;
 
-public class SizeMappingEntity {
+public class SizeEntity {
 	private int sizeID;
 	private String sizeCN;
 	private String sizeEN;
@@ -41,14 +41,6 @@ public class SizeMappingEntity {
 		this.inUser = inUser;
 	}
 
-	public String getInDate() {
-		return this.inDate;
-	}
-
-	public void setInDate(String inDate) {
-		this.inDate = inDate;
-	}
-
 	public String getLastEditUser() {
 		return this.lastEditUser;
 	}
@@ -57,12 +49,19 @@ public class SizeMappingEntity {
 		this.lastEditUser = lastEditUser;
 	}
 
+	public String getInDate() {
+		return inDate;
+	}
+
+	public void setInDate(String inDate) {
+		this.inDate = inDate;
+	}
+
 	public String getLastEditDate() {
-		return this.lastEditDate;
+		return lastEditDate;
 	}
 
 	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
-
 }

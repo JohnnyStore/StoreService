@@ -1,30 +1,13 @@
 package com.johnny.store.entity;
-import java.io.Serializable;
-import java.sql.Timestamp;
 
-public class CategoryEntity implements Serializable {
+public class CategoryEntity {
 	private int categoryID;
 	private String categoryCN;
 	private String categoryEN;
 	private String inUser;
-	private Timestamp inDate;
+	private String inDate;
 	private String lastEditUser;
-	private Timestamp lastEditDate;
-
-	public CategoryEntity(){
-		super();
-	}
-
-	public CategoryEntity(int categoryID, String categoryCN, String categoryEN, String inUser, Timestamp inDate, String lastEditUser, Timestamp lastEditDate){
-		super();
-		this.categoryID = categoryID;
-		this.categoryCN = categoryCN;
-		this.categoryEN = categoryEN;
-		this.inUser = inUser;
-		this.inDate = inDate;
-		this.lastEditUser = lastEditUser;
-		this.lastEditDate = lastEditDate;
-	}
+	private String lastEditDate;
 
 	public int getCategoryID() {
 		return this.categoryID;
@@ -58,11 +41,11 @@ public class CategoryEntity implements Serializable {
 		this.inUser = inUser;
 	}
 
-	public Timestamp getInDate() {
+	public String getInDate() {
 		return this.inDate;
 	}
 
-	public void setInDate(Timestamp inDate) {
+	public void setInDate(String inDate) {
 		this.inDate = inDate;
 	}
 
@@ -74,11 +57,11 @@ public class CategoryEntity implements Serializable {
 		this.lastEditUser = lastEditUser;
 	}
 
-	public Timestamp getLastEditDate() {
+	public String getLastEditDate() {
 		return this.lastEditDate;
 	}
 
-	public void setLastEditDate(Timestamp lastEditDate) {
+	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
 

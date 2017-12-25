@@ -1,30 +1,13 @@
 package com.johnny.store.entity;
-import java.io.Serializable;
-import java.sql.Timestamp;
 
-public class MadeInMappingEntity implements Serializable {
+public class MadeInMappingEntity {
 	private int madeInID;
 	private String madeInCN;
 	private String madeInEN;
 	private String inUser;
-	private Timestamp inDate;
+	private String inDate;
 	private String lastEditUser;
-	private Timestamp lastEditDate;
-
-	public MadeInMappingEntity(){
-		super();
-	}
-
-	public MadeInMappingEntity(int madeInID, String madeInCN, String madeInEN, String inUser, Timestamp inDate, String lastEditUser, Timestamp lastEditDate){
-		super();
-		this.madeInID = madeInID;
-		this.madeInCN = madeInCN;
-		this.madeInEN = madeInEN;
-		this.inUser = inUser;
-		this.inDate = inDate;
-		this.lastEditUser = lastEditUser;
-		this.lastEditDate = lastEditDate;
-	}
+	private String lastEditDate;
 
 	public int getMadeInID() {
 		return this.madeInID;
@@ -58,11 +41,11 @@ public class MadeInMappingEntity implements Serializable {
 		this.inUser = inUser;
 	}
 
-	public Timestamp getInDate() {
+	public String getInDate() {
 		return this.inDate;
 	}
 
-	public void setInDate(Timestamp inDate) {
+	public void setInDate(String inDate) {
 		this.inDate = inDate;
 	}
 
@@ -74,11 +57,11 @@ public class MadeInMappingEntity implements Serializable {
 		this.lastEditUser = lastEditUser;
 	}
 
-	public Timestamp getLastEditDate() {
+	public String getLastEditDate() {
 		return this.lastEditDate;
 	}
 
-	public void setLastEditDate(Timestamp lastEditDate) {
+	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
 

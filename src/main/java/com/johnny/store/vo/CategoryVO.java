@@ -1,7 +1,5 @@
 package com.johnny.store.vo;
 
-import java.sql.Timestamp;
-
 /**
  * 商品一级分类 VO
  * @Author liqian
@@ -11,9 +9,9 @@ public class CategoryVO {
     private String categoryCN;
     private String categoryEN;
     private String inUser;
-    private Timestamp inDate;
+    private String inDate;
     private String lastEditUser;
-    private Timestamp lastEditDate;
+    private String lastEditDate;
 
     public int getCategoryID() {
         return categoryID;
@@ -47,11 +45,11 @@ public class CategoryVO {
         this.inUser = inUser;
     }
 
-    public Timestamp getInDate() {
+    public String getInDate() {
         return inDate;
     }
 
-    public void setInDate(Timestamp inDate) {
+    public void setInDate(String inDate) {
         this.inDate = inDate;
     }
 
@@ -63,11 +61,11 @@ public class CategoryVO {
         this.lastEditUser = lastEditUser;
     }
 
-    public Timestamp getLastEditDate() {
+    public String getLastEditDate() {
         return lastEditDate;
     }
 
-    public void setLastEditDate(Timestamp lastEditDate) {
+    public void setLastEditDate(String lastEditDate) {
         this.lastEditDate = lastEditDate;
     }
 }

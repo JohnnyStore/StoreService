@@ -1,8 +1,6 @@
 package com.johnny.store.entity;
-import java.io.Serializable;
-import java.sql.Timestamp;
 
-public class ItemEntity implements Serializable {
+public class ItemEntity {
 	private int itemID;
 	private int brandID;
 	private int categoryID;
@@ -26,43 +24,9 @@ public class ItemEntity implements Serializable {
 	private String itemDescriptionEN;
 	private String itemStatus;
 	private String inUser;
-	private Timestamp inDate;
+	private String inDate;
 	private String lastEditUser;
-	private Timestamp lastEditDate;
-
-	public ItemEntity(){
-		super();
-	}
-
-	public ItemEntity(int itemID, int brandID, int categoryID, int subCategoryID, int seriesID, String itemNameCN, String itemNameEN, double untiPrice, double promotionPrice, float rate, int colorID, int sizeID, int materialID, String adjustLengthCN, String adjustLengthEN, String suitablePetCN, String suitablePetEN, String itemShortDescriptionCN, String itemShortDescriptionEN, String itemDescriptionCN, String itemDescriptionEN, String itemStatus, String inUser, Timestamp inDate, String lastEditUser, Timestamp lastEditDate){
-		super();
-		this.itemID = itemID;
-		this.brandID = brandID;
-		this.categoryID = categoryID;
-		this.subCategoryID = subCategoryID;
-		this.seriesID = seriesID;
-		this.itemNameCN = itemNameCN;
-		this.itemNameEN = itemNameEN;
-		this.untiPrice = untiPrice;
-		this.promotionPrice = promotionPrice;
-		this.rate = rate;
-		this.colorID = colorID;
-		this.sizeID = sizeID;
-		this.materialID = materialID;
-		this.adjustLengthCN = adjustLengthCN;
-		this.adjustLengthEN = adjustLengthEN;
-		this.suitablePetCN = suitablePetCN;
-		this.suitablePetEN = suitablePetEN;
-		this.itemShortDescriptionCN = itemShortDescriptionCN;
-		this.itemShortDescriptionEN = itemShortDescriptionEN;
-		this.itemDescriptionCN = itemDescriptionCN;
-		this.itemDescriptionEN = itemDescriptionEN;
-		this.itemStatus = itemStatus;
-		this.inUser = inUser;
-		this.inDate = inDate;
-		this.lastEditUser = lastEditUser;
-		this.lastEditDate = lastEditDate;
-	}
+	private String lastEditDate;
 
 	public int getItemID() {
 		return this.itemID;
@@ -248,11 +212,11 @@ public class ItemEntity implements Serializable {
 		this.inUser = inUser;
 	}
 
-	public Timestamp getInDate() {
+	public String getInDate() {
 		return this.inDate;
 	}
 
-	public void setInDate(Timestamp inDate) {
+	public void setInDate(String inDate) {
 		this.inDate = inDate;
 	}
 
@@ -264,11 +228,11 @@ public class ItemEntity implements Serializable {
 		this.lastEditUser = lastEditUser;
 	}
 
-	public Timestamp getLastEditDate() {
+	public String getLastEditDate() {
 		return this.lastEditDate;
 	}
 
-	public void setLastEditDate(Timestamp lastEditDate) {
+	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
 

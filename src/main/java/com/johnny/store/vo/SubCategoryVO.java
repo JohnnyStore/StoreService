@@ -1,19 +1,13 @@
 package com.johnny.store.vo;
 
-import java.sql.Timestamp;
-
-/**
- * 商品二级分类 VO
- * @Author liqian
- */
 public class SubCategoryVO {
     private int subCategoryID;
     private String subCategoryCN;
     private String subCategoryEN;
     private String inUser;
-    private Timestamp inDate;
+    private String inDate;
     private String lastEditUser;
-    private Timestamp lastEditDate;
+    private String lastEditDate;
 
     public int getSubCategoryID() {
         return subCategoryID;
@@ -47,11 +41,11 @@ public class SubCategoryVO {
         this.inUser = inUser;
     }
 
-    public Timestamp getInDate() {
+    public String getInDate() {
         return inDate;
     }
 
-    public void setInDate(Timestamp inDate) {
+    public void setInDate(String inDate) {
         this.inDate = inDate;
     }
 
@@ -63,11 +57,11 @@ public class SubCategoryVO {
         this.lastEditUser = lastEditUser;
     }
 
-    public Timestamp getLastEditDate() {
+    public String getLastEditDate() {
         return lastEditDate;
     }
 
-    public void setLastEditDate(Timestamp lastEditDate) {
+    public void setLastEditDate(String lastEditDate) {
         this.lastEditDate = lastEditDate;
     }
 }

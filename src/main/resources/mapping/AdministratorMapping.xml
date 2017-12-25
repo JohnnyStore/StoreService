@@ -18,7 +18,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM PetShop.Administrator;
+        FROM Luvpet.Administrator;
     </select>
     <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
@@ -34,7 +34,7 @@
             `InDate`,
             `LastEditUser`,
             `LastEditDate`
-        FROM PetShop.Administrator
+        FROM Luvpet.Administrator
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>

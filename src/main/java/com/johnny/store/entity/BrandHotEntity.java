@@ -1,34 +1,15 @@
 package com.johnny.store.entity;
-import java.io.Serializable;
-import java.sql.Timestamp;
 
-public class BrandHotEntity implements Serializable {
+public class BrandHotEntity{
 	private int brandHotID;
 	private int brandID;
 	private String startDate;
 	private String endDate;
 	private String status;
 	private String inUser;
-	private Timestamp inDate;
+	private String inDate;
 	private String lastEditUser;
-	private Timestamp lastEditDate;
-
-	public BrandHotEntity(){
-		super();
-	}
-
-	public BrandHotEntity(int brandHotID, int brandID, String startDate, String endDate, String status, String inUser, Timestamp inDate, String lastEditUser, Timestamp lastEditDate){
-		super();
-		this.brandHotID = brandHotID;
-		this.brandID = brandID;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.status = status;
-		this.inUser = inUser;
-		this.inDate = inDate;
-		this.lastEditUser = lastEditUser;
-		this.lastEditDate = lastEditDate;
-	}
+	private String lastEditDate;
 
 	public int getBrandHotID() {
 		return this.brandHotID;
@@ -78,11 +59,11 @@ public class BrandHotEntity implements Serializable {
 		this.inUser = inUser;
 	}
 
-	public Timestamp getInDate() {
+	public String getInDate() {
 		return this.inDate;
 	}
 
-	public void setInDate(Timestamp inDate) {
+	public void setInDate(String inDate) {
 		this.inDate = inDate;
 	}
 
@@ -94,11 +75,11 @@ public class BrandHotEntity implements Serializable {
 		this.lastEditUser = lastEditUser;
 	}
 
-	public Timestamp getLastEditDate() {
+	public String getLastEditDate() {
 		return this.lastEditDate;
 	}
 
-	public void setLastEditDate(Timestamp lastEditDate) {
+	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
 

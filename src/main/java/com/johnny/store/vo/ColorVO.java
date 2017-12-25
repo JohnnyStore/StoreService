@@ -1,36 +1,36 @@
 package com.johnny.store.vo;
 
-public class CountryVO {
-    private int countryID;
-    private String countryNameCN;
-    private String countryNameEN;
+public class ColorVO {
+    private int colorID;
+    private String colorCN;
+    private String colorEN;
     private String inUser;
     private String inDate;
     private String lastEditUser;
     private String lastEditDate;
 
-    public int getCountryID() {
-        return countryID;
+    public int getColorID() {
+        return colorID;
     }
 
-    public void setCountryID(int countryID) {
-        this.countryID = countryID;
+    public void setColorID(int colorID) {
+        this.colorID = colorID;
     }
 
-    public String getCountryNameCN() {
-        return countryNameCN;
+    public String getColorCN() {
+        return colorCN;
     }
 
-    public void setCountryNameCN(String countryNameCN) {
-        this.countryNameCN = countryNameCN;
+    public void setColorCN(String colorCN) {
+        this.colorCN = colorCN;
     }
 
-    public String getCountryNameEN() {
-        return countryNameEN;
+    public String getColorEN() {
+        return colorEN;
     }
 
-    public void setCountryNameEN(String countryNameEN) {
-        this.countryNameEN = countryNameEN;
+    public void setColorEN(String colorEN) {
+        this.colorEN = colorEN;
     }
 
     public String getInUser() {

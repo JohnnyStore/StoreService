@@ -1,8 +1,6 @@
 package com.johnny.store.entity;
-import java.io.Serializable;
-import java.sql.Timestamp;
 
-public class CustomerEntity implements Serializable {
+public class CustomerEntity {
 	private int customerID;
 	private String customerName;
 	private String account;
@@ -11,28 +9,9 @@ public class CustomerEntity implements Serializable {
 	private String cellphone;
 	private String email;
 	private String inUser;
-	private Timestamp inDate;
+	private String inDate;
 	private String lastEditUser;
-	private Timestamp lastEditDate;
-
-	public CustomerEntity(){
-		super();
-	}
-
-	public CustomerEntity(int customerID, String customerName, String account, String password, String customerSex, String cellphone, String email, String inUser, Timestamp inDate, String lastEditUser, Timestamp lastEditDate){
-		super();
-		this.customerID = customerID;
-		this.customerName = customerName;
-		this.account = account;
-		this.password = password;
-		this.customerSex = customerSex;
-		this.cellphone = cellphone;
-		this.email = email;
-		this.inUser = inUser;
-		this.inDate = inDate;
-		this.lastEditUser = lastEditUser;
-		this.lastEditDate = lastEditDate;
-	}
+	private String lastEditDate;
 
 	public int getCustomerID() {
 		return this.customerID;
@@ -98,11 +77,11 @@ public class CustomerEntity implements Serializable {
 		this.inUser = inUser;
 	}
 
-	public Timestamp getInDate() {
+	public String getInDate() {
 		return this.inDate;
 	}
 
-	public void setInDate(Timestamp inDate) {
+	public void setInDate(String inDate) {
 		this.inDate = inDate;
 	}
 
@@ -114,11 +93,11 @@ public class CustomerEntity implements Serializable {
 		this.lastEditUser = lastEditUser;
 	}
 
-	public Timestamp getLastEditDate() {
+	public String getLastEditDate() {
 		return this.lastEditDate;
 	}
 
-	public void setLastEditDate(Timestamp lastEditDate) {
+	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
 

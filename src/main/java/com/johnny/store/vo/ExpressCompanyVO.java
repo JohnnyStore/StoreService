@@ -1,15 +1,13 @@
 package com.johnny.store.vo;
 
-import java.sql.Timestamp;
-
 public class ExpressCompanyVO {
     private int companyID;
     private String companyCN;
     private String companyEN;
     private String inUser;
-    private Timestamp inDate;
+    private String inDate;
     private String lastEditUser;
-    private Timestamp lastEditDate;
+    private String lastEditDate;
 
     public int getCompanyID() {
         return companyID;
@@ -43,11 +41,11 @@ public class ExpressCompanyVO {
         this.inUser = inUser;
     }
 
-    public Timestamp getInDate() {
+    public String getInDate() {
         return inDate;
     }
 
-    public void setInDate(Timestamp inDate) {
+    public void setInDate(String inDate) {
         this.inDate = inDate;
     }
 
@@ -59,11 +57,11 @@ public class ExpressCompanyVO {
         this.lastEditUser = lastEditUser;
     }
 
-    public Timestamp getLastEditDate() {
+    public String getLastEditDate() {
         return lastEditDate;
     }
 
-    public void setLastEditDate(Timestamp lastEditDate) {
+    public void setLastEditDate(String lastEditDate) {
         this.lastEditDate = lastEditDate;
     }
 }

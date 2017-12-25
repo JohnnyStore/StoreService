@@ -1,34 +1,15 @@
 package com.johnny.store.entity;
-import java.io.Serializable;
-import java.sql.Timestamp;
 
-public class ImageEntity implements Serializable {
+public class ImageEntity {
 	private int imageID;
 	private String imageSrc;
 	private int objectID;
 	private String objectType;
 	private String imageType;
 	private String inUser;
-	private Timestamp inDate;
+	private String inDate;
 	private String lastEditUser;
-	private Timestamp lastEditDate;
-
-	public ImageEntity(){
-		super();
-	}
-
-	public ImageEntity(int imageID, String imageSrc, int objectID, String objectType, String imageType, String inUser, Timestamp inDate, String lastEditUser, Timestamp lastEditDate){
-		super();
-		this.imageID = imageID;
-		this.imageSrc = imageSrc;
-		this.objectID = objectID;
-		this.objectType = objectType;
-		this.imageType = imageType;
-		this.inUser = inUser;
-		this.inDate = inDate;
-		this.lastEditUser = lastEditUser;
-		this.lastEditDate = lastEditDate;
-	}
+	private String lastEditDate;
 
 	public int getImageID() {
 		return this.imageID;
@@ -78,11 +59,11 @@ public class ImageEntity implements Serializable {
 		this.inUser = inUser;
 	}
 
-	public Timestamp getInDate() {
+	public String getInDate() {
 		return this.inDate;
 	}
 
-	public void setInDate(Timestamp inDate) {
+	public void setInDate(String inDate) {
 		this.inDate = inDate;
 	}
 
@@ -94,11 +75,11 @@ public class ImageEntity implements Serializable {
 		this.lastEditUser = lastEditUser;
 	}
 
-	public Timestamp getLastEditDate() {
+	public String getLastEditDate() {
 		return this.lastEditDate;
 	}
 
-	public void setLastEditDate(Timestamp lastEditDate) {
+	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
 

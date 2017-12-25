@@ -1,16 +1,14 @@
 package com.johnny.store.vo;
 
-import java.sql.Timestamp;
-
 public class ProvinceVO {
     private int provinceID;
     private int countryID;
     private String provinceNameCN;
     private String provinceNameEN;
     private String inUser;
-    private Timestamp inDate;
+    private String inDate;
     private String lastEditUser;
-    private Timestamp lastEditDate;
+    private String lastEditDate;
 
     public int getProvinceID() {
         return provinceID;
@@ -51,11 +49,11 @@ public class ProvinceVO {
         this.inUser = inUser;
     }
 
-    public Timestamp getInDate() {
+    public String getInDate() {
         return inDate;
     }
 
-    public void setInDate(Timestamp inDate) {
+    public void setInDate(String inDate) {
         this.inDate = inDate;
     }
 
@@ -67,11 +65,11 @@ public class ProvinceVO {
         this.lastEditUser = lastEditUser;
     }
 
-    public Timestamp getLastEditDate() {
+    public String getLastEditDate() {
         return lastEditDate;
     }
 
-    public void setLastEditDate(Timestamp lastEditDate) {
+    public void setLastEditDate(String lastEditDate) {
         this.lastEditDate = lastEditDate;
     }
 

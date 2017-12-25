@@ -1,7 +1,5 @@
 package com.johnny.store.vo;
 
-import java.sql.Timestamp;
-
 public class CityVO {
     private int cityID;
     private int countryID;
@@ -9,9 +7,9 @@ public class CityVO {
     private String cityNameCN;
     private String cityNameEN;
     private String inUser;
-    private Timestamp inDate;
+    private String inDate;
     private String lastEditUser;
-    private Timestamp lastEditDate;
+    private String lastEditDate;
 
     public int getCityID() {
         return cityID;
@@ -61,11 +59,11 @@ public class CityVO {
         this.inUser = inUser;
     }
 
-    public Timestamp getInDate() {
+    public String getInDate() {
         return inDate;
     }
 
-    public void setInDate(Timestamp inDate) {
+    public void setInDate(String inDate) {
         this.inDate = inDate;
     }
 
@@ -77,11 +75,11 @@ public class CityVO {
         this.lastEditUser = lastEditUser;
     }
 
-    public Timestamp getLastEditDate() {
+    public String getLastEditDate() {
         return lastEditDate;
     }
 
-    public void setLastEditDate(Timestamp lastEditDate) {
+    public void setLastEditDate(String lastEditDate) {
         this.lastEditDate = lastEditDate;
     }
 }

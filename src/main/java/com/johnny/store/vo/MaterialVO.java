@@ -1,36 +1,36 @@
 package com.johnny.store.vo;
 
-public class CountryVO {
-    private int countryID;
-    private String countryNameCN;
-    private String countryNameEN;
+public class MaterialVO {
+    private int materialID;
+    private String materialCN;
+    private String materialEN;
     private String inUser;
     private String inDate;
     private String lastEditUser;
     private String lastEditDate;
 
-    public int getCountryID() {
-        return countryID;
+    public int getMaterialID() {
+        return materialID;
     }
 
-    public void setCountryID(int countryID) {
-        this.countryID = countryID;
+    public void setMaterialID(int materialID) {
+        this.materialID = materialID;
     }
 
-    public String getCountryNameCN() {
-        return countryNameCN;
+    public String getMaterialCN() {
+        return materialCN;
     }
 
-    public void setCountryNameCN(String countryNameCN) {
-        this.countryNameCN = countryNameCN;
+    public void setMaterialCN(String materialCN) {
+        this.materialCN = materialCN;
     }
 
-    public String getCountryNameEN() {
-        return countryNameEN;
+    public String getMaterialEN() {
+        return materialEN;
     }
 
-    public void setCountryNameEN(String countryNameEN) {
-        this.countryNameEN = countryNameEN;
+    public void setMaterialEN(String materialEN) {
+        this.materialEN = materialEN;
     }
 
     public String getInUser() {

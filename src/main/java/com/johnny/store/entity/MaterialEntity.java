@@ -1,36 +1,36 @@
 package com.johnny.store.entity;
 
-public class ColorEntity{
-	private int colorID;
-	private String colorCN;
-	private String colorEN;
+public class MaterialEntity{
+	private int materialID;
+	private String materialCN;
+	private String materialEN;
 	private String inUser;
 	private String inDate;
 	private String lastEditUser;
 	private String lastEditDate;
 
-	public int getColorID() {
-		return this.colorID;
+	public int getMaterialID() {
+		return this.materialID;
 	}
 
-	public void setColorID(int colorID) {
-		this.colorID = colorID;
+	public void setMaterialID(int materialID) {
+		this.materialID = materialID;
 	}
 
-	public String getColorCN() {
-		return this.colorCN;
+	public String getMaterialCN() {
+		return this.materialCN;
 	}
 
-	public void setColorCN(String colorCN) {
-		this.colorCN = colorCN;
+	public void setMaterialCN(String materialCN) {
+		this.materialCN = materialCN;
 	}
 
-	public String getColorEN() {
-		return this.colorEN;
+	public String getMaterialEN() {
+		return this.materialEN;
 	}
 
-	public void setColorEN(String colorEN) {
-		this.colorEN = colorEN;
+	public void setMaterialEN(String materialEN) {
+		this.materialEN = materialEN;
 	}
 
 	public String getInUser() {

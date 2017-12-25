@@ -1,11 +1,9 @@
 package com.johnny.store.entity;
-import java.io.Serializable;
-import java.sql.Timestamp;
 
-public class OrderEntity implements Serializable {
+public class OrderEntity {
 	private int orderID;
 	private int customerID;
-	private Timestamp orderDate;
+	private String orderDate;
 	private double orderAmount;
 	private int countryID;
 	private int shippingAddressProvinceID;
@@ -15,32 +13,9 @@ public class OrderEntity implements Serializable {
 	private String trackingNumber;
 	private int expressCompanyID;
 	private String inUser;
-	private Timestamp inDate;
+	private String inDate;
 	private String lastEditUser;
-	private Timestamp lastEditDate;
-
-	public OrderEntity(){
-		super();
-	}
-
-	public OrderEntity(int orderID, int customerID, Timestamp orderDate, double orderAmount, int countryID, int shippingAddressProvinceID, int shippingAddressCityID, String shippingAddress, String orderStatus, String trackingNumber, int expressCompanyID, String inUser, Timestamp inDate, String lastEditUser, Timestamp lastEditDate){
-		super();
-		this.orderID = orderID;
-		this.customerID = customerID;
-		this.orderDate = orderDate;
-		this.orderAmount = orderAmount;
-		this.countryID = countryID;
-		this.shippingAddressProvinceID = shippingAddressProvinceID;
-		this.shippingAddressCityID = shippingAddressCityID;
-		this.shippingAddress = shippingAddress;
-		this.orderStatus = orderStatus;
-		this.trackingNumber = trackingNumber;
-		this.expressCompanyID = expressCompanyID;
-		this.inUser = inUser;
-		this.inDate = inDate;
-		this.lastEditUser = lastEditUser;
-		this.lastEditDate = lastEditDate;
-	}
+	private String lastEditDate;
 
 	public int getOrderID() {
 		return this.orderID;
@@ -58,11 +33,11 @@ public class OrderEntity implements Serializable {
 		this.customerID = customerID;
 	}
 
-	public Timestamp getOrderDate() {
+	public String getOrderDate() {
 		return this.orderDate;
 	}
 
-	public void setOrderDate(Timestamp orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
 
@@ -138,11 +113,11 @@ public class OrderEntity implements Serializable {
 		this.inUser = inUser;
 	}
 
-	public Timestamp getInDate() {
+	public String getInDate() {
 		return this.inDate;
 	}
 
-	public void setInDate(Timestamp inDate) {
+	public void setInDate(String inDate) {
 		this.inDate = inDate;
 	}
 
@@ -154,11 +129,11 @@ public class OrderEntity implements Serializable {
 		this.lastEditUser = lastEditUser;
 	}
 
-	public Timestamp getLastEditDate() {
+	public String getLastEditDate() {
 		return this.lastEditDate;
 	}
 
-	public void setLastEditDate(Timestamp lastEditDate) {
+	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
 

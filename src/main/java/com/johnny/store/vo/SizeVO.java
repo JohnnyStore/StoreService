@@ -1,36 +1,36 @@
 package com.johnny.store.vo;
 
-public class CountryVO {
-    private int countryID;
-    private String countryNameCN;
-    private String countryNameEN;
+public class SizeVO {
+    private int sizeID;
+    private String sizeCN;
+    private String sizeEN;
     private String inUser;
     private String inDate;
     private String lastEditUser;
     private String lastEditDate;
 
-    public int getCountryID() {
-        return countryID;
+    public int getSizeID() {
+        return sizeID;
     }
 
-    public void setCountryID(int countryID) {
-        this.countryID = countryID;
+    public void setSizeID(int sizeID) {
+        this.sizeID = sizeID;
     }
 
-    public String getCountryNameCN() {
-        return countryNameCN;
+    public String getSizeCN() {
+        return sizeCN;
     }
 
-    public void setCountryNameCN(String countryNameCN) {
-        this.countryNameCN = countryNameCN;
+    public void setSizeCN(String sizeCN) {
+        this.sizeCN = sizeCN;
     }
 
-    public String getCountryNameEN() {
-        return countryNameEN;
+    public String getSizeEN() {
+        return sizeEN;
     }
 
-    public void setCountryNameEN(String countryNameEN) {
-        this.countryNameEN = countryNameEN;
+    public void setSizeEN(String sizeEN) {
+        this.sizeEN = sizeEN;
     }
 
     public String getInUser() {
