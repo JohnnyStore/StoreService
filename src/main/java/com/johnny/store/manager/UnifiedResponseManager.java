@@ -7,6 +7,9 @@ import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.enums.ResponseOptionEnum;
 import com.johnny.store.enums.ResponseTypeEnum;
 
+/**
+ * 统一返回对象
+ */
 public class UnifiedResponseManager {
     public static <T> UnifiedResponse buildSuccessResponse(T data){
         try{

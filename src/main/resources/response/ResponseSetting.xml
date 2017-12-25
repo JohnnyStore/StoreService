@@ -43,7 +43,7 @@
                 <void property="responseType">
                     <object class="java.lang.Enum" method="valueOf">
                         <class>com.johnny.store.enums.ResponseTypeEnum</class>
-                        <string>Success</string>
+                        <string>Success </string>
                     </object>
                 </void>
                 <void property="result">

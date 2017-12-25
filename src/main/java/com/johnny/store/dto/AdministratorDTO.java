@@ -1,5 +1,7 @@
 package com.johnny.store.dto;
-
+/**
+ * 管理员信息传递
+ */
 public class AdministratorDTO {
     private int administratorID;
     private String administratorName;

@@ -3,6 +3,9 @@ import com.johnny.store.entity.AdministratorEntity;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
+/**
+ * 管理员信息数据层
+ */
 @Mapper
 public interface AdministratorMapper {
     int searchTotalCount();

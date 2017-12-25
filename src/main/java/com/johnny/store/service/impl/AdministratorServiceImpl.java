@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 管理员信息业务层
+ */
 @Service
 public class AdministratorServiceImpl implements AdministratorService {
     @Autowired

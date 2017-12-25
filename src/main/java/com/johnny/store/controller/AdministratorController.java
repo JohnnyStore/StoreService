@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 管理员信息维护
+ */
 @RestController
 public class AdministratorController {
     @Autowired

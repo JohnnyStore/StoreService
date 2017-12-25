@@ -2,6 +2,9 @@ package com.johnny.store.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * 管理员信息实体类
+ */
 public class AdministratorEntity {
 	private int administratorID;
 	private String administratorName;

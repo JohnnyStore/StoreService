@@ -52,7 +52,7 @@
             `InDate`,
             `LastEditUser`,
             `LastEditDate`
-        FROM PetShop.Administrator
+        FROM Luvpet.Administrator
         WHERE AdministratorID = #{administratorID,jdbcType=INTEGER}
     </select>
     <select id="searchByName" resultMap="BaseResultMap">
@@ -69,7 +69,7 @@
             `InDate`,
             `LastEditUser`,
             `LastEditDate`
-        FROM PetShop.Administrator
+        FROM Luvpet.Administrator
         WHERE AdministratorName = #{administratorName,jdbcType=NVARCHAR}
     </select>
     <select id="search4Login" resultMap="BaseResultMap">
@@ -85,7 +85,7 @@
             `InDate`,
             `LastEditUser`,
             `LastEditDate`
-        FROM PetShop.Administrator
+        FROM Luvpet.Administrator
         WHERE (Account = #{arg0,jdbcType=NVARCHAR}
                 OR Cellphone = #{arg0,jdbcType=NVARCHAR}
                 OR Email = #{arg0,jdbcType=NVARCHAR})
@@ -94,23 +94,23 @@
     <select id="searchTotalCount4Account" resultType="java.lang.Integer">
         SELECT
             COUNT(1) AS TotalCount
-        FROM PetShop.Administrator
+        FROM Luvpet.Administrator
         WHERE Account = #{account,jdbcType=NVARCHAR}
     </select>
     <select id="searchTotalCount4Cellphone" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM PetShop.Administrator
+        FROM Luvpet.Administrator
         WHERE Cellphone = #{cellphone,jdbcType=NVARCHAR}
     </select>
     <select id="searchTotalCount4Email" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM PetShop.Administrator
+        FROM Luvpet.Administrator
         WHERE Email = #{email,jdbcType=NVARCHAR}
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.BrandEntity" >
-        INSERT INTO PetShop.Administrator (
+        INSERT INTO Luvpet.Administrator (
             `AdministratorName`,
             `Account`,
             `Password`,
@@ -134,7 +134,7 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.BrandEntity" >
-        UPDATE PetShop.Administrator SET
+        UPDATE Luvpet.Administrator SET
             AdministratorName = #{administratorName,jdbcType=NVARCHAR},
             Account = #{account,jdbcType=VARCHAR},
             Password = #{password,jdbcType=VARCHAR},
@@ -144,14 +144,14 @@
         WHERE AdministratorID = #{administratorID,jdbcType=INTEGER}
     </update>
     <update id="approve" parameterType="com.johnny.store.entity.BrandEntity" >
-        UPDATE PetShop.Administrator SET
+        UPDATE Luvpet.Administrator SET
         Status = #{status,jdbcType=VARCHAR},
         CustomerRole = #{customerRole,jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE AdministratorID = #{administratorID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM PetShop.Administrator
+        DELETE FROM Luvpet.Administrator
         WHERE AdministratorID = #{administratorID,jdbcType=INTEGER}
     </delete>
 </mapper>
