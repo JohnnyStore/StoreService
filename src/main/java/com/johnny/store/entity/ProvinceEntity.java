@@ -12,10 +12,6 @@ public class ProvinceEntity {
 	private String lastEditUser;
 	private String lastEditDate;
 
-	/**
-	 *
-	 * @return
-	 */
 	public int getProvinceID() {
 		return this.provinceID;
 	}

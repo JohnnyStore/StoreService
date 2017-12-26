@@ -4,6 +4,8 @@
     <resultMap id="BaseResultMapOfProvince" type="com.johnny.store.entity.ProvinceEntity" >
         <id column="ProvinceID" property="provinceID" jdbcType="INTEGER" />
         <result column="CountryID" property="countryID" jdbcType="INTEGER" />
+        <result column="CountryNameCN" property="countryNameCN" jdbcType="NVARCHAR" />
+        <result column="CountryNameEN" property="countryNameEN" jdbcType="VARCHAR" />
         <result column="ProvinceNameCN" property="provinceNameCN" jdbcType="NVARCHAR" />
         <result column="ProvinceNameEN" property="provinceNameEN" jdbcType="VARCHAR" />
         <result column="InUser" property="inUser" jdbcType="VARCHAR" />
@@ -24,16 +26,16 @@
         A.InDate,
         A.LastEditUser,
         A.LastEditDate
-        FROM Luvpet.province A
-        INNER JOIN Luvpet.country B
+        FROM Luvpet.Province A
+        INNER JOIN Luvpet.Country B
         ON A.CountryID = B.CountryID
-        ORDER BY InDate DESC;
+        ORDER BY A.InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.province;
+        FROM Luvpet.Province;
     </select>
     <select id="search" resultMap="BaseResultMapOfProvince">
         SELECT
@@ -45,10 +47,8 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.province
-        WHERE ProvinceID = #{provinceID,jdbcType=INTEGER}
-        ORDER BY InDate DESC
-        LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
+        FROM Luvpet.Province
+        WHERE ProvinceID = #{provinceID,jdbcType=INTEGER};
     </select>
     <select id="searchByName" resultMap="BaseResultMapOfProvince">
         SELECT
@@ -60,11 +60,11 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.province
+        FROM Luvpet.Province
         WHERE (ProvinceNameCN = #{provinceName,jdbcType=NVARCHAR} OR ProvinceNameEN = #{provinceName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.ProvinceEntity" >
-        INSERT INTO Luvpet.province (
+        INSERT INTO Luvpet.Province (
         CountryID,
         ProvinceNameCN,
         ProvinceNameEN,
@@ -80,7 +80,7 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.ProvinceEntity" >
-        UPDATE Luvpet.province SET
+        UPDATE Luvpet.Province SET
         CountryID = #{countryID, jdbcType=INTEGER},
         ProvinceNameCN = #{provinceNameCN, jdbcType=NVARCHAR},
         ProvinceNameEN = #{provinceNameEN, jdbcType=VARCHAR},
@@ -88,7 +88,7 @@
         WHERE ProvinceID = #{provinceID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM Luvpet.province
+        DELETE FROM Luvpet.Province
         WHERE ProvinceID = #{provinceID,jdbcType=INTEGER}
     </delete>
 </mapper>

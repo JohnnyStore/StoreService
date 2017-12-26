@@ -2,14 +2,14 @@ package com.johnny.store.controller;
 
 import com.johnny.store.dto.CountryDTO;
 import com.johnny.store.dto.UnifiedResponse;
-import com.johnny.store.service.CountryService;
+import com.johnny.store.service.impl.CountryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CountryController {
     @Autowired
-    private CountryService countryServiceImpl;
+    private CountryServiceImpl countryServiceImpl;
 
     @RequestMapping(value = "api/country/{pageNumber}/{pageSize}",method = RequestMethod.GET)
     public UnifiedResponse getAllCountry(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize){
