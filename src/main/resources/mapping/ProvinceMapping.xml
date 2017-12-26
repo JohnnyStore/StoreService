@@ -13,15 +13,21 @@
     </resultMap>
     <select id="searchList" resultMap="BaseResultMapOfProvince">
         SELECT
-        ProvinceID,
-        CountryID,
-        ProvinceNameCN,
-        ProvinceNameEN,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
-        FROM Luvpet.province
+        A.ProvinceID,
+        B.CountryID,
+        B.CountryNameCN,
+        B.CountryNameEN,
+        A.ProvinceNameCN,
+        A.ProvinceNameEN,
+        A.InUser,
+        A.InDate,
+        A.LastEditUser,
+        A.LastEditDate
+        FROM Luvpet.province A
+        INNER JOIN Luvpet.country B
+        ON A.CountryID = B.CountryID
+        ORDER BY InDate DESC;
+        LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT

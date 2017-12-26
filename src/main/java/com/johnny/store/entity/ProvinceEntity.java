@@ -3,6 +3,8 @@ package com.johnny.store.entity;
 public class ProvinceEntity {
 	private int provinceID;
 	private int countryID;
+	private String countryNameCN;
+	private String countryNameEN;
 	private String provinceNameCN;
 	private String provinceNameEN;
 	private String inUser;
@@ -74,4 +76,19 @@ public class ProvinceEntity {
 		this.lastEditDate = lastEditDate;
 	}
 
+	public String getCountryNameCN() {
+		return countryNameCN;
+	}
+
+	public void setCountryNameCN(String countryNameCN) {
+		this.countryNameCN = countryNameCN;
+	}
+
+	public String getCountryNameEN() {
+		return countryNameEN;
+	}
+
+	public void setCountryNameEN(String countryNameEN) {
+		this.countryNameEN = countryNameEN;
+	}
 }
