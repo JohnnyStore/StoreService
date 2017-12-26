@@ -12,6 +12,10 @@ public class ProvinceVO {
     private String lastEditUser;
     private String lastEditDate;
 
+    /**
+     *
+     * @return
+     */
     public int getProvinceID() {
         return provinceID;
     }

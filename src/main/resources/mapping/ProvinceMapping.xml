@@ -11,6 +11,7 @@
         <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
         <result column="LastEditDate" property="lastEditDate" jdbcType="TIMESTAMP" />
     </resultMap>
+
     <select id="searchList" resultMap="BaseResultMapOfProvince">
         SELECT
         A.ProvinceID,
