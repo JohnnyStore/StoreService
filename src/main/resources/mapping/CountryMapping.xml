@@ -13,7 +13,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.country;
+        FROM Luvpet.Country;
     </select>
     <select id="searchList" resultMap="BaseResultMapOfCountry">
         SELECT
