@@ -4,6 +4,10 @@ public class CityEntity{
 	private int cityID;
 	private int countryID;
 	private int provinceID;
+	private String countryNameCN;
+	private String countryNameEN;
+	private String provinceNameCN;
+	private String provinceNameEN;
 	private String cityNameCN;
 	private String cityNameEN;
 	private String inUser;
@@ -83,4 +87,35 @@ public class CityEntity{
 		this.lastEditDate = lastEditDate;
 	}
 
+	public String getCountryNameCN() {
+		return countryNameCN;
+	}
+
+	public void setCountryNameCN(String countryNameCN) {
+		this.countryNameCN = countryNameCN;
+	}
+
+	public String getCountryNameEN() {
+		return countryNameEN;
+	}
+
+	public void setCountryNameEN(String countryNameEN) {
+		this.countryNameEN = countryNameEN;
+	}
+
+	public String getProvinceNameCN() {
+		return provinceNameCN;
+	}
+
+	public void setProvinceNameCN(String provinceNameCN) {
+		this.provinceNameCN = provinceNameCN;
+	}
+
+	public String getProvinceNameEN() {
+		return provinceNameEN;
+	}
+
+	public void setProvinceNameEN(String provinceNameEN) {
+		this.provinceNameEN = provinceNameEN;
+	}
 }

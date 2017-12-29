@@ -41,7 +41,7 @@ public class ExpressCompanyServiceImpl implements ExpressCompanyService{
                 model.setCompanyID(entity.getCompanyID());
                 modelList.add(model);
             }
-            return UnifiedResponseManager.buildSuccessResponse(modelList);
+            return UnifiedResponseManager.buildSuccessResponse(totalCount,modelList);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());

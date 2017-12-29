@@ -43,7 +43,7 @@ public class CityServiceImpl implements CityService {
                 model.setProvinceID(entity.getProvinceID());
                 modelList.add(model);
             }
-            return UnifiedResponseManager.buildSuccessResponse(modelList);
+            return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());

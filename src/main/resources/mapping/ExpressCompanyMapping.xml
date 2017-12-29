@@ -13,7 +13,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.expresscompany;
+        FROM Luvpet.ExpressCompany;
     </select>
     <select id="searchList" resultMap="BaseResultMapOfExpressCompany">
         SELECT
@@ -24,7 +24,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.expresscompany
+        FROM Luvpet.ExpressCompany
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
@@ -37,7 +37,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.expresscompany
+        FROM Luvpet.ExpressCompany
         WHERE CompanyID = #{companyID,jdbcType=INTEGER}
     </select>
     <select id="searchByName" resultMap="BaseResultMapOfExpressCompany">
@@ -49,11 +49,11 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.expresscompany
+        FROM Luvpet.ExpressCompany
         WHERE (CompanyCN = #{companyName,jdbcType=NVARCHAR} OR CompanyEN = #{companyName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.ExpressCompanyEntity" >
-        INSERT INTO Luvpet.expresscompany (
+        INSERT INTO Luvpet.ExpressCompany (
         CompanyCN,
         CompanyEN,
         InUser,
@@ -67,14 +67,14 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.ExpressCompanyEntity" >
-        UPDATE Luvpet.expresscompany SET
+        UPDATE Luvpet.ExpressCompany SET
         CompanyCN = #{companyCN,jdbcType=NVARCHAR},
         CompanyEN = #{companyEN,jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE CompanyID = #{companyID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM Luvpet.expresscompany
+        DELETE FROM Luvpet.ExpressCompany
         WHERE CompanyID = #{companyID,jdbcType=INTEGER}
     </delete>
 </mapper>
