@@ -19,7 +19,7 @@ public class LogUtils {
             SystemLogSetting systemLogSetting = new SystemLogSetting();
             String logDateTime = DateUtils.getCurrentDateTime();
             String logDir = ConfigManager.getSystemSetting(ConfigFileConsts.SYSTEM_SETTING_KEY_FILE_DIR);
-            String logName = logDateTime.replace('-', ' ').replace(':', ' ').concat(".xml");
+            String logName = logDateTime.replace('-', ' ').replace(':', ' ').concat(".json");
             String logPath = logDir.concat("\\").concat(logName);
 
             systemLogSetting.setPriority(PriorityEnum.High.toString());
@@ -29,8 +29,10 @@ public class LogUtils {
             systemLogSetting.setErrorOption(ResponseOptionEnum.Admin.toString());
             systemLogSetting.setErrorMessage(ex.getMessage());
             systemLogSetting.setErrorDetail(getStackTrace(ex));
+
+            String log4Json = JsonUtils.getJsonStr(systemLogSetting);
             FileUtils.createFolder(logDir);
-            XmlSerializeUtils.serializeToFile(systemLogSetting, logPath);
+            FileUtils.createFile(logPath, log4Json);
         }catch (Exception e){
 
         }
@@ -45,7 +47,7 @@ public class LogUtils {
             SystemLogSetting systemLogSetting = new SystemLogSetting();
             String logDateTime = DateUtils.getCurrentDateTime();
             String logDir = ConfigManager.getSystemSetting(ConfigFileConsts.SYSTEM_SETTING_KEY_FILE_DIR);
-            String logName = logDateTime.replace('-', ' ').replace(':', ' ').concat(".log");
+            String logName = logDateTime.replace('-', ' ').replace(':', ' ').concat(".json");
             String logPath = logDir.concat(logName);
 
             systemLogSetting.setPriority(PriorityEnum.Normal.toString());
@@ -56,8 +58,9 @@ public class LogUtils {
             systemLogSetting.setErrorMessage(ex.getMessage());
             systemLogSetting.setErrorDetail(getStackTrace(ex));
 
+            String log4Json = JsonUtils.getJsonStr(systemLogSetting);
             FileUtils.createFolder(logDir);
-            XmlSerializeUtils.serializeToFile(systemLogSetting, logPath);
+            FileUtils.createFile(logPath, log4Json);
         }catch (Exception e){
 
         }

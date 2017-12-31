@@ -12,22 +12,22 @@ public class SystemLogController {
     private SystemLogServiceImpl systemLogServiceImpl;
 
     @RequestMapping(value = "/api/systemLog/{pageIndex}/{pageSize}", method = RequestMethod.GET)
-    public UnifiedResponse getAllBrand(@PathVariable("pageIndex") int pageIndex, @PathVariable("pageSize") int pageSize){
+    public UnifiedResponse getSystemLogList(@PathVariable("pageIndex") int pageIndex, @PathVariable("pageSize") int pageSize){
         return systemLogServiceImpl.findList(pageIndex, pageSize);
     }
 
     @RequestMapping(value = "/api/systemLog/{logId}", method = RequestMethod.GET)
-    public UnifiedResponse getBrand(@PathVariable("logId") int logId){
+    public UnifiedResponse getSystemLog(@PathVariable("logId") int logId){
         return systemLogServiceImpl.find(logId);
     }
 
     @RequestMapping(value="/api/systemLog", method = RequestMethod.POST)
-    public UnifiedResponse addBrand(@RequestBody SystemLogDTO dto){
+    public UnifiedResponse addSystemLog(@RequestBody SystemLogDTO dto){
         return systemLogServiceImpl.add(dto);
     }
 
     @RequestMapping(value="/api/systemLog", method = RequestMethod.PUT)
-    public UnifiedResponse changeBrand(@RequestBody SystemLogDTO dto){
+    public UnifiedResponse changeSystemLogStatus(@RequestBody SystemLogDTO dto){
         return systemLogServiceImpl.change(dto);
     }
 }

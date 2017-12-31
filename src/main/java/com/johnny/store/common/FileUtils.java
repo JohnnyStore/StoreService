@@ -1,9 +1,30 @@
 package com.johnny.store.common;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtils {
+    public static List<String> getFileList(String dirName) throws Exception{
+        List<String> fileList = new ArrayList<>();
+        File file = new File(dirName);
+        if(!file.exists()){
+            throw new FileNotFoundException("The directory is not exists:" + dirName);
+        }
+        if(!file.isDirectory()){
+            throw new Exception("The path is not directory:" + dirName);
+        }
+
+        File[] files = file.listFiles();
+        for (File f : files) {
+            fileList.add(f.getAbsolutePath());
+        }
+
+        return fileList;
+    }
+
     public static boolean createFile(String fileName) throws IOException {
         File file = new File(fileName);
 

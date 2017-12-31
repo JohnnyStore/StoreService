@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.johnny.store.mapper.BrandMapper" >
+<mapper namespace="com.johnny.store.mapper.SystemLogMapper" >
     <resultMap id="SystemLogResultMap" type="com.johnny.store.entity.SystemLogEntity" >
         <id column="LogID" property="logID" jdbcType="INTEGER" />
         <result column="Priority" property="priority" jdbcType="NVARCHAR" />
