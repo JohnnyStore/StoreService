@@ -11,6 +11,8 @@ public interface CountryMapper {
 
     List<CountryEntity> searchList(int startIndex, int pageSize);
 
+    List<CountryEntity> searchAll();
+
     CountryEntity search(int countryID);
 
     CountryEntity searchByName(String countryName);

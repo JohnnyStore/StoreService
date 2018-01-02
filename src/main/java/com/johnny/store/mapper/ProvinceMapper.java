@@ -15,6 +15,8 @@ public interface ProvinceMapper {
 
     ProvinceEntity searchByName(String provinceName);
 
+    List<ProvinceEntity> searchByCountry(int countryID);
+
     int insert(ProvinceEntity entity);
 
     int update(ProvinceEntity entity);

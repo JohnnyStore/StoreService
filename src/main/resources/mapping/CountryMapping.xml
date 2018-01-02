@@ -28,6 +28,18 @@
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
+    <select id="searchAll" resultMap="BaseResultMapOfCountry">
+        SELECT
+        CountryID,
+        CountryNameCN,
+        CountryNameEN,
+        InUser,
+        InDate,
+        LastEditUser,
+        LastEditDate
+        FROM Luvpet.Country
+        ORDER BY InDate DESC;
+    </select>
     <select id="search" resultMap="BaseResultMapOfCountry">
         SELECT
         CountryID,

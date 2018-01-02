@@ -21,6 +21,11 @@ public class ProvinceController {
         return provinceServiceImpl.find(provinceID);
     }
 
+    @RequestMapping(value = "api/province/forCountry/{countryID}",method = RequestMethod.GET)
+    public UnifiedResponse getProvinceForCountry(@PathVariable("countryID") int countryID){
+        return provinceServiceImpl.findByCountry(countryID);
+    }
+
     @RequestMapping(value = "api/province/exist/{provinceName}",method = RequestMethod.GET)
     public UnifiedResponse checkProvinceExist(@PathVariable("provinceName") String provinceName){
         return provinceServiceImpl.existCheck(provinceName);

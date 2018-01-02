@@ -72,6 +72,30 @@ public class ProvinceServiceImpl implements ProvinceService{
         }
     }
 
+    public UnifiedResponse findByCountry(int countryID) {
+        try {
+            List<ProvinceVO> modelList = new ArrayList<>();
+            List<ProvinceEntity> entityList = provinceMapper.searchByCountry(countryID);
+            if(entityList.isEmpty()){
+                return UnifiedResponseManager.buildSuccessResponse(null);
+            }
+            for (ProvinceEntity entity : entityList) {
+                ProvinceVO model = new ProvinceVO();
+                ConvertObjectUtils.convertJavaBean(model, entity);
+                model.setProvinceID(entity.getProvinceID());
+                model.setCountryID(entity.getCountryID());
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(entityList.size(), modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
     @Override
     public UnifiedResponse existCheck(String name) {
         try {

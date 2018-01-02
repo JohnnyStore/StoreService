@@ -37,19 +37,6 @@
         COUNT(1) AS TotalCount
         FROM Luvpet.Province;
     </select>
-    <select id="search" resultMap="BaseResultMapOfProvince">
-        SELECT
-        ProvinceID,
-        CountryID,
-        ProvinceNameCN,
-        ProvinceNameEN,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
-        FROM Luvpet.Province
-        WHERE ProvinceID = #{provinceID,jdbcType=INTEGER};
-    </select>
     <select id="searchByName" resultMap="BaseResultMapOfProvince">
         SELECT
         ProvinceID,
@@ -63,6 +50,21 @@
         FROM Luvpet.Province
         WHERE (ProvinceNameCN = #{provinceName,jdbcType=NVARCHAR} OR ProvinceNameEN = #{provinceName,jdbcType=VARCHAR})
     </select>
+
+    <select id="searchByCountry" resultMap="BaseResultMapOfProvince">
+        SELECT
+        ProvinceID,
+        CountryID,
+        ProvinceNameCN,
+        ProvinceNameEN,
+        InUser,
+        InDate,
+        LastEditUser,
+        LastEditDate
+        FROM Luvpet.Province
+        WHERE CountryID = #{countryID,jdbcType=INTEGER}
+    </select>
+
     <insert id="insert" parameterType="com.johnny.store.entity.ProvinceEntity" >
         INSERT INTO Luvpet.Province (
         CountryID,

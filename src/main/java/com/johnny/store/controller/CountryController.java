@@ -12,8 +12,13 @@ public class CountryController {
     private CountryServiceImpl countryServiceImpl;
 
     @RequestMapping(value = "api/country/{pageNumber}/{pageSize}",method = RequestMethod.GET)
-    public UnifiedResponse getAllCountry(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize){
+    public UnifiedResponse getCountryList(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize){
         return countryServiceImpl.findList(pageNumber, pageSize);
+    }
+
+    @RequestMapping(value = "api/country",method = RequestMethod.GET)
+    public UnifiedResponse getAllCountry(){
+        return countryServiceImpl.findAll();
     }
 
     @RequestMapping(value = "api/country/{countryID}",method = RequestMethod.GET)

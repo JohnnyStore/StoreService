@@ -52,6 +52,33 @@ public class CountryServiceImpl implements CountryService{
         }
     }
 
+    public UnifiedResponse findAll() {
+        try {
+            List<CountryVO> modelList= new ArrayList<>();
+            int totalCount = countryMapper.searchTotalCount();
+            if(totalCount == 0){
+                return UnifiedResponseManager.buildSuccessResponse(0, null);
+            }
+            List<CountryEntity> entityList = countryMapper.searchAll();
+            if (entityList.isEmpty()){
+                return UnifiedResponseManager.buildFailedResponse(null);
+            }
+            for (CountryEntity entity : entityList){
+                CountryVO model = new CountryVO();
+                ConvertObjectUtils.convertJavaBean(model,entity);
+                model.setCountryID(entity.getCountryID());
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
     @Override
     public UnifiedResponse find(int id) {
         try {
