@@ -79,7 +79,7 @@
             `Account`,
             `Cellphone`,
             `Email`,
-            `CustomerRole`,
+             `CustomerRole`,
             `Status`,
             `InUser`,
             `InDate`,
@@ -109,7 +109,7 @@
         FROM Luvpet.Administrator
         WHERE Email = #{email,jdbcType=NVARCHAR}
     </select>
-    <insert id="insert" parameterType="com.johnny.store.entity.BrandEntity" >
+    <insert id="insert" parameterType="com.johnny.store.entity.AdministratorEntity" >
         INSERT INTO Luvpet.Administrator (
             `AdministratorName`,
             `Account`,
@@ -133,7 +133,7 @@
             #{lastEditUser, jdbcType=VARCHAR}
         )
     </insert>
-    <update id="update" parameterType="com.johnny.store.entity.BrandEntity" >
+    <update id="update" parameterType="com.johnny.store.entity.AdministratorEntity" >
         UPDATE Luvpet.Administrator SET
             AdministratorName = #{administratorName,jdbcType=NVARCHAR},
             Account = #{account,jdbcType=VARCHAR},
@@ -143,7 +143,7 @@
             LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE AdministratorID = #{administratorID,jdbcType=INTEGER}
     </update>
-    <update id="approve" parameterType="com.johnny.store.entity.BrandEntity" >
+    <update id="approve" parameterType="com.johnny.store.entity.AdministratorEntity" >
         UPDATE Luvpet.Administrator SET
             Status = #{status,jdbcType=VARCHAR},
             CustomerRole = #{customerRole,jdbcType=VARCHAR},

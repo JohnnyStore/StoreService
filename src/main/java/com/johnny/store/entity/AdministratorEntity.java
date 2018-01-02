@@ -112,4 +112,5 @@ public class AdministratorEntity {
 	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
+
 }
