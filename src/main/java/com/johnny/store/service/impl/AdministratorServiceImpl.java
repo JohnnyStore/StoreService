@@ -201,7 +201,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     public UnifiedResponse approve(AdministratorDTO dto) {
         try {
             AdministratorEntity entity = new AdministratorEntity();
-            transform(entity);
+            transformToKey(entity);
             ConvertObjectUtils.convertJavaBean(entity, dto);
             entity.setAdministratorID(dto.getAdministratorID());
             entity.setLastEditUser(dto.getLoginUser());
@@ -256,6 +256,43 @@ public class AdministratorServiceImpl implements AdministratorService {
                 break;
             case "Q":
                 tranCustomerRole = "查询权限";
+                break;
+            default:
+                break;
+        }
+        administratorEntity.setCustomerRole(tranCustomerRole);
+        return administratorEntity;
+    }
+
+    public AdministratorEntity transformToKey(AdministratorEntity administratorEntity){
+        String tranStatus = administratorEntity.getStatus();
+        switch(tranStatus){
+            case "待审核":
+                tranStatus = "P";
+                break;
+            case "审核通过":
+                tranStatus = "A";
+                break;
+            case "审核未通过":
+                tranStatus = "N";
+                break;
+            case "冻结":
+                tranStatus = "F";
+                break;
+            default:
+                break;
+        }
+        administratorEntity.setStatus(tranStatus);
+        String tranCustomerRole = administratorEntity.getCustomerRole();
+        switch(tranCustomerRole){
+            case "最高权限":
+                tranCustomerRole = "S";
+                break;
+            case "修改权限":
+                tranCustomerRole = "C";
+                break;
+            case "查询权限":
+                tranCustomerRole = "Q";
                 break;
             default:
                 break;
