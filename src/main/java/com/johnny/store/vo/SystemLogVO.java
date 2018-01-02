@@ -12,6 +12,7 @@ public class SystemLogVO {
     private String errorMessage;
     private String errorDetail;
     private String status;
+    private String statusText;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -119,5 +120,13 @@ public class SystemLogVO {
 
     public void setLastEditDate(String lastEditDate) {
         this.lastEditDate = lastEditDate;
+    }
+
+    public String getStatusText() {
+        return statusText;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 }

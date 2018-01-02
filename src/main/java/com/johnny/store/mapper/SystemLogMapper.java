@@ -5,11 +5,13 @@ import java.util.List;
 
 @Mapper
 public interface SystemLogMapper {
-    List<SystemLogEntity> searchLogList();
+    int searchTotalCount();
 
-    SystemLogEntity searchLog(int logID);
+    List<SystemLogEntity> searchList(int startIndex, int pageSize);
 
-    int insertLog(SystemLogEntity entity);
+    SystemLogEntity search(int logID);
+
+    int insert(SystemLogEntity entity);
 
     int updateStatus(SystemLogEntity entity);
 }

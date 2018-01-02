@@ -29,17 +29,18 @@ public class SystemLogServiceImpl implements SystemLogService {
         try {
             int startIndex = (pageIndex - 1) * pageSize;
             List<SystemLogVO> modelList = new ArrayList<>();
-            List<SystemLogEntity> entityList =  systemLogMapper.searchLogList();
-            if(entityList.isEmpty()){
-                return UnifiedResponseManager.buildSuccessResponse(0,null);
+            int totalCount = systemLogMapper.searchTotalCount();
+            if(totalCount == 0){
+                return UnifiedResponseManager.buildSuccessResponse(0, null);
             }
+            List<SystemLogEntity> entityList =  systemLogMapper.searchList(startIndex, pageSize);
             for (SystemLogEntity entity : entityList) {
                 SystemLogVO model = new SystemLogVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
                 model.setLogID(entity.getLogID());
                 modelList.add(model);
             }
-            return UnifiedResponseManager.buildSuccessResponse(modelList);
+            return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
@@ -53,7 +54,7 @@ public class SystemLogServiceImpl implements SystemLogService {
     public UnifiedResponse find(int id) {
         try {
             SystemLogVO model = null;
-            SystemLogEntity entity = systemLogMapper.searchLog(id);
+            SystemLogEntity entity = systemLogMapper.search(id);
             if(entity != null){
                 model = new SystemLogVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
@@ -83,7 +84,7 @@ public class SystemLogServiceImpl implements SystemLogService {
             entity.setInUser(systemLogDTO.getLoginUser());
             entity.setLastEditUser(systemLogDTO.getLoginUser());
             entity.setStatus(SystemLogStatusConsts.INIT);
-            int affectRow = systemLogMapper.insertLog(entity);
+            int affectRow = systemLogMapper.insert(entity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);

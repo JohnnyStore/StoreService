@@ -11,12 +11,18 @@
         <result column="ErrorMessage" property="errorMessage" jdbcType="VARCHAR" />
         <result column="ErrorDetail" property="errorDetail" jdbcType="VARCHAR" />
         <result column="Status" property="status" jdbcType="CHAR" />
+        <result column="StatusText" property="statusText" jdbcType="CHAR" />
         <result column="InUser" property="inUser" jdbcType="VARCHAR" />
         <result column="InDate" property="inDate" jdbcType="TIMESTAMP" />
         <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
         <result column="LastEditDate" property="lastEditDate" jdbcType="TIMESTAMP" />
     </resultMap>
-    <select id="searchLogList" resultMap="SystemLogResultMap">
+    <select id="searchTotalCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1) AS TotalCount
+        FROM Luvpet.SystemLog;
+    </select>
+    <select id="searchList" parameterType="java.lang.Integer" resultMap="SystemLogResultMap">
         SELECT
             LogID,
             Priority,
@@ -26,15 +32,20 @@
             ErrorOption,
             ErrorMessage,
             ErrorDetail,
-            Status,
+            `Status`,
+            (CASE Status WHEN 'I' THEN 'Init'
+                        WHEN 'P' THEN 'Processing'
+                        WHEN 'C' THEN 'Close'
+            END) AS StatusText,
             InUser,
             InDate,
             LastEditUser,
             LastEditDate
         FROM Luvpet.SystemLog
-        ORDER BY ErrorTime DESC
+        ORDER BY InDate DESC
+        LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
-    <select id="searchLog" resultMap="SystemLogResultMap">
+    <select id="search" resultMap="SystemLogResultMap">
         SELECT
             LogID,
             Priority,
@@ -44,7 +55,11 @@
             ErrorOption,
             ErrorMessage,
             ErrorDetail,
-            Status,
+            `Status`,
+            (CASE Status WHEN 'I' THEN 'Init'
+             WHEN 'P' THEN 'Processing'
+             WHEN 'C' THEN 'Close'
+             END) AS StatusText,
             InUser,
             InDate,
             LastEditUser,
@@ -52,7 +67,7 @@
         FROM Luvpet.SystemLog
         WHERE LogID = #{logID,jdbcType=INTEGER}
     </select>
-    <insert id="insertLog" parameterType="com.johnny.store.entity.SystemLogEntity" >
+    <insert id="insert" parameterType="com.johnny.store.entity.SystemLogEntity" >
         INSERT INTO Luvpet.SystemLog (
             Priority,
             ErrorTime,
