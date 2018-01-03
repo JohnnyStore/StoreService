@@ -4,7 +4,7 @@ server:
 spring:
     datasource:
         name: test
-        url: jdbc:mysql://101.132.97.177:3306
+        url: jdbc:mysql://101.132.97.177:3306/Luvpet?useUnicode=true&characterEncoding=UTF-8
         username: root
         password: Lvgu@2017
         # 使用druid数据源

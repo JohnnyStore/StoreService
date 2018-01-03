@@ -9,7 +9,9 @@
         <result column="Cellphone" property="cellphone" jdbcType="VARCHAR" />
         <result column="Email" property="email" jdbcType="VARCHAR" />
         <result column="CustomerRole" property="customerRole" jdbcType="VARCHAR" />
+        <result column="CustomerRoleText" property="customerRoleText" jdbcType="VARCHAR" />
         <result column="Status" property="status" jdbcType="VARCHAR" />
+        <result column="StatusText" property="statusText" jdbcType="VARCHAR" />
         <result column="InUser" property="inUser" jdbcType="VARCHAR" />
         <result column="InDate" property="inDate" jdbcType="TIMESTAMP" />
         <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
@@ -29,12 +31,21 @@
             `Cellphone`,
             `Email`,
             `CustomerRole`,
+            (CASE CustomerRole WHEN 'S' THEN '最高权限'
+             WHEN 'C' THEN '修改权限'
+             WHEN 'Q' THEN '查询权限'
+             END) AS CustomerRoleText,
             `Status`,
+            (CASE Status WHEN 'P' THEN ''
+             WHEN 'A' THEN '审核通过'
+             WHEN 'N' THEN '审核未通过'
+             WHEN 'F' THEN '冻结'
+             END) AS StatusText,
             `InUser`,
             `InDate`,
             `LastEditUser`,
             `LastEditDate`
-        FROM Luvpet.Administrator
+        FROM Administrator
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
@@ -47,7 +58,16 @@
             `Cellphone`,
             `Email`,
             `CustomerRole`,
+            (CASE CustomerRole WHEN 'S' THEN 'Super'
+             WHEN 'C' THEN 'Change'
+             WHEN 'Q' THEN 'Query'
+             END) AS CustomerRoleText,
             `Status`,
+            (CASE Status WHEN 'P' THEN '待审核'
+             WHEN 'A' THEN '审核通过'
+             WHEN 'N' THEN '审核未通过'
+             WHEN 'F' THEN '冻结'
+             END) AS StatusText,
             `InUser`,
             `InDate`,
             `LastEditUser`,
@@ -79,7 +99,7 @@
             `Account`,
             `Cellphone`,
             `Email`,
-             `CustomerRole`,
+            `CustomerRole`,
             `Status`,
             `InUser`,
             `InDate`,

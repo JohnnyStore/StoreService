@@ -105,7 +105,6 @@ public class AdministratorServiceImpl implements AdministratorService {
             }
             List<AdministratorEntity> entityList =  administratorMapper.searchList(startIndex, pageSize);
             for (AdministratorEntity entity : entityList) {
-                transform(entity);
                 AdministratorVO model = new AdministratorVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
                 model.setAdministratorID(entity.getAdministratorID());
@@ -127,7 +126,6 @@ public class AdministratorServiceImpl implements AdministratorService {
             AdministratorVO model = null;
             AdministratorEntity entity = administratorMapper.search(id);
             if(entity != null){
-                transform(entity);
                 model = new AdministratorVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
                 model.setAdministratorID(entity.getAdministratorID());
@@ -201,7 +199,6 @@ public class AdministratorServiceImpl implements AdministratorService {
     public UnifiedResponse approve(AdministratorDTO dto) {
         try {
             AdministratorEntity entity = new AdministratorEntity();
-            transformToKey(entity);
             ConvertObjectUtils.convertJavaBean(entity, dto);
             entity.setAdministratorID(dto.getAdministratorID());
             entity.setLastEditUser(dto.getLoginUser());
@@ -225,79 +222,5 @@ public class AdministratorServiceImpl implements AdministratorService {
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
         }
-    }
-
-    public AdministratorEntity transform(AdministratorEntity administratorEntity){
-        String tranStatus = administratorEntity.getStatus();
-        switch(tranStatus){
-            case "P":
-                tranStatus = "待审核";
-                break;
-            case "A":
-                tranStatus = "审核通过";
-                break;
-            case "N":
-                tranStatus = "审核未通过";
-                break;
-            case "F":
-                tranStatus = "冻结";
-                break;
-            default:
-                break;
-        }
-        administratorEntity.setStatus(tranStatus);
-        String tranCustomerRole = administratorEntity.getCustomerRole();
-        switch(tranCustomerRole){
-            case "S":
-                tranCustomerRole = "最高权限";
-                break;
-            case "C":
-                tranCustomerRole = "修改权限";
-                break;
-            case "Q":
-                tranCustomerRole = "查询权限";
-                break;
-            default:
-                break;
-        }
-        administratorEntity.setCustomerRole(tranCustomerRole);
-        return administratorEntity;
-    }
-
-    public AdministratorEntity transformToKey(AdministratorEntity administratorEntity){
-        String tranStatus = administratorEntity.getStatus();
-        switch(tranStatus){
-            case "待审核":
-                tranStatus = "P";
-                break;
-            case "审核通过":
-                tranStatus = "A";
-                break;
-            case "审核未通过":
-                tranStatus = "N";
-                break;
-            case "冻结":
-                tranStatus = "F";
-                break;
-            default:
-                break;
-        }
-        administratorEntity.setStatus(tranStatus);
-        String tranCustomerRole = administratorEntity.getCustomerRole();
-        switch(tranCustomerRole){
-            case "最高权限":
-                tranCustomerRole = "S";
-                break;
-            case "修改权限":
-                tranCustomerRole = "C";
-                break;
-            case "查询权限":
-                tranCustomerRole = "Q";
-                break;
-            default:
-                break;
-        }
-        administratorEntity.setCustomerRole(tranCustomerRole);
-        return administratorEntity;
     }
 }

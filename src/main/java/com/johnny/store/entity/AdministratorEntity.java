@@ -11,7 +11,9 @@ public class AdministratorEntity {
 	private String cellphone;
 	private String email;
 	private String customerRole;
+	private String customerRoleText;
 	private String status;
+	private String statusText;
 	private String inUser;
 	private String inDate;
 	private String lastEditUser;
@@ -113,4 +115,19 @@ public class AdministratorEntity {
 		this.lastEditDate = lastEditDate;
 	}
 
+	public String getCustomerRoleText() {
+		return customerRoleText;
+	}
+
+	public void setCustomerRoleText(String customerRoleText) {
+		this.customerRoleText = customerRoleText;
+	}
+
+	public String getStatusText() {
+		return statusText;
+	}
+
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
+	}
 }
