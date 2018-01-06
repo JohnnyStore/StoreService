@@ -72,7 +72,7 @@
             `InDate`,
             `LastEditUser`,
             `LastEditDate`
-        FROM Luvpet.Administrator
+        FROM Administrator
         WHERE AdministratorID = #{administratorID,jdbcType=INTEGER}
     </select>
     <select id="searchByName" resultMap="BaseResultMap">
@@ -89,7 +89,7 @@
             `InDate`,
             `LastEditUser`,
             `LastEditDate`
-        FROM Luvpet.Administrator
+        FROM Administrator
         WHERE AdministratorName = #{administratorName,jdbcType=NVARCHAR}
     </select>
     <select id="search4Login" resultMap="BaseResultMap">
@@ -105,7 +105,7 @@
             `InDate`,
             `LastEditUser`,
             `LastEditDate`
-        FROM Luvpet.Administrator
+        FROM Administrator
         WHERE (Account = #{arg0,jdbcType=NVARCHAR}
                 OR Cellphone = #{arg0,jdbcType=NVARCHAR}
                 OR Email = #{arg0,jdbcType=NVARCHAR})
@@ -114,23 +114,23 @@
     <select id="searchTotalCount4Account" resultType="java.lang.Integer">
         SELECT
             COUNT(1) AS TotalCount
-        FROM Luvpet.Administrator
+        FROM Administrator
         WHERE Account = #{account,jdbcType=NVARCHAR}
     </select>
     <select id="searchTotalCount4Cellphone" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.Administrator
+        FROM Administrator
         WHERE Cellphone = #{cellphone,jdbcType=NVARCHAR}
     </select>
     <select id="searchTotalCount4Email" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.Administrator
+        FROM Administrator
         WHERE Email = #{email,jdbcType=NVARCHAR}
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.AdministratorEntity" >
-        INSERT INTO Luvpet.Administrator (
+        INSERT INTO Administrator (
             `AdministratorName`,
             `Account`,
             `Password`,
@@ -154,7 +154,7 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.AdministratorEntity" >
-        UPDATE Luvpet.Administrator SET
+        UPDATE Administrator SET
             AdministratorName = #{administratorName,jdbcType=NVARCHAR},
             Account = #{account,jdbcType=VARCHAR},
             Password = #{password,jdbcType=VARCHAR},
@@ -164,14 +164,14 @@
         WHERE AdministratorID = #{administratorID,jdbcType=INTEGER}
     </update>
     <update id="approve" parameterType="com.johnny.store.entity.AdministratorEntity" >
-        UPDATE Luvpet.Administrator SET
+        UPDATE Administrator SET
             Status = #{status,jdbcType=VARCHAR},
             CustomerRole = #{customerRole,jdbcType=VARCHAR},
             LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE AdministratorID = #{administratorID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM Luvpet.Administrator
+        DELETE FROM Administrator
         WHERE AdministratorID = #{administratorID,jdbcType=INTEGER}
     </delete>
 </mapper>

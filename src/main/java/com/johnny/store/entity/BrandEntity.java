@@ -4,6 +4,7 @@ public class BrandEntity {
     private int brandID;
     private String brandCN;
     private String brandEN;
+    private String imageSrc;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -63,5 +64,13 @@ public class BrandEntity {
 
     public void setLastEditDate(String lastEditDate) {
         this.lastEditDate = lastEditDate;
+    }
+
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
     }
 }

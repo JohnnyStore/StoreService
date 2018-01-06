@@ -20,7 +20,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.SystemLog;
+        FROM SystemLog;
     </select>
     <select id="searchList" parameterType="java.lang.Integer" resultMap="SystemLogResultMap">
         SELECT
@@ -41,7 +41,7 @@
             InDate,
             LastEditUser,
             LastEditDate
-        FROM Luvpet.SystemLog
+        FROM SystemLog
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
@@ -64,11 +64,11 @@
             InDate,
             LastEditUser,
             LastEditDate
-        FROM Luvpet.SystemLog
+        FROM SystemLog
         WHERE LogID = #{logID,jdbcType=INTEGER}
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.SystemLogEntity" >
-        INSERT INTO Luvpet.SystemLog (
+        INSERT INTO SystemLog (
             Priority,
             ErrorTime,
             ErrorCode,
@@ -90,7 +90,7 @@
         )
     </insert>
     <update id="updateStatus" parameterType="com.johnny.store.entity.SystemLogEntity" >
-        UPDATE Luvpet.SystemLog SET
+        UPDATE SystemLog SET
             Status = #{status,jdbcType=CHAR},
             LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE LogID = #{logID,jdbcType=INTEGER}

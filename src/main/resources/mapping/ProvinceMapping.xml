@@ -26,8 +26,8 @@
         A.InDate,
         A.LastEditUser,
         A.LastEditDate
-        FROM Luvpet.Province A
-        INNER JOIN Luvpet.Country B
+        FROM Province A
+        INNER JOIN Country B
         ON A.CountryID = B.CountryID
         ORDER BY A.InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
@@ -35,7 +35,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.Province;
+        FROM Province;
     </select>
     <select id="searchByName" resultMap="BaseResultMapOfProvince">
         SELECT
@@ -47,7 +47,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.Province
+        FROM Province
         WHERE (ProvinceNameCN = #{provinceName,jdbcType=NVARCHAR} OR ProvinceNameEN = #{provinceName,jdbcType=VARCHAR})
     </select>
 
@@ -61,12 +61,12 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.Province
+        FROM Province
         WHERE CountryID = #{countryID,jdbcType=INTEGER}
     </select>
 
     <insert id="insert" parameterType="com.johnny.store.entity.ProvinceEntity" >
-        INSERT INTO Luvpet.Province (
+        INSERT INTO Province (
         CountryID,
         ProvinceNameCN,
         ProvinceNameEN,
@@ -82,7 +82,7 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.ProvinceEntity" >
-        UPDATE Luvpet.Province SET
+        UPDATE Province SET
         CountryID = #{countryID, jdbcType=INTEGER},
         ProvinceNameCN = #{provinceNameCN, jdbcType=NVARCHAR},
         ProvinceNameEN = #{provinceNameEN, jdbcType=VARCHAR},
@@ -90,7 +90,7 @@
         WHERE ProvinceID = #{provinceID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM Luvpet.Province
+        DELETE FROM Province
         WHERE ProvinceID = #{provinceID,jdbcType=INTEGER}
     </delete>
 </mapper>

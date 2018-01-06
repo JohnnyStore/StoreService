@@ -13,7 +13,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.SubCategory;
+        FROM SubCategory;
     </select>
     <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
@@ -24,7 +24,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.SubCategory
+        FROM SubCategory
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
@@ -37,7 +37,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.SubCategory
+        FROM SubCategory
         WHERE SubCategoryID = #{subCategoryID,jdbcType=INTEGER}
     </select>
     <select id="searchByName" resultMap="BaseResultMap">
@@ -49,11 +49,11 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.SubCategory
+        FROM SubCategory
         WHERE (SubCategoryCN = #{subCategoryName,jdbcType=NVARCHAR} OR SubCategoryEN = #{subCategoryName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.SubCategoryEntity" >
-        INSERT INTO Luvpet.SubCategory (
+        INSERT INTO SubCategory (
         SubCategoryCN,
         SubCategoryEN,
         InUser,
@@ -67,14 +67,14 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.SubCategoryEntity" >
-        UPDATE Luvpet.SubCategory SET
+        UPDATE SubCategory SET
         SubCategoryCN = #{subCategoryCN,jdbcType=NVARCHAR},
         SubCategoryEN = #{subCategoryEN,jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE SubCategoryID = #{subCategoryID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM Luvpet.SubCategory
+        DELETE FROM SubCategory
         WHERE SubCategoryID = #{subCategoryID,jdbcType=INTEGER}
     </delete>
 </mapper>

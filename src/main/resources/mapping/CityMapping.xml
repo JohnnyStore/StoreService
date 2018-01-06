@@ -31,10 +31,10 @@
 		A.InDate,
 		A.LastEditUser,
 		A.LastEditDate
-		FROM Luvpet.City A
-		INNER JOIN Luvpet.Province B
+		FROM City A
+		INNER JOIN Province B
 		ON A.ProvinceID = B.ProvinceID
-		INNER JOIN Luvpet.Country C
+		INNER JOIN Country C
 		ON B.CountryID = C.CountryID
 		ORDER BY A.InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
@@ -42,7 +42,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.City;
+        FROM City;
     </select>
     <select id="search" resultMap="BaseResultMapOfCity">
         SELECT
@@ -55,7 +55,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.City
+        FROM City
         WHERE CityID = #{cityID,jdbcType=INTEGER}
     </select>
     <select id="searchByName" resultMap="BaseResultMapOfCity">
@@ -69,11 +69,11 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.City
+        FROM City
         WHERE (CityNameCN = #{cityName,jdbcType=NVARCHAR} OR CityNameEN = #{cityName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.CityEntity" >
-        INSERT INTO Luvpet.City (
+        INSERT INTO City (
         ProvinceID,
         CountryID,
         CityNameCN,
@@ -91,7 +91,7 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.CityEntity" >
-        UPDATE Luvpet.City SET
+        UPDATE City SET
         ProvinceID = #{provinceID, jdbcType=INTEGER},
         CountryID = #{countryID, jdbcType=INTEGER},
         CityNameCN = #{cityNameCN, jdbcType=NVARCHAR},
@@ -100,7 +100,7 @@
         WHERE CityID = #{cityID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM Luvpet.City
+        DELETE FROM City
         WHERE CityID = #{cityID,jdbcType=INTEGER}
     </delete>
 </mapper>

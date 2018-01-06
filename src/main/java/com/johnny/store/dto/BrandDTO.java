@@ -4,6 +4,7 @@ public class BrandDTO {
     private int brandID;
     private String brandCN;
     private String brandEN;
+    private String brandImageUrl;
     private String loginUser;
 
     public int getBrandID() {
@@ -36,5 +37,13 @@ public class BrandDTO {
 
     public void setLoginUser(String loginUser) {
         this.loginUser = loginUser;
+    }
+
+    public String getBrandImageUrl() {
+        return brandImageUrl;
+    }
+
+    public void setBrandImageUrl(String brandImageUrl) {
+        this.brandImageUrl = brandImageUrl;
     }
 }

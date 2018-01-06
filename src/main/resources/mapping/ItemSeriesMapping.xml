@@ -13,7 +13,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.ItemSeries;
+        FROM ItemSeries;
     </select>
     <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
@@ -24,7 +24,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.ItemSeries
+        FROM ItemSeries
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
@@ -37,7 +37,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.ItemSeries
+        FROM ItemSeries
         WHERE SeriesID = #{seriesID,jdbcType=INTEGER}
     </select>
     <select id="searchByName" resultMap="BaseResultMap">
@@ -49,11 +49,11 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.ItemSeries
+        FROM ItemSeries
         WHERE (ItemSeriesCN = #{itemSeriesName,jdbcType=NVARCHAR} OR ItemSeriesEN = #{itemSeriesName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.ItemSeriesEntity" >
-        INSERT INTO Luvpet.ItemSeries (
+        INSERT INTO ItemSeries (
         ItemSeriesCN,
         ItemSeriesEN,
         InUser,
@@ -67,14 +67,14 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.ItemSeriesEntity" >
-        UPDATE Luvpet.ItemSeries SET
+        UPDATE ItemSeries SET
         ItemSeriesCN = #{itemSeriesCN,jdbcType=NVARCHAR},
         ItemSeriesEN = #{itemSeriesEN,jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE SeriesID = #{seriesID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM Luvpet.ItemSeries
+        DELETE FROM ItemSeries
         WHERE SeriesID = #{seriesID,jdbcType=INTEGER}
     </delete>
 </mapper>

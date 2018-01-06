@@ -13,7 +13,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.Country;
+        FROM Country;
     </select>
     <select id="searchList" resultMap="BaseResultMapOfCountry">
         SELECT
@@ -24,7 +24,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.Country
+        FROM Country
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
@@ -37,7 +37,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.Country
+        FROM Country
         ORDER BY InDate DESC;
     </select>
     <select id="search" resultMap="BaseResultMapOfCountry">
@@ -49,7 +49,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.Country
+        FROM Country
         WHERE CountryID = #{countryID,jdbcType=INTEGER}
     </select>
     <select id="searchByName" resultMap="BaseResultMapOfCountry">
@@ -61,11 +61,11 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.Country
+        FROM Country
         WHERE (CountryNameCN = #{countryName,jdbcType=NVARCHAR} OR CountryNameEN = #{countryName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.CountryEntity" >
-        INSERT INTO Luvpet.Country (
+        INSERT INTO Country (
         CountryNameCN,
         CountryNameEN,
         InUser,
@@ -79,14 +79,14 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.CountryEntity" >
-        UPDATE Luvpet.Country SET
+        UPDATE Country SET
         CountryNameCN = #{countryNameCN,jdbcType=NVARCHAR},
         CountryNameEN = #{countryNameEN,jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE CountryID = #{countryID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM Luvpet.Country
+        DELETE FROM Country
         WHERE CountryID = #{countryID,jdbcType=INTEGER}
     </delete>
 </mapper>

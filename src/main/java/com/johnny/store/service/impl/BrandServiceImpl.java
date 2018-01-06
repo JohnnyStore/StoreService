@@ -3,11 +3,15 @@ package com.johnny.store.service.impl;
 import com.johnny.store.common.ConvertObjectUtils;
 import com.johnny.store.common.LogUtils;
 import com.johnny.store.common.StoreException;
+import com.johnny.store.constant.ImageObjectType;
+import com.johnny.store.constant.ImageType;
 import com.johnny.store.constant.ResponseCodeConsts;
 import com.johnny.store.dto.BrandDTO;
 import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.entity.BrandEntity;
+import com.johnny.store.entity.ImageEntity;
 import com.johnny.store.manager.UnifiedResponseManager;
+import com.johnny.store.mapper.ImageMapper;
 import com.johnny.store.service.BrandService;
 import com.johnny.store.vo.BrandVO;
 import com.johnny.store.mapper.BrandMapper;
@@ -20,6 +24,9 @@ import java.util.List;
 public class BrandServiceImpl implements BrandService {
     @Autowired
     private BrandMapper brandMapper;
+
+    @Autowired
+    private ImageMapper imageMapper;
 
     @Override
     public UnifiedResponse findList(int pageNumber, int pageSize) {
@@ -87,10 +94,19 @@ public class BrandServiceImpl implements BrandService {
         try {
             BrandDTO brandDTO = (BrandDTO)dto;
             BrandEntity brandEntity = new BrandEntity();
+            ImageEntity imageEntity = new ImageEntity();
             ConvertObjectUtils.convertJavaBean(brandEntity, brandDTO);
             brandEntity.setInUser(brandDTO.getLoginUser());
             brandEntity.setLastEditUser(brandDTO.getLoginUser());
             int affectRow = brandMapper.insert(brandEntity);
+
+            imageEntity.setImageSrc(brandDTO.getBrandImageUrl());
+            imageEntity.setObjectID(brandEntity.getBrandID());
+            imageEntity.setObjectType(ImageObjectType.BRAND);
+            imageEntity.setImageType(ImageType.NORMAL);
+            imageEntity.setInUser(brandDTO.getLoginUser());
+            imageEntity.setLastEditUser(brandDTO.getLoginUser());
+            imageMapper.insert(imageEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);

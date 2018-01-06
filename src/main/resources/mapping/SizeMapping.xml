@@ -13,7 +13,7 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM Luvpet.SizeMapping;
+        FROM SizeMapping;
     </select>
     <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
@@ -24,7 +24,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.SizeMapping
+        FROM SizeMapping
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
@@ -37,7 +37,7 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.SizeMapping
+        FROM SizeMapping
         WHERE SizeID = #{sizeID,jdbcType=INTEGER}
     </select>
     <select id="searchByName" resultMap="BaseResultMap">
@@ -49,11 +49,11 @@
         InDate,
         LastEditUser,
         LastEditDate
-        FROM Luvpet.SizeMapping
+        FROM SizeMapping
         WHERE (SizeCN = #{sizeName,jdbcType=NVARCHAR} OR SizeEN = #{sizeName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.SizeEntity" >
-        INSERT INTO Luvpet.SizeMapping (
+        INSERT INTO SizeMapping (
         SizeCN,
         SizeEN,
         InUser,
@@ -67,14 +67,14 @@
         )
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.SizeEntity" >
-        UPDATE Luvpet.SizeMapping SET
+        UPDATE SizeMapping SET
         SizeCN = #{sizeCN,jdbcType=NVARCHAR},
         SizeEN = #{sizeEN,jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE SizeID = #{sizeID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM Luvpet.SizeMapping
+        DELETE FROM SizeMapping
         WHERE SizeID = #{sizeID,jdbcType=INTEGER}
     </delete>
 </mapper>
