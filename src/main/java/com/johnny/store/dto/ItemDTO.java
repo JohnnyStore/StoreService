@@ -1,36 +1,25 @@
-package com.johnny.store.vo;
+package com.johnny.store.dto;
 
-public class ItemVO {
+import java.util.List;
+import java.util.Map;
+
+public class ItemDTO {
     private int itemID;
     private int brandID;
-    private String brandCN;
-    private String brandEN;
     private int categoryID;
-    private String categoryCN;
-    private String categoryEN;
     private int subCategoryID;
-    private String subCategoryCN;
-    private String subCategoryEN;
     private int seriesID;
-    private String itemSeriesCN;
-    private String itemSeriesEN;
     private String itemNameCN;
     private String itemNameEN;
     private double unitPrice;
     private double promotionPrice;
     private float rate;
     private int colorID;
-    private String colorCN;
-    private String colorEN;
     private int sizeID;
-    private String sizeCN;
-    private String sizeEN;
     private int materialID;
     private String materialCN;
     private String materialEN;
     private int madeInID;
-    private String madeInCN;
-    private String madeInEN;
     private String adjustLengthCN;
     private String adjustLengthEN;
     private String suitablePetCN;
@@ -40,11 +29,11 @@ public class ItemVO {
     private String itemDescriptionCN;
     private String itemDescriptionEN;
     private String itemStatus;
-    private String itemStatusText;
-    private String inUser;
-    private String inDate;
-    private String lastEditUser;
-    private String lastEditDate;
+    private List<String> itemOriginalImageList;
+    private List<String> itemNormalImageList;
+    private List<String> itemThumbnailImageList;
+    private Map<Integer, String> itemDetailImageMap;
+    private String loginUser;
 
     public int getItemID() {
         return this.itemID;
@@ -222,134 +211,6 @@ public class ItemVO {
         this.itemStatus = itemStatus;
     }
 
-    public String getInUser() {
-        return this.inUser;
-    }
-
-    public void setInUser(String inUser) {
-        this.inUser = inUser;
-    }
-
-    public String getInDate() {
-        return this.inDate;
-    }
-
-    public void setInDate(String inDate) {
-        this.inDate = inDate;
-    }
-
-    public String getLastEditUser() {
-        return this.lastEditUser;
-    }
-
-    public void setLastEditUser(String lastEditUser) {
-        this.lastEditUser = lastEditUser;
-    }
-
-    public String getLastEditDate() {
-        return this.lastEditDate;
-    }
-
-    public void setLastEditDate(String lastEditDate) {
-        this.lastEditDate = lastEditDate;
-    }
-
-    public String getBrandCN() {
-        return brandCN;
-    }
-
-    public void setBrandCN(String brandCN) {
-        this.brandCN = brandCN;
-    }
-
-    public String getBrandEN() {
-        return brandEN;
-    }
-
-    public void setBrandEN(String brandEN) {
-        this.brandEN = brandEN;
-    }
-
-    public String getCategoryCN() {
-        return categoryCN;
-    }
-
-    public void setCategoryCN(String categoryCN) {
-        this.categoryCN = categoryCN;
-    }
-
-    public String getCategoryEN() {
-        return categoryEN;
-    }
-
-    public void setCategoryEN(String categoryEN) {
-        this.categoryEN = categoryEN;
-    }
-
-    public String getSubCategoryCN() {
-        return subCategoryCN;
-    }
-
-    public void setSubCategoryCN(String subCategoryCN) {
-        this.subCategoryCN = subCategoryCN;
-    }
-
-    public String getSubCategoryEN() {
-        return subCategoryEN;
-    }
-
-    public void setSubCategoryEN(String subCategoryEN) {
-        this.subCategoryEN = subCategoryEN;
-    }
-
-    public String getItemSeriesCN() {
-        return itemSeriesCN;
-    }
-
-    public void setItemSeriesCN(String itemSeriesCN) {
-        this.itemSeriesCN = itemSeriesCN;
-    }
-
-    public String getItemSeriesEN() {
-        return itemSeriesEN;
-    }
-
-    public void setItemSeriesEN(String itemSeriesEN) {
-        this.itemSeriesEN = itemSeriesEN;
-    }
-
-    public String getColorCN() {
-        return colorCN;
-    }
-
-    public void setColorCN(String colorCN) {
-        this.colorCN = colorCN;
-    }
-
-    public String getColorEN() {
-        return colorEN;
-    }
-
-    public void setColorEN(String colorEN) {
-        this.colorEN = colorEN;
-    }
-
-    public String getSizeCN() {
-        return sizeCN;
-    }
-
-    public void setSizeCN(String sizeCN) {
-        this.sizeCN = sizeCN;
-    }
-
-    public String getSizeEN() {
-        return sizeEN;
-    }
-
-    public void setSizeEN(String sizeEN) {
-        this.sizeEN = sizeEN;
-    }
-
     public String getMaterialCN() {
         return materialCN;
     }
@@ -374,27 +235,43 @@ public class ItemVO {
         this.madeInID = madeInID;
     }
 
-    public String getMadeInCN() {
-        return madeInCN;
+    public String getLoginUser() {
+        return loginUser;
     }
 
-    public void setMadeInCN(String madeInCN) {
-        this.madeInCN = madeInCN;
+    public void setLoginUser(String loginUser) {
+        this.loginUser = loginUser;
     }
 
-    public String getMadeInEN() {
-        return madeInEN;
+    public List<String> getItemOriginalImageList() {
+        return itemOriginalImageList;
     }
 
-    public void setMadeInEN(String madeInEN) {
-        this.madeInEN = madeInEN;
+    public void setItemOriginalImageList(List<String> itemOriginalImageList) {
+        this.itemOriginalImageList = itemOriginalImageList;
     }
 
-    public String getItemStatusText() {
-        return itemStatusText;
+    public List<String> getItemNormalImageList() {
+        return itemNormalImageList;
     }
 
-    public void setItemStatusText(String itemStatusText) {
-        this.itemStatusText = itemStatusText;
+    public void setItemNormalImageList(List<String> itemNormalImageList) {
+        this.itemNormalImageList = itemNormalImageList;
+    }
+
+    public List<String> getItemThumbnailImageList() {
+        return itemThumbnailImageList;
+    }
+
+    public void setItemThumbnailImageList(List<String> itemThumbnailImageList) {
+        this.itemThumbnailImageList = itemThumbnailImageList;
+    }
+
+    public Map<Integer, String> getItemDetailImageMap() {
+        return itemDetailImageMap;
+    }
+
+    public void setItemDetailImageMap(Map<Integer, String> itemDetailImageMap) {
+        this.itemDetailImageMap = itemDetailImageMap;
     }
 }

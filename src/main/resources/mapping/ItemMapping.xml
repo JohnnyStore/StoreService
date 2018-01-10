@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.johnny.store.mapper.ItemMapper" >
+  <resultMap id="BaseResultMap" type="com.johnny.store.entity.ItemEntity" >
+    <id column="ItemID" property="itemID" jdbcType="INTEGER" />
+    <result column="BrandID" property="brandID" jdbcType="INTEGER" />
+    <result column="BrandCN" property="brandCN" jdbcType="NVARCHAR" />
+    <result column="BrandEN" property="brandEN" jdbcType="VARCHAR" />
+    <result column="CategoryID" property="categoryID" jdbcType="INTEGER" />
+    <result column="CategoryCN" property="categoryCN" jdbcType="NVARCHAR" />
+    <result column="CategoryEN" property="categoryEN" jdbcType="VARCHAR" />
+    <result column="SubCategoryID" property="subCategoryID" jdbcType="INTEGER" />
+    <result column="SubCategoryCN" property="subCategoryCN" jdbcType="NVARCHAR" />
+    <result column="SubCategoryEN" property="subCategoryEN" jdbcType="VARCHAR" />
+    <result column="SeriesID" property="seriesID" jdbcType="INTEGER" />
+    <result column="ItemSeriesCN" property="itemSeriesCN" jdbcType="NVARCHAR" />
+    <result column="ItemSeriesEN" property="itemSeriesEN" jdbcType="VARCHAR" />
+    <result column="ItemNameCN" property="itemNameCN" jdbcType="VARCHAR" />
+    <result column="ItemNameEN" property="itemNameEN" jdbcType="VARCHAR" />
+    <result column="UnitPrice" property="unitPrice" jdbcType="DECIMAL" />
+    <result column="PromotionPrice" property="promotionPrice" jdbcType="DECIMAL" />
+    <result column="Rate" property="rate" jdbcType="FLOAT" />
+    <result column="ColorID" property="colorID" jdbcType="INTEGER" />
+    <result column="ColorCN" property="colorCN" jdbcType="NVARCHAR" />
+    <result column="ColorEN" property="colorEN" jdbcType="VARCHAR" />
+    <result column="SizeID" property="sizeID" jdbcType="INTEGER" />
+    <result column="SizeCN" property="sizeCN" jdbcType="NVARCHAR" />
+    <result column="SizeEN" property="sizeEN" jdbcType="VARCHAR" />
+    <result column="MaterialID" property="materialID" jdbcType="INTEGER" />
+    <result column="MaterialCN" property="materialCN" jdbcType="NVARCHAR" />
+    <result column="MaterialEN" property="materialEN" jdbcType="VARCHAR" />
+    <result column="MadeInID" property="madeInID" jdbcType="INTEGER" />
+    <result column="MadeInCN" property="madeInCN" jdbcType="NVARCHAR" />
+    <result column="MadeInEN" property="madeInEN" jdbcType="VARCHAR" />
+    <result column="AdjustLengthCN" property="adjustLengthCN" jdbcType="VARCHAR" />
+    <result column="AdjustLengthEN" property="adjustLengthEN" jdbcType="VARCHAR" />
+    <result column="SuitablePetCN" property="suitablePetCN" jdbcType="VARCHAR" />
+    <result column="SuitablePetEN" property="suitablePetEN" jdbcType="VARCHAR" />
+    <result column="ItemShortDescriptionCN" property="itemShortDescriptionCN" jdbcType="VARCHAR" />
+    <result column="ItemShortDescriptionEN" property="itemShortDescriptionEN" jdbcType="VARCHAR" />
+    <result column="ItemDescriptionCN" property="itemDescriptionCN" jdbcType="VARCHAR" />
+    <result column="ItemDescriptionEN" property="itemDescriptionEN" jdbcType="VARCHAR" />
+    <result column="ItemStatus" property="itemStatus" jdbcType="VARCHAR" />
+    <result column="ItemStatusText" property="itemStatusText" jdbcType="VARCHAR" />
+    <result column="InUser" property="inUser" jdbcType="VARCHAR" />
+    <result column="InDate" property="inDate" jdbcType="TIMESTAMP" />
+    <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
+    <result column="LastEditDate" property="lastEditDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="searchTotalCount" resultType="java.lang.Integer">
+    SELECT
+    COUNT(1) AS TotalCount
+    FROM Item;
+  </select>
+  <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+      A.ItemID,
+      A.BrandID,
+      B.BrandCN,
+      B.BrandEN,
+      A.CategoryID,
+      C.CategoryCN,
+      C.CategoryEN,
+      A.SubCategoryID,
+      D.SubCategoryCN,
+      D.SubCategoryEN,
+      A.SeriesID,
+      E.ItemSeriesCN,
+      E.ItemSeriesEN,
+      A.ItemNameCN,
+      A.ItemNameEN,
+      A.UntiPrice,
+      A.PromotionPrice,
+      A.Rate,
+      A.ColorID,
+      F.ColorCN,
+      F.ColorEN,
+      A.SizeID,
+      G.SizeCN,
+      G.SizeEN,
+      A.MaterialID,
+      H.MaterialCN,
+      H.MaterialEN,
+      A.MadeInID,
+      I.MadeInCN,
+      I.MadeInEN,
+      A.AdjustLengthCN,
+      A.AdjustLengthEN,
+      A.SuitablePetCN,
+      A.SuitablePetEN,
+      A.ItemShortDescriptionCN,
+      A.ItemShortDescriptionEN,
+      A.ItemDescriptionCN,
+      A.ItemDescriptionEN,
+      A.ItemStatus,
+      (CASE A.ItemStatus WHEN 'P' THEN '待上架'
+       WHEN 'N' THEN '已上架'
+       WHEN 'E' THEN '已下架'
+       END) AS ItemStatusText,
+      A.InUser,
+      A.InDate,
+      A.LastEditUser,
+      A.LastEditDate
+    FROM Item A
+      LEFT JOIN Brand B
+        ON A.BrandID = B.BrandID
+      LEFT JOIN Category C
+        ON A.CategoryID = C.CategoryID
+      LEFT JOIN SubCategory D
+        ON A.SubCategoryID = D.SubCategoryID
+      LEFT JOIN ItemSeries E
+        ON A.SeriesID = E.SeriesID
+      LEFT JOIN Color F
+        ON A.ColorID = F.ColorID
+      LEFT JOIN SizeMapping G
+        ON A.SizeID = G.SizeID
+      LEFT JOIN MaterialMapping H
+        ON A.MaterialID = H.MaterialID
+      LEFT JOIN MadeInMapping I
+        ON A.MadeInID = I.MadeInID
+    ORDER BY InDate DESC
+    LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
+  </select>
+  <select id="search" resultMap="BaseResultMap">
+    SELECT
+      A.ItemID,
+      A.BrandID,
+      B.BrandCN,
+      B.BrandEN,
+      A.CategoryID,
+      C.CategoryCN,
+      C.CategoryEN,
+      A.SubCategoryID,
+      D.SubCategoryCN,
+      D.SubCategoryEN,
+      A.SeriesID,
+      E.ItemSeriesCN,
+      E.ItemSeriesEN,
+      A.ItemNameCN,
+      A.ItemNameEN,
+      A.UntiPrice,
+      A.PromotionPrice,
+      A.Rate,
+      A.ColorID,
+      F.ColorCN,
+      F.ColorEN,
+      A.SizeID,
+      G.SizeCN,
+      G.SizeEN,
+      A.MaterialID,
+      H.MaterialCN,
+      H.MaterialEN,
+      A.MadeInID,
+      I.MadeInCN,
+      I.MadeInEN,
+      A.AdjustLengthCN,
+      A.AdjustLengthEN,
+      A.SuitablePetCN,
+      A.SuitablePetEN,
+      A.ItemShortDescriptionCN,
+      A.ItemShortDescriptionEN,
+      A.ItemDescriptionCN,
+      A.ItemDescriptionEN,
+      A.ItemStatus,
+      A.InUser,
+      A.InDate,
+      A.LastEditUser,
+      A.LastEditDate
+    FROM Item A
+      LEFT JOIN Brand B
+        ON A.BrandID = B.BrandID
+      LEFT JOIN Category C
+        ON A.CategoryID = C.CategoryID
+      LEFT JOIN SubCategory D
+        ON A.SubCategoryID = D.SubCategoryID
+      LEFT JOIN ItemSeries E
+        ON A.SeriesID = E.SeriesID
+      LEFT JOIN Color F
+        ON A.ColorID = F.ColorID
+      LEFT JOIN SizeMapping G
+        ON A.SizeID = G.SizeID
+      LEFT JOIN MaterialMapping H
+        ON A.MaterialID = H.MaterialID
+      LEFT JOIN MadeInMapping I
+        ON A.MadeInID = I.MadeInID
+    WHERE ItemID = #{itemID,jdbcType=INTEGER}
+    ORDER BY InDate DESC
+  </select>
+  <select id="searchByName" resultMap="BaseResultMap">
+    SELECT
+      A.ItemID,
+      A.BrandID,
+      B.BrandCN,
+      B.BrandEN,
+      A.CategoryID,
+      C.CategoryCN,
+      C.CategoryEN,
+      A.SubCategoryID,
+      D.SubCategoryCN,
+      D.SubCategoryEN,
+      A.SeriesID,
+      E.ItemSeriesCN,
+      E.ItemSeriesEN,
+      A.ItemNameCN,
+      A.ItemNameEN,
+      A.UntiPrice,
+      A.PromotionPrice,
+      A.Rate,
+      A.ColorID,
+      F.ColorCN,
+      F.ColorEN,
+      A.SizeID,
+      G.SizeCN,
+      G.SizeEN,
+      A.MaterialID,
+      H.MaterialCN,
+      H.MaterialEN,
+      A.MadeInID,
+      I.MadeInCN,
+      I.MadeInEN,
+      A.AdjustLengthCN,
+      A.AdjustLengthEN,
+      A.SuitablePetCN,
+      A.SuitablePetEN,
+      A.ItemShortDescriptionCN,
+      A.ItemShortDescriptionEN,
+      A.ItemDescriptionCN,
+      A.ItemDescriptionEN,
+      A.ItemStatus,
+      A.InUser,
+      A.InDate,
+      A.LastEditUser,
+      A.LastEditDate
+    FROM Item A
+      LEFT JOIN Brand B
+        ON A.BrandID = B.BrandID
+      LEFT JOIN Category C
+        ON A.CategoryID = C.CategoryID
+      LEFT JOIN SubCategory D
+        ON A.SubCategoryID = D.SubCategoryID
+      LEFT JOIN ItemSeries E
+        ON A.SeriesID = E.SeriesID
+      LEFT JOIN Color F
+        ON A.ColorID = F.ColorID
+      LEFT JOIN SizeMapping G
+        ON A.SizeID = G.SizeID
+      LEFT JOIN MaterialMapping H
+        ON A.MaterialID = H.MaterialID
+      LEFT JOIN MadeInMapping I
+        ON A.MadeInID = I.MadeInID
+    WHERE (A.ItemNameCN = #{itemName,jdbcType=NVARCHAR} OR A.ItemNameEN = #{itemName,jdbcType=VARCHAR})
+  </select>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="itemID" parameterType="com.johnny.store.entity.BrandEntity" >
+    INSERT INTO Brand (
+      BrandID,
+      CategoryID,
+      SubCategoryID,
+      SeriesID,
+      ItemNameCN,
+      ItemNameEN,
+      UntiPrice,
+      PromotionPrice,
+      Rate,
+      ColorID,
+      SizeID,
+      MaterialID,
+      MadeInID,
+      AdjustLengthCN,
+      AdjustLengthEN,
+      SuitablePetCN,
+      SuitablePetEN,
+      ItemShortDescriptionCN,
+      ItemShortDescriptionEN,
+      ItemDescriptionCN,
+      ItemDescriptionEN,
+      ItemStatus,
+      InUser,
+      LastEditUser
+    )
+    VALUES (
+    #{brandID, jdbcType=INTEGER},
+    #{CategoryID, jdbcType=INTEGER},
+    #{SubCategoryID, jdbcType=INTEGER},
+    #{SeriesID, jdbcType=INTEGER},
+    #{ItemNameCN, jdbcType=VARCHAR},
+    #{ItemNameEN, jdbcType=VARCHAR},
+    #{UntiPrice, jdbcType=DECIMAL},
+    #{PromotionPrice, jdbcType=DECIMAL},
+    #{Rate, jdbcType=FLOAT},
+    #{ColorID, jdbcType=INTEGER},
+    #{SizeID, jdbcType=INTEGER},
+    #{MaterialID, jdbcType=INTEGER},
+    #{MadeInID, jdbcType=INTEGER},
+    #{AdjustLengthCN, jdbcType=VARCHAR},
+    #{AdjustLengthEN, jdbcType=VARCHAR},
+    #{SuitablePetCN, jdbcType=VARCHAR},
+    #{SuitablePetEN, jdbcType=VARCHAR},
+    #{ItemShortDescriptionCN, jdbcType=VARCHAR},
+    #{ItemShortDescriptionEN, jdbcType=VARCHAR},
+    #{ItemDescriptionCN, jdbcType=VARCHAR},
+    #{ItemDescriptionEN, jdbcType=VARCHAR},
+    #{ItemStatus, jdbcType=VARCHAR},
+    #{inUser, jdbcType=VARCHAR},
+    #{lastEditUser, jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="update" parameterType="com.johnny.store.entity.BrandEntity" >
+    UPDATE Item SET
+      BrandID = #{brandID, jdbcType=INTEGER},
+      CategoryID = #{CategoryID, jdbcType=INTEGER},
+      SubCategoryID = #{SubCategoryID, jdbcType=INTEGER},
+      SeriesID = #{SeriesID, jdbcType=INTEGER},
+      ItemNameCN = #{ItemNameCN, jdbcType=VARCHAR},
+      ItemNameEN = #{ItemNameEN, jdbcType=VARCHAR},
+      UntiPrice = #{UntiPrice, jdbcType=DECIMAL},
+      PromotionPrice = #{PromotionPrice, jdbcType=DECIMAL},
+      Rate = #{Rate, jdbcType=FLOAT},
+      ColorID = #{ColorID, jdbcType=INTEGER},
+      SizeID = #{SizeID, jdbcType=INTEGER},
+      MaterialID = #{MaterialID, jdbcType=INTEGER},
+      MadeInID = #{MadeInID, jdbcType=INTEGER},
+      AdjustLengthCN = #{AdjustLengthCN, jdbcType=VARCHAR},
+      AdjustLengthEN = #{AdjustLengthEN, jdbcType=VARCHAR},
+      SuitablePetCN = #{SuitablePetCN, jdbcType=VARCHAR},
+      SuitablePetEN = #{SuitablePetEN, jdbcType=VARCHAR},
+      ItemShortDescriptionCN = #{ItemShortDescriptionCN, jdbcType=VARCHAR},
+      ItemShortDescriptionEN = #{ItemShortDescriptionEN, jdbcType=VARCHAR},
+      ItemDescriptionCN = #{ItemDescriptionCN, jdbcType=VARCHAR},
+      ItemDescriptionEN = #{ItemDescriptionEN, jdbcType=VARCHAR},
+      ItemStatus = #{ItemStatus, jdbcType=VARCHAR},
+      LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+    WHERE ItemID = #{itemID,jdbcType=INTEGER}
+  </update>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    DELETE FROM Item
+    WHERE ItemID = #{itemID,jdbcType=INTEGER}
+  </delete>
+</mapper>
