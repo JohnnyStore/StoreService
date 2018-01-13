@@ -51,7 +51,7 @@ public class ItemServiceImpl implements ItemService {
                 model.setColorID(entity.getColorID());
                 model.setSizeID(entity.getSizeID());
                 model.setMaterialID(entity.getMaterialID());
-                model.setMadeInID(entity.getMadeInID());
+                //model.setMadeInID(entity.getMadeInID());
                 modelList.add(model);
             }
             return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
@@ -83,7 +83,7 @@ public class ItemServiceImpl implements ItemService {
                 model.setColorID(entity.getColorID());
                 model.setSizeID(entity.getSizeID());
                 model.setMaterialID(entity.getMaterialID());
-                model.setMadeInID(entity.getMadeInID());
+                //model.setMadeInID(entity.getMadeInID());
             }
             return UnifiedResponseManager.buildSuccessResponse(model);
         } catch (StoreException ex){
@@ -129,7 +129,7 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setColorID(itemDTO.getColorID());
             itemEntity.setSizeID(itemDTO.getSizeID());
             itemEntity.setMaterialID(itemDTO.getMaterialID());
-            itemEntity.setMadeInID(itemDTO.getMadeInID());
+            //itemEntity.setMadeInID(itemDTO.getMadeInID());
             itemEntity.setInUser(itemDTO.getLoginUser());
             itemEntity.setLastEditUser(itemDTO.getLoginUser());
 
@@ -183,7 +183,7 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setColorID(itemDTO.getColorID());
             itemEntity.setSizeID(itemDTO.getSizeID());
             itemEntity.setMaterialID(itemDTO.getMaterialID());
-            itemEntity.setMadeInID(itemDTO.getMadeInID());
+            //itemEntity.setMadeInID(itemDTO.getMadeInID());
             itemEntity.setLastEditUser(itemDTO.getLoginUser());
             int affectRow = itemMapper.update(itemEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);

@@ -21,4 +21,11 @@ public class XmlSerializeUtils {
         xd.close();
         return obj;
     }
+
+    public static <T> T deserializeToObject(InputStream stream) throws FileNotFoundException{
+        XMLDecoder xd = new XMLDecoder(stream);
+        T obj = (T)xd.readObject();
+        xd.close();
+        return obj;
+    }
 }

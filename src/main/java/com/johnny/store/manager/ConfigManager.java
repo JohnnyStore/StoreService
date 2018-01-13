@@ -1,6 +1,7 @@
 package com.johnny.store.manager;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
@@ -15,13 +16,16 @@ public class ConfigManager {
     public static ResponseSetting getResponseSetting(String responseCode) throws FileNotFoundException, UnsupportedEncodingException{
         ResponseSetting resSetting = new ResponseSetting();
         if(responseSettingList == null){
-            String configPath = ConfigManager.class.getClassLoader().getResource(ConfigFileConsts.RESPONSE_SETTING_FILE).getFile();
-            configPath = java.net.URLDecoder.decode(configPath,"utf-8");
-            responseSettingList = XmlSerializeUtils.deserializeToObject(configPath);
+            InputStream stream = ConfigManager.class.getClassLoader().getResourceAsStream(ConfigFileConsts.RESPONSE_SETTING_FILE);
+
+            //String configPath = ConfigManager.class.getClassLoader().getResource(ConfigFileConsts.RESPONSE_SETTING_FILE).getFile();
+            //configPath = java.net.URLDecoder.decode(configPath,"utf-8");
+            responseSettingList = XmlSerializeUtils.deserializeToObject(stream);
         }
         for (ResponseSetting responseSetting : responseSettingList) {
             if(responseSetting.getResponseCode().equals(responseCode)){
                 resSetting = responseSetting;
+                break;
             }
         }
 
@@ -31,8 +35,9 @@ public class ConfigManager {
     public static String getSystemSetting(String key){
         String value = "";
         try {
-            String configPath = java.net.URLDecoder.decode(LogUtils.class.getClassLoader().getResource(ConfigFileConsts.SYSTEM_SETTING).getFile(), "utf-8");
-            Map<String, String> systemSetting = XmlSerializeUtils.deserializeToObject(configPath);
+            //String configPath = java.net.URLDecoder.decode(LogUtils.class.getClassLoader().getResource(ConfigFileConsts.SYSTEM_SETTING).getFile(), "utf-8");
+            InputStream stream = ConfigManager.class.getClassLoader().getResourceAsStream(ConfigFileConsts.SYSTEM_SETTING);
+            Map<String, String> systemSetting = XmlSerializeUtils.deserializeToObject(stream);
             value = systemSetting.get(key);
         } catch (Exception e){
 

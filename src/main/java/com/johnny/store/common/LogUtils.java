@@ -16,6 +16,7 @@ public class LogUtils {
      */
     public static void processExceptionLog(Exception ex){
         try{
+            System.out.println("process exception log: " + getStackTrace(ex));
             SystemLogSetting systemLogSetting = new SystemLogSetting();
             String logDateTime = DateUtils.getCurrentDateTime();
             String logDir = ConfigManager.getSystemSetting(ConfigFileConsts.SYSTEM_SETTING_KEY_FILE_DIR);
@@ -34,7 +35,7 @@ public class LogUtils {
             FileUtils.createFolder(logDir);
             FileUtils.createFile(logPath, log4Json);
         }catch (Exception e){
-
+            System.out.println("process exception log error: " + getStackTrace(e));
         }
     }
 
@@ -44,6 +45,7 @@ public class LogUtils {
      */
     public static void processExceptionLog(StoreException ex){
         try{
+            System.out.println("process exception log: " + getStackTrace(ex));
             SystemLogSetting systemLogSetting = new SystemLogSetting();
             String logDateTime = DateUtils.getCurrentDateTime();
             String logDir = ConfigManager.getSystemSetting(ConfigFileConsts.SYSTEM_SETTING_KEY_FILE_DIR);
@@ -62,7 +64,7 @@ public class LogUtils {
             FileUtils.createFolder(logDir);
             FileUtils.createFile(logPath, log4Json);
         }catch (Exception e){
-
+            System.out.println("process exception log error: " + getStackTrace(e));
         }
     }
 

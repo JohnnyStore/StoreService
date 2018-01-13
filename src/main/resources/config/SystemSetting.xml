@@ -3,7 +3,7 @@
  <object class="java.util.LinkedHashMap">
   <void method="put">
    <string>logDir</string>
-   <string>C:\Users\ZhangQiang\Documents\logs</string>
+   <string>\logs</string>
   </void>
  </object>
 </java>
