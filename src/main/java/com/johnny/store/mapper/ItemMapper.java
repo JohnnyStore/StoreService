@@ -11,7 +11,9 @@ public interface ItemMapper {
 
     ItemEntity search(int brandID);
 
-    ItemEntity searchByName(String brandName);
+    ItemEntity searchByItemCode(String itemCode);
+
+    ItemEntity searchByItemName(int brandID, int categoryID, int subCategoryID, int seriesID, String itemName);
 
     int insert(ItemEntity entity);
 

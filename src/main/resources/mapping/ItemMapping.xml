@@ -15,10 +15,13 @@
     <result column="SeriesID" property="seriesID" jdbcType="INTEGER" />
     <result column="ItemSeriesCN" property="itemSeriesCN" jdbcType="NVARCHAR" />
     <result column="ItemSeriesEN" property="itemSeriesEN" jdbcType="VARCHAR" />
+    <result column="ItemCode" property="itemCode" jdbcType="VARCHAR" />
     <result column="ItemNameCN" property="itemNameCN" jdbcType="VARCHAR" />
     <result column="ItemNameEN" property="itemNameEN" jdbcType="VARCHAR" />
-    <result column="UnitPrice" property="unitPrice" jdbcType="DECIMAL" />
-    <result column="PromotionPrice" property="promotionPrice" jdbcType="DECIMAL" />
+    <result column="UnitPrice4RMB" property="unitPrice4RMB" jdbcType="DECIMAL" />
+    <result column="PromotionPrice4RMB" property="promotionPrice4RMB" jdbcType="DECIMAL" />
+    <result column="UnitPrice4USD" property="unitPrice4USD" jdbcType="DECIMAL" />
+    <result column="PromotionPrice4USD" property="promotionPrice4USD" jdbcType="DECIMAL" />
     <result column="Rate" property="rate" jdbcType="FLOAT" />
     <result column="ColorID" property="colorID" jdbcType="INTEGER" />
     <result column="ColorCN" property="colorCN" jdbcType="NVARCHAR" />
@@ -32,8 +35,10 @@
     <result column="MadeInID" property="madeInID" jdbcType="INTEGER" />
     <result column="MadeInCN" property="madeInCN" jdbcType="NVARCHAR" />
     <result column="MadeInEN" property="madeInEN" jdbcType="VARCHAR" />
-    <result column="AdjustLengthCN" property="adjustLengthCN" jdbcType="VARCHAR" />
-    <result column="AdjustLengthEN" property="adjustLengthEN" jdbcType="VARCHAR" />
+
+    <result column="ItemLength" property="itemLength" jdbcType="VARCHAR" />
+    <result column="AdjustLength" property="adjustLength" jdbcType="VARCHAR" />
+
     <result column="SuitablePetCN" property="suitablePetCN" jdbcType="VARCHAR" />
     <result column="SuitablePetEN" property="suitablePetEN" jdbcType="VARCHAR" />
     <result column="ItemShortDescriptionCN" property="itemShortDescriptionCN" jdbcType="VARCHAR" />
@@ -65,12 +70,15 @@
       D.SubCategoryCN,
       D.SubCategoryEN,
       A.SeriesID,
+      A.ItemCode,
       E.ItemSeriesCN,
       E.ItemSeriesEN,
       A.ItemNameCN,
       A.ItemNameEN,
-      A.UntiPrice,
-      A.PromotionPrice,
+      A.UnitPrice4RMB,
+      A.PromotionPrice4RMB,
+      A.UnitPrice4USD,
+      A.PromotionPrice4USD,
       A.Rate,
       A.ColorID,
       F.ColorCN,
@@ -84,8 +92,8 @@
       A.MadeInID,
       I.MadeInCN,
       I.MadeInEN,
-      A.AdjustLengthCN,
-      A.AdjustLengthEN,
+      A.ItemLength,
+      A.AdjustLength,
       A.SuitablePetCN,
       A.SuitablePetEN,
       A.ItemShortDescriptionCN,
@@ -134,12 +142,15 @@
       D.SubCategoryCN,
       D.SubCategoryEN,
       A.SeriesID,
+      A.ItemCode,
       E.ItemSeriesCN,
       E.ItemSeriesEN,
       A.ItemNameCN,
       A.ItemNameEN,
-      A.UntiPrice,
-      A.PromotionPrice,
+      A.UnitPrice4RMB,
+      A.PromotionPrice4RMB,
+      A.UnitPrice4USD,
+      A.PromotionPrice4USD,
       A.Rate,
       A.ColorID,
       F.ColorCN,
@@ -153,8 +164,8 @@
       A.MadeInID,
       I.MadeInCN,
       I.MadeInEN,
-      A.AdjustLengthCN,
-      A.AdjustLengthEN,
+      A.ItemLength,
+      A.AdjustLength,
       A.SuitablePetCN,
       A.SuitablePetEN,
       A.ItemShortDescriptionCN,
@@ -186,7 +197,7 @@
     WHERE ItemID = #{itemID,jdbcType=INTEGER}
     ORDER BY InDate DESC
   </select>
-  <select id="searchByName" resultMap="BaseResultMap">
+  <select id="searchByItemCode" resultMap="BaseResultMap">
     SELECT
       A.ItemID,
       A.BrandID,
@@ -199,12 +210,15 @@
       D.SubCategoryCN,
       D.SubCategoryEN,
       A.SeriesID,
+      A.ItemCode,
       E.ItemSeriesCN,
       E.ItemSeriesEN,
       A.ItemNameCN,
       A.ItemNameEN,
-      A.UntiPrice,
-      A.PromotionPrice,
+      A.UnitPrice4RMB,
+      A.PromotionPrice4RMB,
+      A.UnitPrice4USD,
+      A.PromotionPrice4USD,
       A.Rate,
       A.ColorID,
       F.ColorCN,
@@ -218,8 +232,8 @@
       A.MadeInID,
       I.MadeInCN,
       I.MadeInEN,
-      A.AdjustLengthCN,
-      A.AdjustLengthEN,
+      A.ItemLength,
+      A.AdjustLength,
       A.SuitablePetCN,
       A.SuitablePetEN,
       A.ItemShortDescriptionCN,
@@ -248,25 +262,99 @@
         ON A.MaterialID = H.MaterialID
       LEFT JOIN MadeInMapping I
         ON A.MadeInID = I.MadeInID
-    WHERE (A.ItemNameCN = #{itemName,jdbcType=NVARCHAR} OR A.ItemNameEN = #{itemName,jdbcType=VARCHAR})
+    WHERE A.ItemCode = #{itemCode,jdbcType=NVARCHAR}
+  </select>
+  <select id="searchByItemName" resultMap="BaseResultMap">
+    SELECT
+      A.ItemID,
+      A.BrandID,
+      B.BrandCN,
+      B.BrandEN,
+      A.CategoryID,
+      C.CategoryCN,
+      C.CategoryEN,
+      A.SubCategoryID,
+      D.SubCategoryCN,
+      D.SubCategoryEN,
+      A.SeriesID,
+      A.ItemCode,
+      E.ItemSeriesCN,
+      E.ItemSeriesEN,
+      A.ItemNameCN,
+      A.ItemNameEN,
+      A.UnitPrice4RMB,
+      A.PromotionPrice4RMB,
+      A.UnitPrice4USD,
+      A.PromotionPrice4USD,
+      A.Rate,
+      A.ColorID,
+      F.ColorCN,
+      F.ColorEN,
+      A.SizeID,
+      G.SizeCN,
+      G.SizeEN,
+      A.MaterialID,
+      H.MaterialCN,
+      H.MaterialEN,
+      A.MadeInID,
+      I.MadeInCN,
+      I.MadeInEN,
+      A.ItemLength,
+      A.AdjustLength,
+      A.SuitablePetCN,
+      A.SuitablePetEN,
+      A.ItemShortDescriptionCN,
+      A.ItemShortDescriptionEN,
+      A.ItemDescriptionCN,
+      A.ItemDescriptionEN,
+      A.ItemStatus,
+      A.InUser,
+      A.InDate,
+      A.LastEditUser,
+      A.LastEditDate
+    FROM Item A
+    LEFT JOIN Brand B
+    ON A.BrandID = B.BrandID
+    LEFT JOIN Category C
+    ON A.CategoryID = C.CategoryID
+    LEFT JOIN SubCategory D
+    ON A.SubCategoryID = D.SubCategoryID
+    LEFT JOIN ItemSeries E
+    ON A.SeriesID = E.SeriesID
+    LEFT JOIN Color F
+    ON A.ColorID = F.ColorID
+    LEFT JOIN SizeMapping G
+    ON A.SizeID = G.SizeID
+    LEFT JOIN MaterialMapping H
+    ON A.MaterialID = H.MaterialID
+    LEFT JOIN MadeInMapping I
+    ON A.MadeInID = I.MadeInID
+    WHERE A.BrandID = #{arg0,jdbcType=INTEGER}
+        AND A.CategoryID = #{arg1,jdbcType=INTEGER}
+        AND A.SubCategoryID = #{arg2,jdbcType=INTEGER}
+        AND A.SeriesID = #{arg3,jdbcType=INTEGER}
+        AND (A.ItemNameCN = #{arg4,jdbcType=NVARCHAR} OR A.ItemNameEN = #{arg4,jdbcType=VARCHAR})
   </select>
   <insert id="insert" useGeneratedKeys="true" keyProperty="itemID" parameterType="com.johnny.store.entity.BrandEntity" >
-    INSERT INTO Brand (
+    INSERT INTO Item (
       BrandID,
       CategoryID,
       SubCategoryID,
       SeriesID,
+      ItemCode,
       ItemNameCN,
       ItemNameEN,
-      UntiPrice,
-      PromotionPrice,
+      UnitPrice4RMB,
+      PromotionPrice4RMB,
+      UnitPrice4USD,
+      PromotionPrice4USD,
       Rate,
       ColorID,
       SizeID,
       MaterialID,
       MadeInID,
-      AdjustLengthCN,
-      AdjustLengthEN,
+      ItemLength,
+      AdjustLength,
       SuitablePetCN,
       SuitablePetEN,
       ItemShortDescriptionCN,
@@ -279,27 +367,30 @@
     )
     VALUES (
     #{brandID, jdbcType=INTEGER},
-    #{CategoryID, jdbcType=INTEGER},
-    #{SubCategoryID, jdbcType=INTEGER},
-    #{SeriesID, jdbcType=INTEGER},
-    #{ItemNameCN, jdbcType=VARCHAR},
-    #{ItemNameEN, jdbcType=VARCHAR},
-    #{UntiPrice, jdbcType=DECIMAL},
-    #{PromotionPrice, jdbcType=DECIMAL},
-    #{Rate, jdbcType=FLOAT},
-    #{ColorID, jdbcType=INTEGER},
-    #{SizeID, jdbcType=INTEGER},
-    #{MaterialID, jdbcType=INTEGER},
-    #{MadeInID, jdbcType=INTEGER},
-    #{AdjustLengthCN, jdbcType=VARCHAR},
-    #{AdjustLengthEN, jdbcType=VARCHAR},
-    #{SuitablePetCN, jdbcType=VARCHAR},
-    #{SuitablePetEN, jdbcType=VARCHAR},
-    #{ItemShortDescriptionCN, jdbcType=VARCHAR},
-    #{ItemShortDescriptionEN, jdbcType=VARCHAR},
-    #{ItemDescriptionCN, jdbcType=VARCHAR},
-    #{ItemDescriptionEN, jdbcType=VARCHAR},
-    #{ItemStatus, jdbcType=VARCHAR},
+    #{categoryID, jdbcType=INTEGER},
+    #{subCategoryID, jdbcType=INTEGER},
+    #{seriesID, jdbcType=INTEGER},
+    #{itemCode, jdbcType=VARCHAR},
+    #{itemNameCN, jdbcType=VARCHAR},
+    #{itemNameEN, jdbcType=VARCHAR},
+    #{unitPrice4RMB, jdbcType=DECIMAL},
+    #{promotionPrice4RMB, jdbcType=DECIMAL},
+    #{unitPrice4USD, jdbcType=DECIMAL},
+    #{promotionPrice4USD, jdbcType=DECIMAL},
+    #{rate, jdbcType=FLOAT},
+    #{colorID, jdbcType=INTEGER},
+    #{sizeID, jdbcType=INTEGER},
+    #{materialID, jdbcType=INTEGER},
+    #{madeInID, jdbcType=INTEGER},
+    #{itemLength, jdbcType=VARCHAR},
+    #{adjustLength, jdbcType=VARCHAR},
+    #{suitablePetCN, jdbcType=VARCHAR},
+    #{suitablePetEN, jdbcType=VARCHAR},
+    #{itemShortDescriptionCN, jdbcType=VARCHAR},
+    #{itemShortDescriptionEN, jdbcType=VARCHAR},
+    #{itemDescriptionCN, jdbcType=VARCHAR},
+    #{itemDescriptionEN, jdbcType=VARCHAR},
+    #{itemStatus, jdbcType=VARCHAR},
     #{inUser, jdbcType=VARCHAR},
     #{lastEditUser, jdbcType=VARCHAR}
     )
@@ -307,27 +398,30 @@
   <update id="update" parameterType="com.johnny.store.entity.BrandEntity" >
     UPDATE Item SET
       BrandID = #{brandID, jdbcType=INTEGER},
-      CategoryID = #{CategoryID, jdbcType=INTEGER},
-      SubCategoryID = #{SubCategoryID, jdbcType=INTEGER},
-      SeriesID = #{SeriesID, jdbcType=INTEGER},
-      ItemNameCN = #{ItemNameCN, jdbcType=VARCHAR},
-      ItemNameEN = #{ItemNameEN, jdbcType=VARCHAR},
-      UntiPrice = #{UntiPrice, jdbcType=DECIMAL},
-      PromotionPrice = #{PromotionPrice, jdbcType=DECIMAL},
-      Rate = #{Rate, jdbcType=FLOAT},
-      ColorID = #{ColorID, jdbcType=INTEGER},
-      SizeID = #{SizeID, jdbcType=INTEGER},
-      MaterialID = #{MaterialID, jdbcType=INTEGER},
-      MadeInID = #{MadeInID, jdbcType=INTEGER},
-      AdjustLengthCN = #{AdjustLengthCN, jdbcType=VARCHAR},
-      AdjustLengthEN = #{AdjustLengthEN, jdbcType=VARCHAR},
-      SuitablePetCN = #{SuitablePetCN, jdbcType=VARCHAR},
-      SuitablePetEN = #{SuitablePetEN, jdbcType=VARCHAR},
-      ItemShortDescriptionCN = #{ItemShortDescriptionCN, jdbcType=VARCHAR},
-      ItemShortDescriptionEN = #{ItemShortDescriptionEN, jdbcType=VARCHAR},
-      ItemDescriptionCN = #{ItemDescriptionCN, jdbcType=VARCHAR},
-      ItemDescriptionEN = #{ItemDescriptionEN, jdbcType=VARCHAR},
-      ItemStatus = #{ItemStatus, jdbcType=VARCHAR},
+      CategoryID = #{categoryID, jdbcType=INTEGER},
+      SubCategoryID = #{subCategoryID, jdbcType=INTEGER},
+      SeriesID = #{seriesID, jdbcType=INTEGER},
+      ItemCode = #{itemCode, jdbcType=VARCHAR},
+      ItemNameCN = #{itemNameCN, jdbcType=VARCHAR},
+      ItemNameEN = #{itemNameEN, jdbcType=VARCHAR},
+      UnitPrice4RMB = #{unitPrice4RMB, jdbcType=DECIMAL},
+      PromotionPrice4RMB = #{promotionPrice4RMB, jdbcType=DECIMAL},
+      UnitPrice4USD = #{unitPrice4USD, jdbcType=DECIMAL},
+      PromotionPrice4USD = #{promotionPrice4USD, jdbcType=DECIMAL},
+      Rate = #{rate, jdbcType=FLOAT},
+      ColorID = #{colorID, jdbcType=INTEGER},
+      SizeID = #{sizeID, jdbcType=INTEGER},
+      MaterialID = #{materialID, jdbcType=INTEGER},
+      MadeInID = #{madeInID, jdbcType=INTEGER},
+      ItemLength = #{itemLength, jdbcType=VARCHAR},
+      AdjustLength = #{adjustLength, jdbcType=VARCHAR},
+      SuitablePetCN = #{suitablePetCN, jdbcType=VARCHAR},
+      SuitablePetEN = #{suitablePetEN, jdbcType=VARCHAR},
+      ItemShortDescriptionCN = #{itemShortDescriptionCN, jdbcType=VARCHAR},
+      ItemShortDescriptionEN = #{itemShortDescriptionEN, jdbcType=VARCHAR},
+      ItemDescriptionCN = #{itemDescriptionCN, jdbcType=VARCHAR},
+      ItemDescriptionEN = #{itemDescriptionEN, jdbcType=VARCHAR},
+      ItemStatus = #{itemStatus, jdbcType=VARCHAR},
       LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
     WHERE ItemID = #{itemID,jdbcType=INTEGER}
   </update>

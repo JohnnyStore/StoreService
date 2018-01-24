@@ -84,6 +84,24 @@ public class UnifiedResponseManager {
         }
     }
 
+    public static <T> UnifiedResponse buildSuccessResponseWithID(int affectCount, T data){
+        try{
+            UnifiedResponse<T> unifiedResponse = new UnifiedResponse<>();
+            ResponseSetting responseSetting = ConfigManager.getResponseSetting(ResponseCodeConsts.SUCCESS);
+            unifiedResponse.setResponseCode(responseSetting.getResponseCode());
+            unifiedResponse.setResponseMessage(responseSetting.getResponseMessage());
+            unifiedResponse.setResult(responseSetting.isResult());
+            unifiedResponse.setResponseType(responseSetting.getResponseType());
+            unifiedResponse.setResponseOption(responseSetting.getResponseOption());
+            unifiedResponse.setAffectCount(affectCount);
+            unifiedResponse.setResponseData(data);
+            return unifiedResponse;
+        }catch (Exception ex){
+            LogUtils.processExceptionLog(ex);
+            return buildErrorResponse(ResponseCodeConsts.BuildResponseException);
+        }
+    }
+
     public static <T> UnifiedResponse buildFailedResponse(String responseCode){
         try{
             UnifiedResponse<T> unifiedResponse = new UnifiedResponse<>();

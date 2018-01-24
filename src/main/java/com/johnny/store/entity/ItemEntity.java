@@ -3,19 +3,40 @@ package com.johnny.store.entity;
 public class ItemEntity {
 	private int itemID;
 	private int brandID;
+	private String brandCN;
+	private String brandEN;
 	private int categoryID;
+	private String categoryCN;
+	private String categoryEN;
 	private int subCategoryID;
+	private String subCategoryCN;
+	private String subCategoryEN;
 	private int seriesID;
+	private String itemSeriesCN;
+	private String itemSeriesEN;
+	private String itemCode;
 	private String itemNameCN;
 	private String itemNameEN;
-	private double unitPrice;
-	private double promotionPrice;
+	private String itemImageUrl;
+	private double unitPrice4RMB;
+	private double promotionPrice4RMB;
+	private double unitPrice4USD;
+	private double promotionPrice4USD;
 	private float rate;
 	private int colorID;
+	private String colorCN;
+	private String colorEN;
 	private int sizeID;
+	private String sizeCN;
+	private String sizeEN;
 	private int materialID;
-	private String adjustLengthCN;
-	private String adjustLengthEN;
+	private String materialCN;
+	private String materialEN;
+	private int madeInID;
+	private String madeInCN;
+	private String madeInEN;
+	private String itemLength;
+	private String adjustLength;
 	private String suitablePetCN;
 	private String suitablePetEN;
 	private String itemShortDescriptionCN;
@@ -23,6 +44,7 @@ public class ItemEntity {
 	private String itemDescriptionCN;
 	private String itemDescriptionEN;
 	private String itemStatus;
+	private String itemStatusText;
 	private String inUser;
 	private String inDate;
 	private String lastEditUser;
@@ -84,22 +106,6 @@ public class ItemEntity {
 		this.itemNameEN = itemNameEN;
 	}
 
-	public double getUnitPrice() {
-		return this.unitPrice;
-	}
-
-	public void setUnitPrice(double unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-
-	public double getPromotionPrice() {
-		return this.promotionPrice;
-	}
-
-	public void setPromotionPrice(double promotionPrice) {
-		this.promotionPrice = promotionPrice;
-	}
-
 	public float getRate() {
 		return this.rate;
 	}
@@ -130,22 +136,6 @@ public class ItemEntity {
 
 	public void setMaterialID(int materialID) {
 		this.materialID = materialID;
-	}
-
-	public String getAdjustLengthCN() {
-		return this.adjustLengthCN;
-	}
-
-	public void setAdjustLengthCN(String adjustLengthCN) {
-		this.adjustLengthCN = adjustLengthCN;
-	}
-
-	public String getAdjustLengthEN() {
-		return this.adjustLengthEN;
-	}
-
-	public void setAdjustLengthEN(String adjustLengthEN) {
-		this.adjustLengthEN = adjustLengthEN;
 	}
 
 	public String getSuitablePetCN() {
@@ -236,4 +226,211 @@ public class ItemEntity {
 		this.lastEditDate = lastEditDate;
 	}
 
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+
+	public int getMadeInID() {
+		return madeInID;
+	}
+
+	public void setMadeInID(int madeInID) {
+		this.madeInID = madeInID;
+	}
+
+	public double getUnitPrice4RMB() {
+		return unitPrice4RMB;
+	}
+
+	public void setUnitPrice4RMB(double unitPrice4RMB) {
+		this.unitPrice4RMB = unitPrice4RMB;
+	}
+
+	public double getPromotionPrice4RMB() {
+		return promotionPrice4RMB;
+	}
+
+	public void setPromotionPrice4RMB(double promotionPrice4RMB) {
+		this.promotionPrice4RMB = promotionPrice4RMB;
+	}
+
+	public double getUnitPrice4USD() {
+		return unitPrice4USD;
+	}
+
+	public void setUnitPrice4USD(double unitPrice4USD) {
+		this.unitPrice4USD = unitPrice4USD;
+	}
+
+	public double getPromotionPrice4USD() {
+		return promotionPrice4USD;
+	}
+
+	public void setPromotionPrice4USD(double promotionPrice4USD) {
+		this.promotionPrice4USD = promotionPrice4USD;
+	}
+
+	public String getItemLength() {
+		return itemLength;
+	}
+
+	public void setItemLength(String itemLength) {
+		this.itemLength = itemLength;
+	}
+
+	public String getAdjustLength() {
+		return adjustLength;
+	}
+
+	public void setAdjustLength(String adjustLength) {
+		this.adjustLength = adjustLength;
+	}
+
+	public String getBrandCN() {
+		return brandCN;
+	}
+
+	public void setBrandCN(String brandCN) {
+		this.brandCN = brandCN;
+	}
+
+	public String getBrandEN() {
+		return brandEN;
+	}
+
+	public void setBrandEN(String brandEN) {
+		this.brandEN = brandEN;
+	}
+
+	public String getCategoryCN() {
+		return categoryCN;
+	}
+
+	public void setCategoryCN(String categoryCN) {
+		this.categoryCN = categoryCN;
+	}
+
+	public String getCategoryEN() {
+		return categoryEN;
+	}
+
+	public void setCategoryEN(String categoryEN) {
+		this.categoryEN = categoryEN;
+	}
+
+	public String getSubCategoryCN() {
+		return subCategoryCN;
+	}
+
+	public void setSubCategoryCN(String subCategoryCN) {
+		this.subCategoryCN = subCategoryCN;
+	}
+
+	public String getSubCategoryEN() {
+		return subCategoryEN;
+	}
+
+	public void setSubCategoryEN(String subCategoryEN) {
+		this.subCategoryEN = subCategoryEN;
+	}
+
+	public String getItemSeriesCN() {
+		return itemSeriesCN;
+	}
+
+	public void setItemSeriesCN(String itemSeriesCN) {
+		this.itemSeriesCN = itemSeriesCN;
+	}
+
+	public String getItemSeriesEN() {
+		return itemSeriesEN;
+	}
+
+	public void setItemSeriesEN(String itemSeriesEN) {
+		this.itemSeriesEN = itemSeriesEN;
+	}
+
+	public String getColorCN() {
+		return colorCN;
+	}
+
+	public void setColorCN(String colorCN) {
+		this.colorCN = colorCN;
+	}
+
+	public String getColorEN() {
+		return colorEN;
+	}
+
+	public void setColorEN(String colorEN) {
+		this.colorEN = colorEN;
+	}
+
+	public String getSizeCN() {
+		return sizeCN;
+	}
+
+	public void setSizeCN(String sizeCN) {
+		this.sizeCN = sizeCN;
+	}
+
+	public String getSizeEN() {
+		return sizeEN;
+	}
+
+	public void setSizeEN(String sizeEN) {
+		this.sizeEN = sizeEN;
+	}
+
+	public String getMaterialCN() {
+		return materialCN;
+	}
+
+	public void setMaterialCN(String materialCN) {
+		this.materialCN = materialCN;
+	}
+
+	public String getMaterialEN() {
+		return materialEN;
+	}
+
+	public void setMaterialEN(String materialEN) {
+		this.materialEN = materialEN;
+	}
+
+	public String getMadeInCN() {
+		return madeInCN;
+	}
+
+	public void setMadeInCN(String madeInCN) {
+		this.madeInCN = madeInCN;
+	}
+
+	public String getMadeInEN() {
+		return madeInEN;
+	}
+
+	public void setMadeInEN(String madeInEN) {
+		this.madeInEN = madeInEN;
+	}
+
+	public String getItemStatusText() {
+		return itemStatusText;
+	}
+
+	public void setItemStatusText(String itemStatusText) {
+		this.itemStatusText = itemStatusText;
+	}
+
+	public String getItemImageUrl() {
+		return itemImageUrl;
+	}
+
+	public void setItemImageUrl(String itemImageUrl) {
+		this.itemImageUrl = itemImageUrl;
+	}
 }

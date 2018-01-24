@@ -3,6 +3,8 @@ package com.johnny.store.service.impl;
 import com.johnny.store.common.ConvertObjectUtils;
 import com.johnny.store.common.LogUtils;
 import com.johnny.store.common.StoreException;
+import com.johnny.store.constant.ImageObjectType;
+import com.johnny.store.constant.ImageType;
 import com.johnny.store.constant.ResponseCodeConsts;
 import com.johnny.store.dto.ItemDTO;
 import com.johnny.store.dto.UnifiedResponse;
@@ -38,6 +40,11 @@ public class ItemServiceImpl implements ItemService {
             }
             List<ItemEntity> entityList =  itemMapper.searchList(startIndex, pageSize);
             for (ItemEntity entity : entityList) {
+                List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.THUMBNAIL);
+                if(imageEntityList != null && imageEntityList.size() > 0){
+                    entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+                }
+
                 ItemVO model = new ItemVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
                 model.setItemID(entity.getItemID());
@@ -45,13 +52,15 @@ public class ItemServiceImpl implements ItemService {
                 model.setCategoryID(entity.getCategoryID());
                 model.setSubCategoryID(entity.getSubCategoryID());
                 model.setSeriesID(entity.getSeriesID());
-                model.setUnitPrice(entity.getUnitPrice());
-                model.setPromotionPrice(entity.getPromotionPrice());
+                model.setUnitPrice4RMB(entity.getUnitPrice4RMB());
+                model.setPromotionPrice4RMB(entity.getPromotionPrice4RMB());
+                model.setUnitPrice4USD(entity.getUnitPrice4USD());
+                model.setPromotionPrice4USD(entity.getPromotionPrice4USD());
                 model.setRate(entity.getRate());
                 model.setColorID(entity.getColorID());
                 model.setSizeID(entity.getSizeID());
                 model.setMaterialID(entity.getMaterialID());
-                //model.setMadeInID(entity.getMadeInID());
+//                model.setMadeInID(entity.getMadeInID());
                 modelList.add(model);
             }
             return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
@@ -77,13 +86,15 @@ public class ItemServiceImpl implements ItemService {
                 model.setCategoryID(entity.getCategoryID());
                 model.setSubCategoryID(entity.getSubCategoryID());
                 model.setSeriesID(entity.getSeriesID());
-                model.setUnitPrice(entity.getUnitPrice());
-                model.setPromotionPrice(entity.getPromotionPrice());
+                model.setUnitPrice4RMB(entity.getUnitPrice4RMB());
+                model.setPromotionPrice4RMB(entity.getPromotionPrice4RMB());
+                model.setUnitPrice4USD(entity.getUnitPrice4USD());
+                model.setPromotionPrice4USD(entity.getPromotionPrice4USD());
                 model.setRate(entity.getRate());
                 model.setColorID(entity.getColorID());
                 model.setSizeID(entity.getSizeID());
                 model.setMaterialID(entity.getMaterialID());
-                //model.setMadeInID(entity.getMadeInID());
+                model.setMadeInID(entity.getMadeInID());
             }
             return UnifiedResponseManager.buildSuccessResponse(model);
         } catch (StoreException ex){
@@ -96,10 +107,24 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public UnifiedResponse existCheck(String name) {
+    public UnifiedResponse existCheck(String itemCode) {
         try {
             boolean exist = false;
-            ItemEntity entity = itemMapper.searchByName(name);
+            ItemEntity entity = itemMapper.searchByItemCode(itemCode);
+            if(entity != null){
+                exist = true;
+            }
+            return UnifiedResponseManager.buildSuccessResponse(exist);
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    public UnifiedResponse existCheck(int brandID, int categoryID, int subCategoryID, int seriesID, String itemName) {
+        try {
+            boolean exist = false;
+            ItemEntity entity = itemMapper.searchByItemName(brandID, categoryID, subCategoryID, seriesID, itemName);
             if(entity != null){
                 exist = true;
             }
@@ -115,7 +140,6 @@ public class ItemServiceImpl implements ItemService {
         try {
             ItemDTO itemDTO = (ItemDTO)dto;
             ItemEntity itemEntity = new ItemEntity();
-            ImageEntity imageEntity = new ImageEntity();
 
             ConvertObjectUtils.convertJavaBean(itemEntity, itemDTO);
             itemEntity.setItemID(itemDTO.getItemID());
@@ -123,40 +147,20 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setCategoryID(itemDTO.getCategoryID());
             itemEntity.setSubCategoryID(itemDTO.getSubCategoryID());
             itemEntity.setSeriesID(itemDTO.getSeriesID());
-            itemEntity.setUnitPrice(itemDTO.getUnitPrice());
-            itemEntity.setPromotionPrice(itemDTO.getPromotionPrice());
+            itemEntity.setUnitPrice4RMB(itemDTO.getUnitPrice4RMB());
+            itemEntity.setPromotionPrice4RMB(itemDTO.getPromotionPrice4RMB());
+            itemEntity.setUnitPrice4USD(itemDTO.getUnitPrice4USD());
+            itemEntity.setPromotionPrice4USD(itemDTO.getPromotionPrice4USD());
             itemEntity.setRate(itemDTO.getRate());
             itemEntity.setColorID(itemDTO.getColorID());
             itemEntity.setSizeID(itemDTO.getSizeID());
             itemEntity.setMaterialID(itemDTO.getMaterialID());
-            //itemEntity.setMadeInID(itemDTO.getMadeInID());
+            itemEntity.setMadeInID(itemDTO.getMadeInID());
             itemEntity.setInUser(itemDTO.getLoginUser());
             itemEntity.setLastEditUser(itemDTO.getLoginUser());
 
             int affectRow = itemMapper.insert(itemEntity);
-
-//            for (String originalImage : itemDTO.getItemOriginalImageList()) {
-//
-//            }
-//
-//            for (String normalImage : itemDTO.getItemNormalImageList()) {
-//
-//            }
-//
-//            for (String thumbnailImage : itemDTO.getItemThumbnailImageList()) {
-//
-//            }
-//
-//            itemDTO.getItemDetailImageMap().
-//            imageEntity.setImageSrc(itemDTO.getBrandImageUrl());
-//            imageEntity.setObjectID(brandEntity.getBrandID());
-//            imageEntity.setObjectType(ImageObjectType.BRAND);
-//            imageEntity.setImageType(ImageType.NORMAL);
-//            imageEntity.setInUser(itemDTO.getLoginUser());
-//            imageEntity.setLastEditUser(itemDTO.getLoginUser());
-//
-//            imageMapper.insert(imageEntity);
-            return UnifiedResponseManager.buildSuccessResponse(affectRow, itemEntity.getItemID());
+            return UnifiedResponseManager.buildSuccessResponseWithID(affectRow, itemEntity.getItemID());
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
@@ -177,13 +181,15 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setCategoryID(itemDTO.getCategoryID());
             itemEntity.setSubCategoryID(itemDTO.getSubCategoryID());
             itemEntity.setSeriesID(itemDTO.getSeriesID());
-            itemEntity.setUnitPrice(itemDTO.getUnitPrice());
-            itemEntity.setPromotionPrice(itemDTO.getPromotionPrice());
+            itemEntity.setUnitPrice4RMB(itemDTO.getUnitPrice4RMB());
+            itemEntity.setPromotionPrice4RMB(itemDTO.getPromotionPrice4RMB());
+            itemEntity.setUnitPrice4USD(itemDTO.getUnitPrice4USD());
+            itemEntity.setPromotionPrice4USD(itemDTO.getPromotionPrice4USD());
             itemEntity.setRate(itemDTO.getRate());
             itemEntity.setColorID(itemDTO.getColorID());
             itemEntity.setSizeID(itemDTO.getSizeID());
             itemEntity.setMaterialID(itemDTO.getMaterialID());
-            //itemEntity.setMadeInID(itemDTO.getMadeInID());
+            itemEntity.setMadeInID(itemDTO.getMadeInID());
             itemEntity.setLastEditUser(itemDTO.getLoginUser());
             int affectRow = itemMapper.update(itemEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);

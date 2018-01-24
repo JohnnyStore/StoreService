@@ -5,11 +5,15 @@ import java.util.List;
 
 @Mapper
 public interface ImageMapper {
-    List<ImageEntity> searchList(int objectID, String objectType, String mageType);
+    List<ImageEntity> searchList(int objectID, String objectType, String imageType);
+
+    List<ImageEntity> searchList4Item(int objectID, String objectType);
 
     int insert(ImageEntity entity);
 
     int update(ImageEntity entity);
 
-    int delete(int brandID);
+    int delete(int objectID, String objectType, int groupID, String imageType);
+
+    int deleteItemImage(int itemID, String objectType);
 }

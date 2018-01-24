@@ -101,6 +101,7 @@ public class BrandServiceImpl implements BrandService {
             int affectRow = brandMapper.insert(brandEntity);
 
             imageEntity.setImageSrc(brandDTO.getBrandImageUrl());
+            imageEntity.setParentImageSrc("");
             imageEntity.setObjectID(brandEntity.getBrandID());
             imageEntity.setObjectType(ImageObjectType.BRAND);
             imageEntity.setImageType(ImageType.NORMAL);

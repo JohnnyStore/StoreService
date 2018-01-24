@@ -21,9 +21,18 @@ public class ItemController {
         return itemServiceImpl.find(itemId);
     }
 
-    @RequestMapping(value = "/api/item/exist/{itemName}", method = RequestMethod.GET)
-    public UnifiedResponse checkName(@PathVariable("itemName") String itemName){
-        return itemServiceImpl.existCheck(itemName);
+    @RequestMapping(value = "/api/item/exist/{itemCode}", method = RequestMethod.GET)
+    public UnifiedResponse checkName(@PathVariable("itemCode") String itemCode){
+        return itemServiceImpl.existCheck(itemCode);
+    }
+
+    @RequestMapping(value = "/api/item/exist/{brandID}/{categoryID}/{subCategoryID}/{seriesID}/{itemName}", method = RequestMethod.GET)
+    public UnifiedResponse checkName(@PathVariable("brandID") int brandID,
+                                     @PathVariable("categoryID") int categoryID,
+                                     @PathVariable("subCategoryID") int subCategoryID,
+                                     @PathVariable("seriesID") int seriesID,
+                                     @PathVariable("itemName") String itemName){
+        return itemServiceImpl.existCheck(brandID, categoryID, subCategoryID, seriesID, itemName);
     }
 
     @RequestMapping(value="/api/item", method = RequestMethod.POST)

@@ -3,8 +3,10 @@ package com.johnny.store.entity;
 public class ImageEntity {
 	private int imageID;
 	private String imageSrc;
+	private String parentImageSrc;
 	private int objectID;
 	private String objectType;
+	private int groupID;
 	private String imageType;
 	private String inUser;
 	private String inDate;
@@ -83,4 +85,19 @@ public class ImageEntity {
 		this.lastEditDate = lastEditDate;
 	}
 
+	public String getParentImageSrc() {
+		return parentImageSrc;
+	}
+
+	public void setParentImageSrc(String parentImageSrc) {
+		this.parentImageSrc = parentImageSrc;
+	}
+
+	public int getGroupID() {
+		return groupID;
+	}
+
+	public void setGroupID(int groupID) {
+		this.groupID = groupID;
+	}
 }
