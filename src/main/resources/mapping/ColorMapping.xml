@@ -17,13 +17,13 @@
     </select>
     <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
-        ColorID,
-        ColorCN,
-        ColorEN,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
+            ColorID,
+            ColorCN,
+            ColorEN,
+            InUser,
+            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            LastEditUser,
+            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM Color
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
@@ -50,7 +50,7 @@
         LastEditUser,
         LastEditDate
         FROM Color
-        WHERE (ColorCN = #{colorName,jdbcType=NVARCHAR} OR ColorEN = #{colorName,jdbcType=VARCHAR})
+        WHERE (ColorCN = #{colorName,jdbcType=NVARCHAR} OR BINARY ColorEN = #{colorName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.ColorEntity" >
         INSERT INTO Color (

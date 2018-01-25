@@ -122,7 +122,6 @@ public class CountryServiceImpl implements CountryService{
             ConvertObjectUtils.convertJavaBean(countryEntity, countryDTO);
             countryEntity.setInUser(countryDTO.getLoginUser ());
             countryEntity.setLastEditUser(countryDTO.getLoginUser());
-            System.out.print(countryMapper.insert(countryEntity));
             int affectRow = countryMapper.insert(countryEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (StoreException ex){

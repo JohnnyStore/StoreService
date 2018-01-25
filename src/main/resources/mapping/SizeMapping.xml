@@ -17,13 +17,13 @@
     </select>
     <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
-        SizeID,
-        SizeCN,
-        SizeEN,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
+            SizeID,
+            SizeCN,
+            SizeEN,
+            InUser,
+            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            LastEditUser,
+            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM SizeMapping
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
@@ -50,7 +50,7 @@
         LastEditUser,
         LastEditDate
         FROM SizeMapping
-        WHERE (SizeCN = #{sizeName,jdbcType=NVARCHAR} OR SizeEN = #{sizeName,jdbcType=VARCHAR})
+        WHERE (SizeCN = #{sizeName,jdbcType=NVARCHAR} OR BINARY SizeEN = #{sizeName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.SizeEntity" >
         INSERT INTO SizeMapping (

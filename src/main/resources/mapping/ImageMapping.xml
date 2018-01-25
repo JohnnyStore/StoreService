@@ -17,17 +17,17 @@
 
   <select id="searchList" resultMap="BaseResultMap">
     SELECT
-    ImageID,
-    ImageSrc,
-    ParentImageSrc,
-    ObjectID,
-    ObjectType,
-    GroupID,
-    ImageType,
-    InUser,
-    InDate,
-    LastEditUser,
-    LastEditDate
+      ImageID,
+      ImageSrc,
+      ParentImageSrc,
+      ObjectID,
+      ObjectType,
+      GroupID,
+      ImageType,
+      InUser,
+      DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+      LastEditUser,
+      DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
     FROM Image
     WHERE ObjectID = #{arg0,jdbcType=INTEGER}
       AND ObjectType = #{arg1,jdbcType=VARCHAR}
@@ -37,17 +37,17 @@
 
   <select id="searchList4Item" resultMap="BaseResultMap">
     SELECT
-    ImageID,
-    ImageSrc,
-    ParentImageSrc,
-    ObjectID,
-    ObjectType,
-    GroupID,
-    ImageType,
-    InUser,
-    InDate,
-    LastEditUser,
-    LastEditDate
+      ImageID,
+      ImageSrc,
+      ParentImageSrc,
+      ObjectID,
+      ObjectType,
+      GroupID,
+      ImageType,
+      InUser,
+      DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+      LastEditUser,
+      DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
     FROM Image
     WHERE ObjectID = #{arg0,jdbcType=INTEGER}
     AND ObjectType = #{arg1,jdbcType=VARCHAR}

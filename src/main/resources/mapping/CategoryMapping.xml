@@ -17,13 +17,13 @@
     </select>
     <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
-        CategoryID,
-        CategoryCN,
-        CategoryEN,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
+            CategoryID,
+            CategoryCN,
+            CategoryEN,
+            InUser,
+            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            LastEditUser,
+            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM Category
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
@@ -50,7 +50,7 @@
         LastEditUser,
         LastEditDate
         FROM Category
-        WHERE (CategoryCN = #{categoryName,jdbcType=NVARCHAR} OR CategoryEN = #{categoryName,jdbcType=VARCHAR})
+        WHERE (CategoryCN = #{categoryName,jdbcType=NVARCHAR} OR BINARY CategoryEN = #{categoryName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.CategoryEntity" >
         INSERT INTO Category (

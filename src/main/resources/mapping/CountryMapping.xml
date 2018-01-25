@@ -17,13 +17,13 @@
     </select>
     <select id="searchList" resultMap="BaseResultMapOfCountry">
         SELECT
-        CountryID,
-        CountryNameCN,
-        CountryNameEN,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
+            CountryID,
+            CountryNameCN,
+            CountryNameEN,
+            InUser,
+            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            LastEditUser,
+            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM Country
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
@@ -62,7 +62,7 @@
         LastEditUser,
         LastEditDate
         FROM Country
-        WHERE (CountryNameCN = #{countryName,jdbcType=NVARCHAR} OR CountryNameEN = #{countryName,jdbcType=VARCHAR})
+        WHERE (CountryNameCN = #{countryName,jdbcType=NVARCHAR} OR BINARY CountryNameEN = #{countryName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.CountryEntity" >
         INSERT INTO Country (

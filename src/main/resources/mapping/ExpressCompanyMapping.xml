@@ -17,13 +17,13 @@
     </select>
     <select id="searchList" resultMap="BaseResultMapOfExpressCompany">
         SELECT
-        CompanyID,
-        CompanyCN,
-        CompanyEN,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
+            CompanyID,
+            CompanyCN,
+            CompanyEN,
+            InUser,
+            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            LastEditUser,
+            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM ExpressCompany
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
@@ -50,7 +50,7 @@
         LastEditUser,
         LastEditDate
         FROM ExpressCompany
-        WHERE (CompanyCN = #{companyName,jdbcType=NVARCHAR} OR CompanyEN = #{companyName,jdbcType=VARCHAR})
+        WHERE (CompanyCN = #{companyName,jdbcType=NVARCHAR} OR BINARY CompanyEN = #{companyName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.ExpressCompanyEntity" >
         INSERT INTO ExpressCompany (

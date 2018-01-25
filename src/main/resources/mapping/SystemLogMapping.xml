@@ -38,9 +38,9 @@
                         WHEN 'C' THEN 'Close'
             END) AS StatusText,
             InUser,
-            InDate,
+            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
             LastEditUser,
-            LastEditDate
+            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM SystemLog
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};

@@ -35,10 +35,8 @@
     <result column="MadeInID" property="madeInID" jdbcType="INTEGER" />
     <result column="MadeInCN" property="madeInCN" jdbcType="NVARCHAR" />
     <result column="MadeInEN" property="madeInEN" jdbcType="VARCHAR" />
-
     <result column="ItemLength" property="itemLength" jdbcType="VARCHAR" />
     <result column="AdjustLength" property="adjustLength" jdbcType="VARCHAR" />
-
     <result column="SuitablePetCN" property="suitablePetCN" jdbcType="VARCHAR" />
     <result column="SuitablePetEN" property="suitablePetEN" jdbcType="VARCHAR" />
     <result column="ItemShortDescriptionCN" property="itemShortDescriptionCN" jdbcType="VARCHAR" />
@@ -106,9 +104,9 @@
        WHEN 'E' THEN '已下架'
        END) AS ItemStatusText,
       A.InUser,
-      A.InDate,
+      DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
       A.LastEditUser,
-      A.LastEditDate
+      DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
     FROM Item A
       LEFT JOIN Brand B
         ON A.BrandID = B.BrandID
@@ -333,7 +331,7 @@
         AND A.CategoryID = #{arg1,jdbcType=INTEGER}
         AND A.SubCategoryID = #{arg2,jdbcType=INTEGER}
         AND A.SeriesID = #{arg3,jdbcType=INTEGER}
-        AND (A.ItemNameCN = #{arg4,jdbcType=NVARCHAR} OR A.ItemNameEN = #{arg4,jdbcType=VARCHAR})
+        AND (A.ItemNameCN = #{arg4,jdbcType=NVARCHAR} OR BINARY A.ItemNameEN = #{arg4,jdbcType=VARCHAR})
   </select>
   <insert id="insert" useGeneratedKeys="true" keyProperty="itemID" parameterType="com.johnny.store.entity.BrandEntity" >
     INSERT INTO Item (

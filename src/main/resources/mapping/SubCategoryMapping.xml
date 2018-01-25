@@ -17,13 +17,13 @@
     </select>
     <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
-        SubCategoryID,
-        SubCategoryCN,
-        SubCategoryEN,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
+            SubCategoryID,
+            SubCategoryCN,
+            SubCategoryEN,
+            InUser,
+            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            LastEditUser,
+            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM SubCategory
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
@@ -50,7 +50,7 @@
         LastEditUser,
         LastEditDate
         FROM SubCategory
-        WHERE (SubCategoryCN = #{subCategoryName,jdbcType=NVARCHAR} OR SubCategoryEN = #{subCategoryName,jdbcType=VARCHAR})
+        WHERE (SubCategoryCN = #{subCategoryName,jdbcType=NVARCHAR} OR BINARY SubCategoryEN = #{subCategoryName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.SubCategoryEntity" >
         INSERT INTO SubCategory (

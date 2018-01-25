@@ -17,20 +17,20 @@
         <result column="LastEditDate" property="lastEditDate" jdbcType="TIMESTAMP" />
     </resultMap>
     <select id="searchList" resultMap="BaseResultMapOfCity">
-        SELECT
-		A.CityID,
-		B.ProvinceID,
-		B.ProvinceNameCN,
-		B.ProvinceNameEN,
-		C.CountryID,
-		C.CountryNameCN,
-		C.CountryNameEN,
-		A.CityNameCN,
-		A.CityNameEN,
-		A.InUser,
-		A.InDate,
-		A.LastEditUser,
-		A.LastEditDate
+    SELECT
+        A.CityID,
+        B.ProvinceID,
+        B.ProvinceNameCN,
+        B.ProvinceNameEN,
+        C.CountryID,
+        C.CountryNameCN,
+        C.CountryNameEN,
+        A.CityNameCN,
+        A.CityNameEN,
+        A.InUser,
+        DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+        A.LastEditUser,
+        DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
 		FROM City A
 		INNER JOIN Province B
 		ON A.ProvinceID = B.ProvinceID
@@ -70,7 +70,7 @@
         LastEditUser,
         LastEditDate
         FROM City
-        WHERE (CityNameCN = #{cityName,jdbcType=NVARCHAR} OR CityNameEN = #{cityName,jdbcType=VARCHAR})
+        WHERE (CityNameCN = #{cityName,jdbcType=NVARCHAR} OR BINARY CityNameEN = #{cityName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.CityEntity" >
         INSERT INTO City (

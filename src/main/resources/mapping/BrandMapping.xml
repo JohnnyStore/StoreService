@@ -23,9 +23,9 @@
             A.BrandEN,
             B.ImageSrc,
             A.InUser,
-            A.InDate,
+            DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
             A.LastEditUser,
-            A.LastEditDate
+            DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM Brand A
         INNER JOIN Image B
         ON A.BrandID = B.ObjectID
@@ -56,7 +56,7 @@
         LastEditUser,
         LastEditDate
         FROM Brand
-        WHERE (BrandCN = #{brandName,jdbcType=NVARCHAR} OR BrandEN = #{brandName,jdbcType=VARCHAR})
+        WHERE (BrandCN = #{brandName,jdbcType=NVARCHAR} OR BINARY BrandEN = #{brandName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="brandID" parameterType="com.johnny.store.entity.BrandEntity" >
         INSERT INTO Brand (

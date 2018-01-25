@@ -41,10 +41,10 @@
              WHEN 'N' THEN '审核未通过'
              WHEN 'F' THEN '冻结'
              END) AS StatusText,
-            `InUser`,
-            `InDate`,
-            `LastEditUser`,
-            `LastEditDate`
+            InUser,
+            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            LastEditUser,
+            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM Administrator
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};

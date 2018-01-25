@@ -17,13 +17,13 @@
     </select>
     <select id="searchList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
-        MaterialID,
-        MaterialCN,
-        MaterialEN,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
+            MaterialID,
+            MaterialCN,
+            MaterialEN,
+            InUser,
+            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            LastEditUser,
+            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM MaterialMapping
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
@@ -50,7 +50,7 @@
         LastEditUser,
         LastEditDate
         FROM MaterialMapping
-        WHERE (MaterialCN = #{materialName,jdbcType=NVARCHAR} OR MaterialEN = #{materialName,jdbcType=VARCHAR})
+        WHERE (MaterialCN = #{materialName,jdbcType=NVARCHAR} OR BINARY MaterialEN = #{materialName,jdbcType=VARCHAR})
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.MaterialEntity" >
         INSERT INTO MaterialMapping (
