@@ -12,14 +12,15 @@ public class ItemVO {
     private String categoryCN;
     private String categoryEN;
     private int subCategoryID;
+    private int itemGroupID;
+    private String itemGroupCN;
+    private String itemGroupEN;
     private String subCategoryCN;
     private String subCategoryEN;
     private int seriesID;
     private String itemSeriesCN;
     private String itemSeriesEN;
     private String itemCode;
-    private String itemNameCN;
-    private String itemNameEN;
     private String itemImageUrl;
     private double unitPrice4RMB;
     private double promotionPrice4RMB;
@@ -32,7 +33,8 @@ public class ItemVO {
     private int sizeID;
     private String sizeCN;
     private String sizeEN;
-    private int materialID;
+    private String itemMaterial;
+    private String itemMaterialName;
     private String materialCN;
     private String materialEN;
     private int madeInID;
@@ -93,22 +95,6 @@ public class ItemVO {
         this.seriesID = seriesID;
     }
 
-    public String getItemNameCN() {
-        return this.itemNameCN;
-    }
-
-    public void setItemNameCN(String itemNameCN) {
-        this.itemNameCN = itemNameCN;
-    }
-
-    public String getItemNameEN() {
-        return this.itemNameEN;
-    }
-
-    public void setItemNameEN(String itemNameEN) {
-        this.itemNameEN = itemNameEN;
-    }
-
     public float getRate() {
         return this.rate;
     }
@@ -131,14 +117,6 @@ public class ItemVO {
 
     public void setSizeID(int sizeID) {
         this.sizeID = sizeID;
-    }
-
-    public int getMaterialID() {
-        return this.materialID;
-    }
-
-    public void setMaterialID(int materialID) {
-        this.materialID = materialID;
     }
 
     public String getSuitablePetCN() {
@@ -435,5 +413,45 @@ public class ItemVO {
 
     public void setItemImageUrl(String itemImageUrl) {
         this.itemImageUrl = itemImageUrl;
+    }
+
+    public int getItemGroupID() {
+        return itemGroupID;
+    }
+
+    public void setItemGroupID(int itemGroupID) {
+        this.itemGroupID = itemGroupID;
+    }
+
+    public String getItemGroupCN() {
+        return itemGroupCN;
+    }
+
+    public void setItemGroupCN(String itemGroupCN) {
+        this.itemGroupCN = itemGroupCN;
+    }
+
+    public String getItemGroupEN() {
+        return itemGroupEN;
+    }
+
+    public void setItemGroupEN(String itemGroupEN) {
+        this.itemGroupEN = itemGroupEN;
+    }
+
+    public String getItemMaterial() {
+        return itemMaterial;
+    }
+
+    public void setItemMaterial(String itemMaterial) {
+        this.itemMaterial = itemMaterial;
+    }
+
+    public String getItemMaterialName() {
+        return itemMaterialName;
+    }
+
+    public void setItemMaterialName(String itemMaterialName) {
+        this.itemMaterialName = itemMaterialName;
     }
 }

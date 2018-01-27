@@ -8,6 +8,9 @@ public class ItemEntity {
 	private int categoryID;
 	private String categoryCN;
 	private String categoryEN;
+	private int itemGroupID;
+	private String itemGroupCN;
+	private String itemGroupEN;
 	private int subCategoryID;
 	private String subCategoryCN;
 	private String subCategoryEN;
@@ -15,8 +18,6 @@ public class ItemEntity {
 	private String itemSeriesCN;
 	private String itemSeriesEN;
 	private String itemCode;
-	private String itemNameCN;
-	private String itemNameEN;
 	private String itemImageUrl;
 	private double unitPrice4RMB;
 	private double promotionPrice4RMB;
@@ -29,9 +30,7 @@ public class ItemEntity {
 	private int sizeID;
 	private String sizeCN;
 	private String sizeEN;
-	private int materialID;
-	private String materialCN;
-	private String materialEN;
+	private String itemMaterial;
 	private int madeInID;
 	private String madeInCN;
 	private String madeInEN;
@@ -90,22 +89,6 @@ public class ItemEntity {
 		this.seriesID = seriesID;
 	}
 
-	public String getItemNameCN() {
-		return this.itemNameCN;
-	}
-
-	public void setItemNameCN(String itemNameCN) {
-		this.itemNameCN = itemNameCN;
-	}
-
-	public String getItemNameEN() {
-		return this.itemNameEN;
-	}
-
-	public void setItemNameEN(String itemNameEN) {
-		this.itemNameEN = itemNameEN;
-	}
-
 	public float getRate() {
 		return this.rate;
 	}
@@ -128,14 +111,6 @@ public class ItemEntity {
 
 	public void setSizeID(int sizeID) {
 		this.sizeID = sizeID;
-	}
-
-	public int getMaterialID() {
-		return this.materialID;
-	}
-
-	public void setMaterialID(int materialID) {
-		this.materialID = materialID;
 	}
 
 	public String getSuitablePetCN() {
@@ -386,22 +361,6 @@ public class ItemEntity {
 		this.sizeEN = sizeEN;
 	}
 
-	public String getMaterialCN() {
-		return materialCN;
-	}
-
-	public void setMaterialCN(String materialCN) {
-		this.materialCN = materialCN;
-	}
-
-	public String getMaterialEN() {
-		return materialEN;
-	}
-
-	public void setMaterialEN(String materialEN) {
-		this.materialEN = materialEN;
-	}
-
 	public String getMadeInCN() {
 		return madeInCN;
 	}
@@ -432,5 +391,37 @@ public class ItemEntity {
 
 	public void setItemImageUrl(String itemImageUrl) {
 		this.itemImageUrl = itemImageUrl;
+	}
+
+	public int getItemGroupID() {
+		return itemGroupID;
+	}
+
+	public void setItemGroupID(int itemGroupID) {
+		this.itemGroupID = itemGroupID;
+	}
+
+	public String getItemGroupCN() {
+		return itemGroupCN;
+	}
+
+	public void setItemGroupCN(String itemGroupCN) {
+		this.itemGroupCN = itemGroupCN;
+	}
+
+	public String getItemGroupEN() {
+		return itemGroupEN;
+	}
+
+	public void setItemGroupEN(String itemGroupEN) {
+		this.itemGroupEN = itemGroupEN;
+	}
+
+	public String getItemMaterial() {
+		return itemMaterial;
+	}
+
+	public void setItemMaterial(String itemMaterial) {
+		this.itemMaterial = itemMaterial;
 	}
 }

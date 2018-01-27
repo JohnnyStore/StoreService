@@ -12,12 +12,13 @@
     <result column="SubCategoryID" property="subCategoryID" jdbcType="INTEGER" />
     <result column="SubCategoryCN" property="subCategoryCN" jdbcType="NVARCHAR" />
     <result column="SubCategoryEN" property="subCategoryEN" jdbcType="VARCHAR" />
+    <result column="ItemGroupID" property="itemGroupID" jdbcType="INTEGER" />
+    <result column="ItemGroupCN" property="itemGroupCN" jdbcType="NVARCHAR" />
+    <result column="ItemGroupEN" property="itemGroupEN" jdbcType="VARCHAR" />
     <result column="SeriesID" property="seriesID" jdbcType="INTEGER" />
     <result column="ItemSeriesCN" property="itemSeriesCN" jdbcType="NVARCHAR" />
     <result column="ItemSeriesEN" property="itemSeriesEN" jdbcType="VARCHAR" />
     <result column="ItemCode" property="itemCode" jdbcType="VARCHAR" />
-    <result column="ItemNameCN" property="itemNameCN" jdbcType="VARCHAR" />
-    <result column="ItemNameEN" property="itemNameEN" jdbcType="VARCHAR" />
     <result column="UnitPrice4RMB" property="unitPrice4RMB" jdbcType="DECIMAL" />
     <result column="PromotionPrice4RMB" property="promotionPrice4RMB" jdbcType="DECIMAL" />
     <result column="UnitPrice4USD" property="unitPrice4USD" jdbcType="DECIMAL" />
@@ -29,9 +30,7 @@
     <result column="SizeID" property="sizeID" jdbcType="INTEGER" />
     <result column="SizeCN" property="sizeCN" jdbcType="NVARCHAR" />
     <result column="SizeEN" property="sizeEN" jdbcType="VARCHAR" />
-    <result column="MaterialID" property="materialID" jdbcType="INTEGER" />
-    <result column="MaterialCN" property="materialCN" jdbcType="NVARCHAR" />
-    <result column="MaterialEN" property="materialEN" jdbcType="VARCHAR" />
+    <result column="ItemMaterial" property="itemMaterial" jdbcType="INTEGER" />
     <result column="MadeInID" property="madeInID" jdbcType="INTEGER" />
     <result column="MadeInCN" property="madeInCN" jdbcType="NVARCHAR" />
     <result column="MadeInEN" property="madeInEN" jdbcType="VARCHAR" />
@@ -67,12 +66,13 @@
       A.SubCategoryID,
       D.SubCategoryCN,
       D.SubCategoryEN,
+      A.ItemGroupID,
+      J.ItemGroupCN,
+      J.ItemGroupEN,
       A.SeriesID,
       A.ItemCode,
       E.ItemSeriesCN,
       E.ItemSeriesEN,
-      A.ItemNameCN,
-      A.ItemNameEN,
       A.UnitPrice4RMB,
       A.PromotionPrice4RMB,
       A.UnitPrice4USD,
@@ -84,9 +84,7 @@
       A.SizeID,
       G.SizeCN,
       G.SizeEN,
-      A.MaterialID,
-      H.MaterialCN,
-      H.MaterialEN,
+      A.ItemMaterial,
       A.MadeInID,
       I.MadeInCN,
       I.MadeInEN,
@@ -120,10 +118,10 @@
         ON A.ColorID = F.ColorID
       LEFT JOIN SizeMapping G
         ON A.SizeID = G.SizeID
-      LEFT JOIN MaterialMapping H
-        ON A.MaterialID = H.MaterialID
       LEFT JOIN MadeInMapping I
         ON A.MadeInID = I.MadeInID
+      LEFT JOIN ItemGroup J
+        ON A.ItemGroupID = J.ItemGroupID
     ORDER BY InDate DESC
     LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
   </select>
@@ -139,12 +137,13 @@
       A.SubCategoryID,
       D.SubCategoryCN,
       D.SubCategoryEN,
+      A.ItemGroupID,
+      J.ItemGroupCN,
+      J.ItemGroupEN,
       A.SeriesID,
       A.ItemCode,
       E.ItemSeriesCN,
       E.ItemSeriesEN,
-      A.ItemNameCN,
-      A.ItemNameEN,
       A.UnitPrice4RMB,
       A.PromotionPrice4RMB,
       A.UnitPrice4USD,
@@ -156,9 +155,7 @@
       A.SizeID,
       G.SizeCN,
       G.SizeEN,
-      A.MaterialID,
-      H.MaterialCN,
-      H.MaterialEN,
+      A.ItemMaterial,
       A.MadeInID,
       I.MadeInCN,
       I.MadeInEN,
@@ -171,10 +168,14 @@
       A.ItemDescriptionCN,
       A.ItemDescriptionEN,
       A.ItemStatus,
+      (CASE A.ItemStatus WHEN 'P' THEN '待上架'
+       WHEN 'N' THEN '已上架'
+       WHEN 'E' THEN '已下架'
+       END) AS ItemStatusText,
       A.InUser,
-      A.InDate,
+      DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
       A.LastEditUser,
-      A.LastEditDate
+      DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
     FROM Item A
       LEFT JOIN Brand B
         ON A.BrandID = B.BrandID
@@ -188,10 +189,10 @@
         ON A.ColorID = F.ColorID
       LEFT JOIN SizeMapping G
         ON A.SizeID = G.SizeID
-      LEFT JOIN MaterialMapping H
-        ON A.MaterialID = H.MaterialID
       LEFT JOIN MadeInMapping I
         ON A.MadeInID = I.MadeInID
+      LEFT JOIN ItemGroup J
+        ON A.ItemGroupID = J.ItemGroupID
     WHERE ItemID = #{itemID,jdbcType=INTEGER}
     ORDER BY InDate DESC
   </select>
@@ -207,12 +208,13 @@
       A.SubCategoryID,
       D.SubCategoryCN,
       D.SubCategoryEN,
+      A.ItemGroupID,
+      J.ItemGroupCN,
+      J.ItemGroupEN,
       A.SeriesID,
       A.ItemCode,
       E.ItemSeriesCN,
       E.ItemSeriesEN,
-      A.ItemNameCN,
-      A.ItemNameEN,
       A.UnitPrice4RMB,
       A.PromotionPrice4RMB,
       A.UnitPrice4USD,
@@ -224,9 +226,7 @@
       A.SizeID,
       G.SizeCN,
       G.SizeEN,
-      A.MaterialID,
-      H.MaterialCN,
-      H.MaterialEN,
+      A.ItemMaterial,
       A.MadeInID,
       I.MadeInCN,
       I.MadeInEN,
@@ -239,10 +239,14 @@
       A.ItemDescriptionCN,
       A.ItemDescriptionEN,
       A.ItemStatus,
+      (CASE A.ItemStatus WHEN 'P' THEN '待上架'
+       WHEN 'N' THEN '已上架'
+       WHEN 'E' THEN '已下架'
+       END) AS ItemStatusText,
       A.InUser,
-      A.InDate,
+      DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
       A.LastEditUser,
-      A.LastEditDate
+      DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
     FROM Item A
       LEFT JOIN Brand B
         ON A.BrandID = B.BrandID
@@ -256,10 +260,10 @@
         ON A.ColorID = F.ColorID
       LEFT JOIN SizeMapping G
         ON A.SizeID = G.SizeID
-      LEFT JOIN MaterialMapping H
-        ON A.MaterialID = H.MaterialID
       LEFT JOIN MadeInMapping I
         ON A.MadeInID = I.MadeInID
+      LEFT JOIN ItemGroup J
+        ON A.ItemGroupID = J.ItemGroupID
     WHERE A.ItemCode = #{itemCode,jdbcType=NVARCHAR}
   </select>
   <select id="searchByItemName" resultMap="BaseResultMap">
@@ -274,12 +278,13 @@
       A.SubCategoryID,
       D.SubCategoryCN,
       D.SubCategoryEN,
+      A.ItemGroupID,
+      J.ItemGroupCN,
+      J.ItemGroupEN,
       A.SeriesID,
       A.ItemCode,
       E.ItemSeriesCN,
       E.ItemSeriesEN,
-      A.ItemNameCN,
-      A.ItemNameEN,
       A.UnitPrice4RMB,
       A.PromotionPrice4RMB,
       A.UnitPrice4USD,
@@ -291,9 +296,7 @@
       A.SizeID,
       G.SizeCN,
       G.SizeEN,
-      A.MaterialID,
-      H.MaterialCN,
-      H.MaterialEN,
+      A.ItemMaterial,
       A.MadeInID,
       I.MadeInCN,
       I.MadeInEN,
@@ -306,27 +309,31 @@
       A.ItemDescriptionCN,
       A.ItemDescriptionEN,
       A.ItemStatus,
+      (CASE A.ItemStatus WHEN 'P' THEN '待上架'
+       WHEN 'N' THEN '已上架'
+       WHEN 'E' THEN '已下架'
+       END) AS ItemStatusText,
       A.InUser,
-      A.InDate,
+      DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
       A.LastEditUser,
-      A.LastEditDate
+      DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
     FROM Item A
-    LEFT JOIN Brand B
-    ON A.BrandID = B.BrandID
-    LEFT JOIN Category C
-    ON A.CategoryID = C.CategoryID
-    LEFT JOIN SubCategory D
-    ON A.SubCategoryID = D.SubCategoryID
-    LEFT JOIN ItemSeries E
-    ON A.SeriesID = E.SeriesID
-    LEFT JOIN Color F
-    ON A.ColorID = F.ColorID
-    LEFT JOIN SizeMapping G
-    ON A.SizeID = G.SizeID
-    LEFT JOIN MaterialMapping H
-    ON A.MaterialID = H.MaterialID
-    LEFT JOIN MadeInMapping I
-    ON A.MadeInID = I.MadeInID
+      LEFT JOIN Brand B
+        ON A.BrandID = B.BrandID
+      LEFT JOIN Category C
+        ON A.CategoryID = C.CategoryID
+      LEFT JOIN SubCategory D
+        ON A.SubCategoryID = D.SubCategoryID
+      LEFT JOIN ItemSeries E
+        ON A.SeriesID = E.SeriesID
+      LEFT JOIN Color F
+        ON A.ColorID = F.ColorID
+      LEFT JOIN SizeMapping G
+        ON A.SizeID = G.SizeID
+      LEFT JOIN MadeInMapping I
+        ON A.MadeInID = I.MadeInID
+      LEFT JOIN ItemGroup J
+        ON A.ItemGroupID = J.ItemGroupID
     WHERE A.BrandID = #{arg0,jdbcType=INTEGER}
         AND A.CategoryID = #{arg1,jdbcType=INTEGER}
         AND A.SubCategoryID = #{arg2,jdbcType=INTEGER}
@@ -338,10 +345,9 @@
       BrandID,
       CategoryID,
       SubCategoryID,
+      ItemGroupID,
       SeriesID,
       ItemCode,
-      ItemNameCN,
-      ItemNameEN,
       UnitPrice4RMB,
       PromotionPrice4RMB,
       UnitPrice4USD,
@@ -349,7 +355,7 @@
       Rate,
       ColorID,
       SizeID,
-      MaterialID,
+      ItemMaterial,
       MadeInID,
       ItemLength,
       AdjustLength,
@@ -367,10 +373,9 @@
     #{brandID, jdbcType=INTEGER},
     #{categoryID, jdbcType=INTEGER},
     #{subCategoryID, jdbcType=INTEGER},
+    #{itemGroupID, jdbcType=INTEGER},
     #{seriesID, jdbcType=INTEGER},
     #{itemCode, jdbcType=VARCHAR},
-    #{itemNameCN, jdbcType=VARCHAR},
-    #{itemNameEN, jdbcType=VARCHAR},
     #{unitPrice4RMB, jdbcType=DECIMAL},
     #{promotionPrice4RMB, jdbcType=DECIMAL},
     #{unitPrice4USD, jdbcType=DECIMAL},
@@ -378,7 +383,7 @@
     #{rate, jdbcType=FLOAT},
     #{colorID, jdbcType=INTEGER},
     #{sizeID, jdbcType=INTEGER},
-    #{materialID, jdbcType=INTEGER},
+    #{itemMaterial, jdbcType=VARCHAR},
     #{madeInID, jdbcType=INTEGER},
     #{itemLength, jdbcType=VARCHAR},
     #{adjustLength, jdbcType=VARCHAR},
@@ -398,10 +403,9 @@
       BrandID = #{brandID, jdbcType=INTEGER},
       CategoryID = #{categoryID, jdbcType=INTEGER},
       SubCategoryID = #{subCategoryID, jdbcType=INTEGER},
+      ItemGroupID = #{itemGroupID, jdbcType=INTEGER},
       SeriesID = #{seriesID, jdbcType=INTEGER},
       ItemCode = #{itemCode, jdbcType=VARCHAR},
-      ItemNameCN = #{itemNameCN, jdbcType=VARCHAR},
-      ItemNameEN = #{itemNameEN, jdbcType=VARCHAR},
       UnitPrice4RMB = #{unitPrice4RMB, jdbcType=DECIMAL},
       PromotionPrice4RMB = #{promotionPrice4RMB, jdbcType=DECIMAL},
       UnitPrice4USD = #{unitPrice4USD, jdbcType=DECIMAL},
@@ -409,7 +413,7 @@
       Rate = #{rate, jdbcType=FLOAT},
       ColorID = #{colorID, jdbcType=INTEGER},
       SizeID = #{sizeID, jdbcType=INTEGER},
-      MaterialID = #{materialID, jdbcType=INTEGER},
+      ItemMaterial = #{itemMaterial, jdbcType=VARCHAR},
       MadeInID = #{madeInID, jdbcType=INTEGER},
       ItemLength = #{itemLength, jdbcType=VARCHAR},
       AdjustLength = #{adjustLength, jdbcType=VARCHAR},

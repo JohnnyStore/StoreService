@@ -8,10 +8,9 @@ public class ItemDTO {
     private int brandID;
     private int categoryID;
     private int subCategoryID;
+    private int itemGroupID;
     private int seriesID;
     private String itemCode;
-    private String itemNameCN;
-    private String itemNameEN;
     private double unitPrice4RMB;
     private double promotionPrice4RMB;
     private double unitPrice4USD;
@@ -19,9 +18,8 @@ public class ItemDTO {
     private float rate;
     private int colorID;
     private int sizeID;
-    private int materialID;
-    private String materialCN;
-    private String materialEN;
+    private String itemMaterial;
+    private String itemMaterialName;
     private int madeInID;
     private String itemLength;
     private String adjustLength;
@@ -78,22 +76,6 @@ public class ItemDTO {
         this.seriesID = seriesID;
     }
 
-    public String getItemNameCN() {
-        return this.itemNameCN;
-    }
-
-    public void setItemNameCN(String itemNameCN) {
-        this.itemNameCN = itemNameCN;
-    }
-
-    public String getItemNameEN() {
-        return this.itemNameEN;
-    }
-
-    public void setItemNameEN(String itemNameEN) {
-        this.itemNameEN = itemNameEN;
-    }
-
     public float getRate() {
         return this.rate;
     }
@@ -116,14 +98,6 @@ public class ItemDTO {
 
     public void setSizeID(int sizeID) {
         this.sizeID = sizeID;
-    }
-
-    public int getMaterialID() {
-        return this.materialID;
-    }
-
-    public void setMaterialID(int materialID) {
-        this.materialID = materialID;
     }
 
     public String getSuitablePetCN() {
@@ -180,22 +154,6 @@ public class ItemDTO {
 
     public void setItemStatus(String itemStatus) {
         this.itemStatus = itemStatus;
-    }
-
-    public String getMaterialCN() {
-        return materialCN;
-    }
-
-    public void setMaterialCN(String materialCN) {
-        this.materialCN = materialCN;
-    }
-
-    public String getMaterialEN() {
-        return materialEN;
-    }
-
-    public void setMaterialEN(String materialEN) {
-        this.materialEN = materialEN;
     }
 
     public int getMadeInID() {
@@ -300,5 +258,29 @@ public class ItemDTO {
 
     public void setAdjustLength(String adjustLength) {
         this.adjustLength = adjustLength;
+    }
+
+    public int getItemGroupID() {
+        return itemGroupID;
+    }
+
+    public void setItemGroupID(int itemGroupID) {
+        this.itemGroupID = itemGroupID;
+    }
+
+    public String getItemMaterial() {
+        return itemMaterial;
+    }
+
+    public void setItemMaterial(String itemMaterial) {
+        this.itemMaterial = itemMaterial;
+    }
+
+    public String getItemMaterialName() {
+        return itemMaterialName;
+    }
+
+    public void setItemMaterialName(String itemMaterialName) {
+        this.itemMaterialName = itemMaterialName;
     }
 }

@@ -10,9 +10,11 @@ import com.johnny.store.dto.ItemDTO;
 import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.entity.ImageEntity;
 import com.johnny.store.entity.ItemEntity;
+import com.johnny.store.entity.MaterialEntity;
 import com.johnny.store.manager.UnifiedResponseManager;
 import com.johnny.store.mapper.ItemMapper;
 import com.johnny.store.mapper.ImageMapper;
+import com.johnny.store.mapper.MaterialMapper;
 import com.johnny.store.service.ItemService;
 import com.johnny.store.vo.ItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemMapper itemMapper;
+
+    @Autowired
+    private MaterialMapper materialMapper;
 
     @Autowired
     private ImageMapper imageMapper;
@@ -51,6 +56,7 @@ public class ItemServiceImpl implements ItemService {
                 model.setBrandID(entity.getBrandID());
                 model.setCategoryID(entity.getCategoryID());
                 model.setSubCategoryID(entity.getSubCategoryID());
+                model.setItemGroupID(entity.getItemGroupID());
                 model.setSeriesID(entity.getSeriesID());
                 model.setUnitPrice4RMB(entity.getUnitPrice4RMB());
                 model.setPromotionPrice4RMB(entity.getPromotionPrice4RMB());
@@ -59,7 +65,6 @@ public class ItemServiceImpl implements ItemService {
                 model.setRate(entity.getRate());
                 model.setColorID(entity.getColorID());
                 model.setSizeID(entity.getSizeID());
-                model.setMaterialID(entity.getMaterialID());
 //                model.setMadeInID(entity.getMadeInID());
                 modelList.add(model);
             }
@@ -80,11 +85,19 @@ public class ItemServiceImpl implements ItemService {
             ItemEntity entity = itemMapper.search(id);
             if(entity != null){
                 model = new ItemVO();
+                String[] itemMaterialArray = entity.getItemMaterial().split(",");
+                List<String> itemMaterialList = new ArrayList<>();
+                for (String itemMaterialID : itemMaterialArray) {
+                    MaterialEntity materialEntity = materialMapper.search(Integer.parseInt(itemMaterialID));
+                    itemMaterialList.add(materialEntity.getMaterialCN());
+                }
                 ConvertObjectUtils.convertJavaBean(model, entity);
+                model.setItemMaterialName(String.join(",", itemMaterialList));
                 model.setItemID(entity.getItemID());
                 model.setBrandID(entity.getBrandID());
                 model.setCategoryID(entity.getCategoryID());
                 model.setSubCategoryID(entity.getSubCategoryID());
+                model.setItemGroupID(entity.getItemGroupID());
                 model.setSeriesID(entity.getSeriesID());
                 model.setUnitPrice4RMB(entity.getUnitPrice4RMB());
                 model.setPromotionPrice4RMB(entity.getPromotionPrice4RMB());
@@ -93,7 +106,6 @@ public class ItemServiceImpl implements ItemService {
                 model.setRate(entity.getRate());
                 model.setColorID(entity.getColorID());
                 model.setSizeID(entity.getSizeID());
-                model.setMaterialID(entity.getMaterialID());
                 model.setMadeInID(entity.getMadeInID());
             }
             return UnifiedResponseManager.buildSuccessResponse(model);
@@ -146,6 +158,7 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setBrandID(itemDTO.getBrandID());
             itemEntity.setCategoryID(itemDTO.getCategoryID());
             itemEntity.setSubCategoryID(itemDTO.getSubCategoryID());
+            itemEntity.setItemGroupID(itemDTO.getItemGroupID());
             itemEntity.setSeriesID(itemDTO.getSeriesID());
             itemEntity.setUnitPrice4RMB(itemDTO.getUnitPrice4RMB());
             itemEntity.setPromotionPrice4RMB(itemDTO.getPromotionPrice4RMB());
@@ -154,7 +167,6 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setRate(itemDTO.getRate());
             itemEntity.setColorID(itemDTO.getColorID());
             itemEntity.setSizeID(itemDTO.getSizeID());
-            itemEntity.setMaterialID(itemDTO.getMaterialID());
             itemEntity.setMadeInID(itemDTO.getMadeInID());
             itemEntity.setInUser(itemDTO.getLoginUser());
             itemEntity.setLastEditUser(itemDTO.getLoginUser());
@@ -180,6 +192,7 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setBrandID(itemDTO.getBrandID());
             itemEntity.setCategoryID(itemDTO.getCategoryID());
             itemEntity.setSubCategoryID(itemDTO.getSubCategoryID());
+            itemEntity.setItemGroupID(itemDTO.getItemGroupID());
             itemEntity.setSeriesID(itemDTO.getSeriesID());
             itemEntity.setUnitPrice4RMB(itemDTO.getUnitPrice4RMB());
             itemEntity.setPromotionPrice4RMB(itemDTO.getPromotionPrice4RMB());
@@ -188,7 +201,6 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setRate(itemDTO.getRate());
             itemEntity.setColorID(itemDTO.getColorID());
             itemEntity.setSizeID(itemDTO.getSizeID());
-            itemEntity.setMaterialID(itemDTO.getMaterialID());
             itemEntity.setMadeInID(itemDTO.getMadeInID());
             itemEntity.setLastEditUser(itemDTO.getLoginUser());
             int affectRow = itemMapper.update(itemEntity);
