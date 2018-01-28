@@ -3,13 +3,18 @@ package com.johnny.store.entity;
 public class BrandHotEntity{
 	private int brandHotID;
 	private int brandID;
+	private String brandCN;
+	private String brandEN;
+	private String brandImageUrl;
 	private String startDate;
 	private String endDate;
 	private String status;
+	private String statusText;
 	private String inUser;
 	private String inDate;
 	private String lastEditUser;
 	private String lastEditDate;
+	private String loginUser;
 
 	public int getBrandHotID() {
 		return this.brandHotID;
@@ -83,4 +88,43 @@ public class BrandHotEntity{
 		this.lastEditDate = lastEditDate;
 	}
 
+	public String getLoginUser() {
+		return loginUser;
+	}
+
+	public void setLoginUser(String loginUser) {
+		this.loginUser = loginUser;
+	}
+
+	public String getStatusText() {
+		return statusText;
+	}
+
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
+	}
+
+	public String getBrandCN() {
+		return brandCN;
+	}
+
+	public void setBrandCN(String brandCN) {
+		this.brandCN = brandCN;
+	}
+
+	public String getBrandEN() {
+		return brandEN;
+	}
+
+	public void setBrandEN(String brandEN) {
+		this.brandEN = brandEN;
+	}
+
+	public String getBrandImageUrl() {
+		return brandImageUrl;
+	}
+
+	public void setBrandImageUrl(String brandImageUrl) {
+		this.brandImageUrl = brandImageUrl;
+	}
 }
