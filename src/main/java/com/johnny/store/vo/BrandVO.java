@@ -4,6 +4,7 @@ public class BrandVO {
     private int brandID;
     private String brandCN;
     private String brandEN;
+    private int imageID;
     private String imageSrc;
     private String inUser;
     private String inDate;
@@ -72,5 +73,13 @@ public class BrandVO {
 
     public void setImageSrc(String imageSrc) {
         this.imageSrc = imageSrc;
+    }
+
+    public int getImageID() {
+        return imageID;
+    }
+
+    public void setImageID(int imageID) {
+        this.imageID = imageID;
     }
 }

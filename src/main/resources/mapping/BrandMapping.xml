@@ -5,6 +5,7 @@
         <id column="BrandID" property="brandID" jdbcType="INTEGER" />
         <result column="BrandCN" property="brandCN" jdbcType="NVARCHAR" />
         <result column="BrandEN" property="brandEN" jdbcType="VARCHAR" />
+        <result column="ImageID" property="imageID" jdbcType="INTEGER" />
         <result column="ImageSrc" property="imageSrc" jdbcType="VARCHAR" />
         <result column="InUser" property="inUser" jdbcType="VARCHAR" />
         <result column="InDate" property="inDate" jdbcType="TIMESTAMP" />
@@ -21,6 +22,7 @@
             A.BrandID,
             A.BrandCN,
             A.BrandEN,
+            B.ImageID,
             B.ImageSrc,
             A.InUser,
             DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
