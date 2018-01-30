@@ -20,7 +20,6 @@ public class ShoppingCartController {
         return shoppingCartServiceImpl.findList(pageNumber, pageSize);
     }
 
-
     @RequestMapping(value = "/api/shoppingCart/condition/{customerId}/{status}", method = RequestMethod.GET)
     public UnifiedResponse get(@PathVariable("customerId") int customerId,@PathVariable("status") String status){
         return shoppingCartServiceImpl.find(customerId,status);
