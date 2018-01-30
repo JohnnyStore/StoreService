@@ -76,8 +76,8 @@
         ON A.ItemID = B.ItemID
         INNER JOIN Customer C
         ON A.CustomerID = C.CustomerID
-        WHERE A.CustomerID = #{customerID,jdbcType=INTEGER}
-        AND A.Status = #{status,jdbcType=VARCHAR}
+        WHERE A.CustomerID = #{arg0,jdbcType=INTEGER}
+        AND A.Status = #{arg1,jdbcType=VARCHAR}
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.ShoppingCartEntity" >
         INSERT INTO ShoppingCart (

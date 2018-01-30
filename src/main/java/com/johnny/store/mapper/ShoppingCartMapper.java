@@ -19,7 +19,7 @@ public interface ShoppingCartMapper {
 
     List<ShoppingCartEntity> searchList(int startIndex, int pageSize);
 
-    ShoppingCartEntity search(ShoppingCartEntity entity);
+    ShoppingCartEntity search(int customerID,String status);
 
     ShoppingCartEntity search(int shoppingCartID);
 

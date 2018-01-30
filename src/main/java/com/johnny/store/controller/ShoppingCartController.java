@@ -20,19 +20,10 @@ public class ShoppingCartController {
         return shoppingCartServiceImpl.findList(pageNumber, pageSize);
     }
 
-//    @RequestMapping(value = "/api/shoppingCart", method = RequestMethod.POST)
-//    public UnifiedResponse add(@RequestBody ShoppingCartDTO dto) {
-//        return shoppingCartServiceImpl.find(dto);
-//    }
-//
-//    @RequestMapping(value="/api/shoppingCart", method = RequestMethod.POST)
-//    public UnifiedResponse add(@RequestBody ShoppingCartDTO dto){
-//        return shoppingCartServiceImpl.add(dto);
-//    }
 
-    @RequestMapping(value = "/api/shoppingCart/{shoppingCartId}", method = RequestMethod.GET)
-    public UnifiedResponse get(@PathVariable("shoppingCartId") int shoppingCartId){
-        return shoppingCartServiceImpl.find(shoppingCartId);
+    @RequestMapping(value = "/api/shoppingCart/condition/{customerId}/{status}", method = RequestMethod.GET)
+    public UnifiedResponse get(@PathVariable("customerId") int customerId,@PathVariable("status") String status){
+        return shoppingCartServiceImpl.find(customerId,status);
     }
 
     @RequestMapping(value="/api/shoppingCart", method = RequestMethod.PUT)

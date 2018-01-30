@@ -69,15 +69,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return null;
     }
 
-    public UnifiedResponse find(Object dto) {
+    public UnifiedResponse find(int customerId,String status) {
         try {
             ShoppingCartVO model = null;
-            ShoppingCartDTO shoppingCartDTO = (ShoppingCartDTO)dto;
-            ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity();
-            ConvertObjectUtils.convertJavaBean(shoppingCartEntity, shoppingCartDTO);
-            shoppingCartEntity.setCustomerID(shoppingCartDTO.getCustomerID());
-            shoppingCartEntity.setStatus(shoppingCartDTO.getStatus());
-            ShoppingCartEntity entity = shoppingCartMapper.search(shoppingCartEntity);
+            ShoppingCartEntity entity = shoppingCartMapper.search(customerId,status);
             if(entity != null){
                 model = new ShoppingCartVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
