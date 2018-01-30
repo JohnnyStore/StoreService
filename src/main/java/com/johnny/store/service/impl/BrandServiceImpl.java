@@ -42,6 +42,7 @@ public class BrandServiceImpl implements BrandService {
                 BrandVO model = new BrandVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
                 model.setBrandID(entity.getBrandID());
+                model.setImageID(entity.getImageID());
                 modelList.add(model);
             }
             return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
@@ -123,10 +124,18 @@ public class BrandServiceImpl implements BrandService {
         try {
             BrandDTO brandDTO = (BrandDTO)dto;
             BrandEntity brandEntity = new BrandEntity();
+            ImageEntity imageEntity = new ImageEntity();
+
             ConvertObjectUtils.convertJavaBean(brandEntity, brandDTO);
             brandEntity.setBrandID(brandDTO.getBrandID());
             brandEntity.setLastEditUser(brandDTO.getLoginUser());
             int affectRow = brandMapper.update(brandEntity);
+
+            imageEntity.setImageID(brandDTO.getBrandImageID());
+            imageEntity.setImageSrc(brandDTO.getBrandImageUrl());
+            imageEntity.setParentImageSrc("");
+            imageEntity.setLastEditUser(brandDTO.getLoginUser());
+            int affectRow4Image = imageMapper.update(imageEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
