@@ -8,13 +8,11 @@ public class ShoppingCartVO {
     private int itemID;
     private int customerID;
     private int shoppingCount;
+    private double totalPrice4RMB;
+    private double totalPrice4USD;
     private String status;
     private String statusText;
-    private String itemCode;
-    private String itemShortDescriptionCN;
-    private String itemShortDescriptionEN;
-    private String cellphone;
-    private String customerName;
+    private ItemVO itemVO;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -109,43 +107,27 @@ public class ShoppingCartVO {
         this.statusText = statusText;
     }
 
-    public String getItemCode() {
-        return itemCode;
+    public ItemVO getItemVO() {
+        return itemVO;
     }
 
-    public void setItemCode(String itemCode) {
-        this.itemCode = itemCode;
+    public void setItemVO(ItemVO itemVO) {
+        this.itemVO = itemVO;
     }
 
-    public String getItemShortDescriptionCN() {
-        return itemShortDescriptionCN;
+    public double getTotalPrice4RMB() {
+        return totalPrice4RMB;
     }
 
-    public void setItemShortDescriptionCN(String itemShortDescriptionCN) {
-        this.itemShortDescriptionCN = itemShortDescriptionCN;
+    public void setTotalPrice4RMB(double totalPrice4RMB) {
+        this.totalPrice4RMB = totalPrice4RMB;
     }
 
-    public String getItemShortDescriptionEN() {
-        return itemShortDescriptionEN;
+    public double getTotalPrice4USD() {
+        return totalPrice4USD;
     }
 
-    public void setItemShortDescriptionEN(String itemShortDescriptionEN) {
-        this.itemShortDescriptionEN = itemShortDescriptionEN;
-    }
-
-    public String getCellphone() {
-        return cellphone;
-    }
-
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setTotalPrice4USD(double totalPrice4USD) {
+        this.totalPrice4USD = totalPrice4USD;
     }
 }

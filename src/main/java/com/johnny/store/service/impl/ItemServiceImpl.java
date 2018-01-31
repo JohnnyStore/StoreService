@@ -65,7 +65,7 @@ public class ItemServiceImpl implements ItemService {
                 model.setRate(entity.getRate());
                 model.setColorID(entity.getColorID());
                 model.setSizeID(entity.getSizeID());
-//                model.setMadeInID(entity.getMadeInID());
+                model.setMadeInID(entity.getMadeInID());
                 modelList.add(model);
             }
             return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);

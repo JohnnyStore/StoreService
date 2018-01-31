@@ -1,5 +1,7 @@
 package com.johnny.store.service;
 
+import com.johnny.store.dto.UnifiedResponse;
+
 /**
  * ShoppingCartService
  *
@@ -8,4 +10,5 @@ package com.johnny.store.service;
  * @since 1.0.0+
  */
 public interface ShoppingCartService extends BaseService {
+    UnifiedResponse findList(int pageNumber, int pageSize, int customerID, String status);
 }

@@ -14,11 +14,6 @@ public class ShoppingCartEntity {
     private int shoppingCount;
     private String status;
     private String statusText;
-    private String itemCode;
-    private String itemShortDescriptionCN;
-    private String itemShortDescriptionEN;
-    private String cellphone;
-    private String customerName;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -111,45 +106,5 @@ public class ShoppingCartEntity {
 
     public void setStatusText(String statusText) {
         this.statusText = statusText;
-    }
-
-    public String getItemCode() {
-        return itemCode;
-    }
-
-    public void setItemCode(String itemCode) {
-        this.itemCode = itemCode;
-    }
-
-    public String getItemShortDescriptionEN() {
-        return itemShortDescriptionEN;
-    }
-
-    public void setItemShortDescriptionEN(String itemShortDescriptionEN) {
-        this.itemShortDescriptionEN = itemShortDescriptionEN;
-    }
-
-    public String getItemShortDescriptionCN() {
-        return itemShortDescriptionCN;
-    }
-
-    public void setItemShortDescriptionCN(String itemShortDescriptionCN) {
-        this.itemShortDescriptionCN = itemShortDescriptionCN;
-    }
-
-    public String getCellphone() {
-        return cellphone;
-    }
-
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
     }
 }

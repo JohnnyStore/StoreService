@@ -8,6 +8,7 @@ public class CustomerEntity {
 	private String customerSex;
 	private String cellphone;
 	private String email;
+	private String status;
 	private String inUser;
 	private String inDate;
 	private String lastEditUser;
@@ -101,4 +102,11 @@ public class CustomerEntity {
 		this.lastEditDate = lastEditDate;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }
