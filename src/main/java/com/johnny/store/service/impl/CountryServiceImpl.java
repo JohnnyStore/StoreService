@@ -149,7 +149,7 @@ public class CountryServiceImpl implements CountryService{
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
         }
-}
+    }
 
     @Override
     public UnifiedResponse delete(int id) {
