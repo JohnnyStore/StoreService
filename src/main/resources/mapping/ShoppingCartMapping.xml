@@ -71,8 +71,8 @@
     </insert>
     <update id="update" parameterType="com.johnny.store.entity.ShoppingCartEntity" >
         UPDATE ShoppingCart SET
-        ItemID = #{shoppingCartID, jdbcType=INTEGER},
-        CustomerID = #{shoppingCartID, jdbcType=INTEGER},
+        ItemID = #{itemID, jdbcType=INTEGER},
+        CustomerID = #{customerID, jdbcType=INTEGER},
         ShoppingCount = #{shoppingCount, jdbcType=INTEGER},
         Status = #{status, jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}

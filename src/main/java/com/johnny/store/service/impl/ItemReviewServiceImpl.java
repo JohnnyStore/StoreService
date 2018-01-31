@@ -3,20 +3,14 @@ package com.johnny.store.service.impl;
 import com.johnny.store.common.ConvertObjectUtils;
 import com.johnny.store.common.LogUtils;
 import com.johnny.store.common.StoreException;
-import com.johnny.store.constant.ImageObjectType;
-import com.johnny.store.constant.ImageType;
 import com.johnny.store.constant.ResponseCodeConsts;
-import com.johnny.store.dto.BrandHotDTO;
-import com.johnny.store.dto.ShoppingCartDTO;
+import com.johnny.store.dto.ItemReviewDTO;
 import com.johnny.store.dto.UnifiedResponse;
-import com.johnny.store.entity.BrandHotEntity;
-import com.johnny.store.entity.ImageEntity;
-import com.johnny.store.entity.ShoppingCartEntity;
+import com.johnny.store.entity.ItemReviewEntity;
 import com.johnny.store.manager.UnifiedResponseManager;
-import com.johnny.store.mapper.ShoppingCartMapper;
-import com.johnny.store.service.ShoppingCartService;
-import com.johnny.store.vo.BrandHotVO;
-import com.johnny.store.vo.ShoppingCartVO;
+import com.johnny.store.mapper.ItemReviewMapper;
+import com.johnny.store.service.ItemReviewService;
+import com.johnny.store.vo.CustomerReviewVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,34 +18,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ShoppingCartServiceImpl
- *
- * @author liqian
- * @version 1.0.0
- * @since 1.0.0+
+ * Created by 13425 on 2018/1/31.
  */
 @Service
-public class ShoppingCartServiceImpl implements ShoppingCartService {
+public class ItemReviewServiceImpl implements ItemReviewService {
+    
     @Autowired
-    private ShoppingCartMapper shoppingCartMapper;
+    private ItemReviewMapper customerReviewMapper;
 
     @Override
     public UnifiedResponse findList(int pageNumber, int pageSize) {
         try {
             int startIndex = (pageNumber - 1) * pageSize;
-            List<ShoppingCartVO> modelList = new ArrayList<>();
-            int totalCount = shoppingCartMapper.searchTotalCount();
+            List<CustomerReviewVO> modelList = new ArrayList<>();
+            int totalCount = customerReviewMapper.searchTotalCount();
             if(totalCount == 0){
                 return UnifiedResponseManager.buildSuccessResponse(0, null);
             }
-            List<ShoppingCartEntity> entityList =  shoppingCartMapper.searchList(startIndex, pageSize);
-            for (ShoppingCartEntity entity : entityList) {
-                ShoppingCartVO model = new ShoppingCartVO();
+            List<ItemReviewEntity> entityList =  customerReviewMapper.searchList(startIndex, pageSize);
+            for (ItemReviewEntity entity : entityList) {
+                CustomerReviewVO model = new CustomerReviewVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
-                model.setShoppingCartID(entity.getShoppingCartID());
+                model.setReviewID(entity.getReviewID());
                 model.setItemID(entity.getItemID());
                 model.setCustomerID(entity.getCustomerID());
-                model.setShoppingCount(entity.getShoppingCount());
                 modelList.add(model);
             }
             return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
@@ -70,17 +60,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
 
-    public UnifiedResponse find(int customerId,String status) {
+    public UnifiedResponse find(int customerID, int itemID, String reviewLevel, String reviewStatus) {
         try {
-            ShoppingCartVO model = null;
-            ShoppingCartEntity entity = shoppingCartMapper.search(customerId,status);
+            CustomerReviewVO model = null;
+            ItemReviewEntity entity = customerReviewMapper.search(customerID,itemID, reviewLevel,reviewStatus);
             if(entity != null){
-                model = new ShoppingCartVO();
+                model = new CustomerReviewVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
-                model.setShoppingCartID(entity.getShoppingCartID());
+                model.setReviewID(entity.getReviewID());
                 model.setItemID(entity.getItemID());
                 model.setCustomerID(entity.getCustomerID());
-                model.setShoppingCount(entity.getShoppingCount());
             }
             return UnifiedResponseManager.buildSuccessResponse(model);
         } catch (StoreException ex){
@@ -100,17 +89,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public UnifiedResponse add(Object dto) {
         try {
-            ShoppingCartDTO shoppingCartDTO = (ShoppingCartDTO)dto;
-            ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity();
-            ConvertObjectUtils.convertJavaBean(shoppingCartEntity, shoppingCartDTO);
-            shoppingCartEntity.setShoppingCartID(shoppingCartDTO.getShoppingCartID());
-            shoppingCartEntity.setInUser(shoppingCartDTO.getLoginUser());
-            shoppingCartEntity.setItemID(shoppingCartDTO.getItemID());
-            shoppingCartEntity.setCustomerID(shoppingCartDTO.getCustomerID());
-            shoppingCartEntity.setShoppingCount(shoppingCartDTO.getShoppingCount());
-            shoppingCartEntity.setStatus(shoppingCartDTO.getStatus());
-            shoppingCartEntity.setLastEditUser(shoppingCartDTO.getLoginUser());
-            int affectRow = shoppingCartMapper.insert(shoppingCartEntity);
+            ItemReviewDTO customerReviewDTO = (ItemReviewDTO)dto;
+            ItemReviewEntity customerReviewEntity = new ItemReviewEntity();
+            ConvertObjectUtils.convertJavaBean(customerReviewEntity, customerReviewDTO);
+            customerReviewEntity.setReviewID(customerReviewDTO.getReviewID());
+            customerReviewEntity.setInUser(customerReviewDTO.getLoginUser());
+            customerReviewEntity.setItemID(customerReviewDTO.getItemID());
+            customerReviewEntity.setCustomerID(customerReviewDTO.getCustomerID());
+            customerReviewEntity.setReviewLevel(customerReviewDTO.getReviewLevel());
+            customerReviewEntity.setReviewStatus(customerReviewDTO.getReviewStatus());
+            customerReviewEntity.setReviewText(customerReviewDTO.getReviewText());
+            customerReviewEntity.setLastEditUser(customerReviewDTO.getLoginUser());
+            int affectRow = customerReviewMapper.insert(customerReviewEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
@@ -124,16 +114,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public UnifiedResponse change(Object dto) {
         try {
-            ShoppingCartDTO shoppingCartDTO = (ShoppingCartDTO)dto;
-            ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity();
-            ConvertObjectUtils.convertJavaBean(shoppingCartEntity, shoppingCartDTO);
-            shoppingCartEntity.setShoppingCartID(shoppingCartDTO.getShoppingCartID());
-            shoppingCartEntity.setItemID(shoppingCartDTO.getItemID());
-            shoppingCartEntity.setCustomerID(shoppingCartDTO.getCustomerID());
-            shoppingCartEntity.setShoppingCount(shoppingCartDTO.getShoppingCount());
-            shoppingCartEntity.setStatus(shoppingCartDTO.getStatus());
-            shoppingCartEntity.setLastEditUser(shoppingCartDTO.getLoginUser());
-            int affectRow = shoppingCartMapper.update(shoppingCartEntity);
+            ItemReviewDTO customerReviewDTO = (ItemReviewDTO)dto;
+            ItemReviewEntity customerReviewEntity = new ItemReviewEntity();
+            ConvertObjectUtils.convertJavaBean(customerReviewEntity, customerReviewDTO);
+            customerReviewEntity.setReviewID(customerReviewDTO.getReviewID());
+            customerReviewEntity.setReviewStatus(customerReviewDTO.getReviewStatus());
+            customerReviewEntity.setLastEditUser(customerReviewDTO.getLoginUser());
+            int affectRow = customerReviewMapper.update(customerReviewEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
@@ -147,7 +134,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public UnifiedResponse delete(int id) {
         try {
-            int affectRow = shoppingCartMapper.delete(id);
+            int affectRow = customerReviewMapper.delete(id);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (Exception ex) {
             LogUtils.processExceptionLog(ex);
