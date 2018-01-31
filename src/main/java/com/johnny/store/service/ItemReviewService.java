@@ -1,7 +1,11 @@
 package com.johnny.store.service;
 
 /**
- * Created by 13425 on 2018/1/31.
+ * todo 描述
+ *
+ * @author liqian
+ * @version 1.0.0
+ * @since 1.0.0+
  */
 public interface ItemReviewService extends BaseService {
 }
