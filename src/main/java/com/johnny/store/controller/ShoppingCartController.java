@@ -1,6 +1,5 @@
 package com.johnny.store.controller;
 
-import com.johnny.store.dto.BrandHotDTO;
 import com.johnny.store.dto.ShoppingCartDTO;
 import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.service.impl.ShoppingCartServiceImpl;
@@ -22,11 +21,6 @@ public class ShoppingCartController {
                                   @PathVariable("status") String status){
         return shoppingCartServiceImpl.findList(pageNumber, pageSize, customerID, status);
     }
-
-//    @RequestMapping(value = "/api/shoppingCart/condition/{customerId}/{status}", method = RequestMethod.GET)
-//    public UnifiedResponse get(@PathVariable("customerId") int customerId, @PathVariable("status") String status){
-//        return shoppingCartServiceImpl.find(customerId, status);
-//    }
 
     @RequestMapping(value="/api/shoppingCart", method = RequestMethod.PUT)
     public UnifiedResponse change(@RequestBody ShoppingCartDTO dto){
