@@ -15,13 +15,9 @@ import java.util.List;
  */
 @Mapper
 public interface ShoppingCartMapper {
-    int searchTotalCount();
+    int searchTotalCount(int customerID, String status);
 
-    List<ShoppingCartEntity> searchList(int startIndex, int pageSize);
-
-    ShoppingCartEntity search(int customerID,String status);
-
-    ShoppingCartEntity search(int shoppingCartID);
+    List<ShoppingCartEntity> searchList(int startIndex, int pageSize, int customerID, String status);
 
     int insert(ShoppingCartEntity entity);
 

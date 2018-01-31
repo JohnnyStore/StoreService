@@ -9,7 +9,7 @@ public interface ItemMapper {
 
     List<ItemEntity> searchList(int startIndex, int pageSize);
 
-    ItemEntity search(int brandID);
+    ItemEntity search(int itemID);
 
     ItemEntity searchByItemCode(String itemCode);
 
