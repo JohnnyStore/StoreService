@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.johnny.store.mapper.ShoppingCartMapper" >
-    <resultMap id="BaseResultMapOfCity" type="com.johnny.store.entity.ShoppingCartEntity" >
-        <id column="ShoppingCartID" property="shoppingCartID" jdbcType="INTEGER" />
+<mapper namespace="com.johnny.store.mapper.ItemReviewMapper" >
+    <resultMap id="BaseResultMapOfCity" type="com.johnny.store.entity.ItemReviewEntity" >
+        <id column="ReviewID" property="reviewID" jdbcType="INTEGER" />
         <result column="ItemID" property="itemID" jdbcType="INTEGER" />
         <result column="CustomerID" property="customerID" jdbcType="INTEGER" />
-        <result column="ShoppingCount" property="shoppingCount" jdbcType="INTEGER" />
-        <result column="Status" property="status" jdbcType="VARCHAR" />
+        <result column="ReviewLevel" property="reviewLevel" jdbcType="VARCHAR" />
+        <result column="ReviewLevelText" property="reviewLevelText" jdbcType="VARCHAR" />
+        <result column="ReviewText" property="reviewText" jdbcType="VARCHAR" />
+        <result column="ReviewStatus" property="reviewStatus" jdbcType="VARCHAR" />
         <result column="ItemCode" property="itemCode" jdbcType="VARCHAR" />
         <result column="ItemShortDescriptionCN" property="itemShortDescriptionCN" jdbcType="VARCHAR" />
         <result column="ItemShortDescriptionEN" property="itemShortDescriptionEN" jdbcType="VARCHAR" />
         <result column="Cellphone" property="cellphone" jdbcType="VARCHAR" />
         <result column="CustomerName" property="customerName" jdbcType="VARCHAR" />
-        <result column="StatusText" property="statusText" jdbcType="VARCHAR" />
+        <result column="ReviewStatusText" property="reviewStatusText" jdbcType="VARCHAR" />
         <result column="InUser" property="inUser" jdbcType="VARCHAR" />
         <result column="InDate" property="inDate" jdbcType="VARCHAR" />
         <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
@@ -20,25 +22,30 @@
     </resultMap>
     <select id="searchList" resultMap="BaseResultMapOfCity">
         SELECT
-        A.ShoppingCartID,
+        A.ReviewID,
         A.ItemID,
         A.CustomerID,
-        A.ShoppingCount,
+        A.ReviewText,
         B.ItemCode,
         B.ItemShortDescriptionCN,
         B.ItemShortDescriptionEN,
         C.Cellphone,
         C.CustomerName,
-        A.Status,
-        (CASE A.Status WHEN 'I' THEN '待支付'
-        WHEN 'D' THEN '已删除'
-        WHEN 'P' THEN '已支付'
-        END) AS StatusText,
+        A.ReviewLevel,
+        (CASE A.ReviewLevel WHEN 'G' THEN '好评'
+        WHEN 'N' THEN '中评'
+        WHEN 'B' THEN '差评'
+        END) AS ReviewLevelText,
+         A.ReviewStatus,
+        (CASE A.ReviewStatus WHEN 'I' THEN '待审核'
+        WHEN 'P' THEN '审核通过'
+        WHEN 'N' THEN '审核未通过'
+        END) AS ReviewStatusText,
         A.InUser,
         DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
         A.LastEditUser,
         DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
-        FROM ShoppingCart A
+        FROM CustomerReview A
         INNER JOIN Item B
         ON A.ItemID = B.ItemID
         INNER JOIN Customer C
@@ -49,65 +56,74 @@
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM ShoppingCart;
+        FROM CustomerReview;
     </select>
     <select id="search" resultMap="BaseResultMapOfCity">
-        SELECT
-        A.ShoppingCartID,
+         SELECT
+        A.ReviewID,
         A.ItemID,
         A.CustomerID,
-        A.ShoppingCount,
+        A.ReviewText,
         B.ItemCode,
         B.ItemShortDescriptionCN,
         B.ItemShortDescriptionEN,
         C.Cellphone,
         C.CustomerName,
-        A.Status,
-        (CASE A.Status WHEN 'I' THEN '待支付'
-        WHEN 'D' THEN '已删除'
-        WHEN 'P' THEN '已支付'
-        END) AS StatusText,
+        A.ReviewLevel,
+        (CASE A.ReviewLevel WHEN 'G' THEN '好评'
+        WHEN 'N' THEN '中评'
+        WHEN 'B' THEN '差评'
+        END) AS ReviewLevelText,
+         A.ReviewStatus,
+        (CASE A.ReviewStatus WHEN 'I' THEN '待审核'
+        WHEN 'P' THEN '审核通过'
+        WHEN 'N' THEN '审核未通过'
+        END) AS ReviewStatusText,
         A.InUser,
         DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
         A.LastEditUser,
         DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
-        FROM ShoppingCart A
+        FROM CustomerReview A
         INNER JOIN Item B
         ON A.ItemID = B.ItemID
         INNER JOIN Customer C
         ON A.CustomerID = C.CustomerID
         WHERE A.CustomerID = #{arg0,jdbcType=INTEGER}
-        AND A.Status = #{arg1,jdbcType=VARCHAR}
+        AND A.ItemID = #{arg1,jdbcType=VARCHAR}
+        AND A.ReviewLevel = #{arg2,jdbcType=VARCHAR}
+        AND A.ReviewStatus = #{arg3,jdbcType=VARCHAR}
+        ORDER BY A.InDate DESC
     </select>
-    <insert id="insert" parameterType="com.johnny.store.entity.ShoppingCartEntity" >
-        INSERT INTO ShoppingCart (
-        ItemID,
+    <insert id="insert" parameterType="com.johnny.store.entity.ItemReviewEntity" >
+        INSERT INTO CustomerReview (
+        ReviewID,
         CustomerID,
-        ShoppingCount,
-        Status,
+        ItemID,
+        ReviewLevel,
+        ReviewText,
+        ReviewStatus,
         InUser,
         LastEditUser
         )
         VALUES (
-        #{itemID, jdbcType=INTEGER},
+        #{reviewID, jdbcType=INTEGER},
         #{customerID, jdbcType=INTEGER},
-        #{shoppingCount, jdbcType=INTEGER},
-        #{status, jdbcType=VARCHAR},
+        #{itemID, jdbcType=INTEGER},
+        #{reviewLevel, jdbcType=VARCHAR},
+        #{reviewText, jdbcType=VARCHAR},
+        #{reviewStatus, jdbcType=VARCHAR},
         #{inUser, jdbcType=VARCHAR},
         #{lastEditUser, jdbcType=VARCHAR}
         )
     </insert>
-    <update id="update" parameterType="com.johnny.store.entity.ShoppingCartEntity" >
-        UPDATE ShoppingCart SET
-        ItemID = #{itemID, jdbcType=INTEGER},
-        CustomerID = #{customerID, jdbcType=INTEGER},
-        ShoppingCount = #{shoppingCount, jdbcType=INTEGER},
-        Status = #{status, jdbcType=VARCHAR},
+    <update id="update" parameterType="com.johnny.store.entity.ItemReviewEntity" >
+        UPDATE CustomerReview SET
+        ReviewStatus = #{reviewStatus, jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
-        WHERE ShoppingCartID = #{shoppingCartID,jdbcType=INTEGER}
+        WHERE ReviewID = #{reviewID,jdbcType=INTEGER}
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM ShoppingCart
-        WHERE ShoppingCartID = #{shoppingCartID,jdbcType=INTEGER}
+        DELETE FROM CustomerReview
+        WHERE ReviewID = #{reviewID,jdbcType=INTEGER}
     </delete>
 </mapper>
