@@ -11,9 +11,12 @@ public class CustomerController {
     @Autowired
     private CustomerServiceImpl customerServiceImpl;
 
-    @RequestMapping(value = "api/customer/{pageNumber}/{pageSize}",method = RequestMethod.GET)
-    public UnifiedResponse getCustomerList(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize){
-        return customerServiceImpl.findList(pageNumber, pageSize);
+    @RequestMapping(value = "api/customer/{pageNumber}/{pageSize}/{cellphone}/{status}",method = RequestMethod.GET)
+    public UnifiedResponse getCustomerList(@PathVariable("pageNumber") int pageNumber,
+                                           @PathVariable("pageSize") int pageSize,
+                                           @PathVariable("cellphone") String cellphone,
+                                           @PathVariable("status") String status){
+        return customerServiceImpl.findList(pageNumber, pageSize, cellphone, status);
     }
 
     @RequestMapping(value = "api/customer/{customerID}",method = RequestMethod.GET)
@@ -21,10 +24,29 @@ public class CustomerController {
         return customerServiceImpl.find(customerID);
     }
 
-    @RequestMapping(value = "api/customer",method = RequestMethod.PUT)
+    @RequestMapping(value="api/customer", method = RequestMethod.POST)
+    public UnifiedResponse addBrand(@RequestBody CustomerDTO customerDTO){
+        return customerServiceImpl.add(customerDTO);
+    }
+
+    @RequestMapping(value = "api/customer/changeStatus",method = RequestMethod.PUT)
     public UnifiedResponse changeCustomerStatus(@RequestBody CustomerDTO customerDTO){
+        return customerServiceImpl.changeStatus(customerDTO);
+    }
+
+    @RequestMapping(value = "api/customer/changePassword",method = RequestMethod.PUT)
+    public UnifiedResponse changeCustomerPassword(@RequestBody CustomerDTO customerDTO){
+        return customerServiceImpl.changePassword(customerDTO);
+    }
+
+    @RequestMapping(value = "api/customer",method = RequestMethod.PUT)
+    public UnifiedResponse change(@RequestBody CustomerDTO customerDTO){
         return customerServiceImpl.change(customerDTO);
     }
 
+    @RequestMapping(value="api/customer/{customerId}", method = RequestMethod.DELETE)
+    public UnifiedResponse deleteBrand(@PathVariable("customerId") int customerId){
+        return customerServiceImpl.delete(customerId);
+    }
 }
 

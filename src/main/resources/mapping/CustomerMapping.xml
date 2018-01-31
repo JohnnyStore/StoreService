@@ -10,71 +10,105 @@
         <result column="Cellphone" property="cellphone" jdbcType="VARCHAR" />
         <result column="Email" property="email" jdbcType="VARCHAR" />
         <result column="Status" property="status" jdbcType="VARCHAR" />
+        <result column="StatusText" property="statusText" jdbcType="VARCHAR" />
         <result column="InUser" property="inUser" jdbcType="VARCHAR" />
-        <result column="InDate" property="inDate" jdbcType="TIMESTAMP" />
+        <result column="InDate" property="inDate" jdbcType="VARCHAR" />
         <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
-        <result column="LastEditDate" property="lastEditDate" jdbcType="TIMESTAMP" />
+        <result column="LastEditDate" property="lastEditDate" jdbcType="VARCHAR" />
     </resultMap>
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
-        COUNT(1) AS TotalCount
+            COUNT(1) AS TotalCount
         FROM Customer;
     </select>
     <select id="searchList" resultMap="BaseResultMapOfCustomer">
         SELECT
-        CustomerID,
-        CustomerName,
-        Account,
-        Password,
-        CustomerSex,
-        Cellphone,
-        Email,
-        Status,
-        InUser,
-        DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
-        LastEditUser,
-        DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+            CustomerID,
+            CustomerName,
+            Account,
+            Password,
+            CustomerSex,
+            Cellphone,
+            Email,
+            Status,
+            (CASE Status WHEN 'A' THEN '激活'
+                        WHEN 'F' THEN '冻结'
+             END) AS StatusText,
+            InUser,
+            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            LastEditUser,
+            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM Customer
+        WHERE 1 = 1
+        <if test="arg2 != null">
+            and Cellphone=#{arg2}
+        </if>
+        <if test="arg3 != null">
+            and Status=#{arg3}
+        </if>
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
-    <select id="searchAll" resultMap="BaseResultMapOfCustomer">
-        SELECT
-        CustomerID,
-        CustomerName,
-        Account,
-        Password,
-        CustomerSex,
-        Cellphone,
-        Email,
-        Status,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
-        FROM Customer
-        ORDER BY InDate DESC;
-    </select>
     <select id="search" resultMap="BaseResultMapOfCustomer">
         SELECT
-        CustomerID,
-        CustomerName,
-        Account,
-        Password,
-        CustomerSex,
-        Cellphone,
-        Email,
-        Status,
-        InUser,
-        InDate,
-        LastEditUser,
-        LastEditDate
+            CustomerID,
+            CustomerName,
+            Account,
+            Password,
+            CustomerSex,
+            Cellphone,
+            Email,
+            Status,
+            (CASE Status WHEN 'A' THEN '激活'
+             WHEN 'F' THEN '冻结'
+             END) AS StatusText,
+            InUser,
+            InDate,
+            LastEditUser,
+            LastEditDate
         FROM Customer
         WHERE CustomerID = #{customerID,jdbcType=INTEGER}
     </select>
+    <insert id="insert" parameterType="com.johnny.store.entity.CustomerEntity" >
+        INSERT INTO Customer (
+            Cellphone,
+            Email,
+            Password,
+            InUser,
+            LastEditUser
+        )
+        VALUES (
+            #{cellphone, jdbcType=NVARCHAR},
+            #{email, jdbcType=VARCHAR},
+            #{password, jdbcType=VARCHAR},
+            #{inUser, jdbcType=VARCHAR},
+            #{lastEditUser, jdbcType=VARCHAR}
+        )
+    </insert>
     <update id="update" parameterType="com.johnny.store.entity.CustomerEntity" >
         UPDATE Customer SET
-        Status = #{status,jdbcType=NVARCHAR}
+            CustomerName = #{customerName,jdbcType=NVARCHAR},
+            Account = #{account,jdbcType=NVARCHAR},
+            CustomerSex = #{customerSex,jdbcType=NVARCHAR},
+            Cellphone = #{cellphone,jdbcType=NVARCHAR},
+            Email = #{email,jdbcType=NVARCHAR},
+            LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE CustomerID = #{customerID,jdbcType=INTEGER}
     </update>
+    <update id="updateStatus" parameterType="com.johnny.store.entity.CustomerEntity" >
+        UPDATE Customer SET
+            Status = #{status,jdbcType=NVARCHAR},
+            LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+        WHERE CustomerID = #{customerID,jdbcType=INTEGER}
+    </update>
+    <update id="updatePassword" parameterType="com.johnny.store.entity.CustomerEntity" >
+        UPDATE Customer SET
+            Password = #{password,jdbcType=NVARCHAR},
+            LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+        WHERE CustomerID = #{customerID,jdbcType=INTEGER}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer" >
+        DELETE FROM Customer
+        WHERE CustomerID = #{customerID,jdbcType=INTEGER}
+    </delete>
 </mapper>

@@ -10,13 +10,17 @@ public interface CustomerMapper {
 
     int searchTotalCount();
 
-    List<CustomerEntity> searchList(int startIndex, int pageSize);
-
-    List<CustomerEntity> searchAll();
+    List<CustomerEntity> searchList(int startIndex, int pageSize, String cellphone, String status);
 
     CustomerEntity search(int customerID);
 
+    int insert(CustomerEntity entity);
+
+    int updateStatus(CustomerEntity entity);
+
     int update(CustomerEntity entity);
 
+    int updatePassword(CustomerEntity entity);
 
+    int delete(int customerID);
 }

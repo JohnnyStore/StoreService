@@ -1,4 +1,7 @@
 package com.johnny.store.service;
 
-public interface CustomerService extends BaseCustomerService {
+import com.johnny.store.dto.UnifiedResponse;
+
+public interface CustomerService extends BaseService {
+    UnifiedResponse findList(int pageNumber, int pageSize, String cellphone, String status);
 }

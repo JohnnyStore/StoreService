@@ -9,6 +9,9 @@ public class CustomerVO {
     private String cellphone;
     private String email;
     private String status;
+    private String statusText;
+    private boolean isActive;
+    private boolean isFrozen;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -108,5 +111,29 @@ public class CustomerVO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getStatusText() {
+        return statusText;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isFrozen() {
+        return isFrozen;
+    }
+
+    public void setFrozen(boolean frozen) {
+        isFrozen = frozen;
     }
 }

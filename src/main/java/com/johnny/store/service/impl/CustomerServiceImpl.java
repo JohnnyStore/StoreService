@@ -6,7 +6,6 @@ import com.johnny.store.common.StoreException;
 import com.johnny.store.constant.ResponseCodeConsts;
 import com.johnny.store.dto.CustomerDTO;
 import com.johnny.store.dto.UnifiedResponse;
-
 import com.johnny.store.entity.CustomerEntity;
 import com.johnny.store.manager.UnifiedResponseManager;
 import com.johnny.store.mapper.CustomerMapper;
@@ -25,6 +24,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public UnifiedResponse findList(int pageNumber, int pageSize) {
+        return null;
+    }
+
+    @Override
+    public UnifiedResponse findList(int pageNumber, int pageSize, String cellphone, String status) {
         try {
             int startIndex = (pageNumber - 1) * pageSize;
             List<CustomerVO> modelList= new ArrayList<>();
@@ -32,13 +36,24 @@ public class CustomerServiceImpl implements CustomerService {
             if(totalCount == 0){
                 return UnifiedResponseManager.buildSuccessResponse(0, null);
             }
-            List<CustomerEntity> entityList = customerMapper.searchList(startIndex, pageSize);
+            List<CustomerEntity> entityList = customerMapper.searchList(
+                    startIndex,
+                    pageSize,
+                    cellphone.equals("null") ? null : cellphone,
+                    status.equals("null") ? null : status);
             if (entityList.isEmpty()){
                 return UnifiedResponseManager.buildFailedResponse(null);
             }
             for (CustomerEntity entity : entityList){
                 CustomerVO model = new CustomerVO();
                 ConvertObjectUtils.convertJavaBean(model,entity);
+                if(model.getStatus().equals("A")){
+                    model.setActive(true);
+                    model.setFrozen(false);
+                }else{
+                    model.setActive(false);
+                    model.setFrozen(true);
+                }
                 model.setCustomerID(entity.getCustomerID());
                 modelList.add(model);
             }
@@ -73,13 +88,73 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public UnifiedResponse existCheck(String name) {
+        return null;
+    }
+
+    @Override
+    public UnifiedResponse add(Object dto) {
+        try {
+            CustomerDTO customerDTO = (CustomerDTO)dto;
+            CustomerEntity customerEntity = new CustomerEntity();
+            ConvertObjectUtils.convertJavaBean(customerEntity, customerDTO);
+            customerEntity.setInUser(customerDTO.getLoginUser());
+            customerEntity.setLastEditUser(customerDTO.getLoginUser());
+            int affectRow = customerMapper.insert(customerEntity);
+            return UnifiedResponseManager.buildSuccessResponse(affectRow);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    public UnifiedResponse changeStatus(Object dto){
+        try {
+            CustomerDTO customerDTO = (CustomerDTO) dto;
+            CustomerEntity customerEntity = new CustomerEntity();
+            ConvertObjectUtils.convertJavaBean(customerEntity,customerDTO);
+            customerEntity.setCustomerID(customerDTO.getCustomerID());
+            customerEntity.setLastEditUser(customerDTO.getLoginUser());
+            int affectRow = customerMapper.updateStatus(customerEntity);
+            return UnifiedResponseManager.buildSuccessResponse(affectRow);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    public UnifiedResponse changePassword(Object dto){
+        try {
+            CustomerDTO customerDTO = (CustomerDTO) dto;
+            CustomerEntity customerEntity = new CustomerEntity();
+            ConvertObjectUtils.convertJavaBean(customerEntity,customerDTO);
+            customerEntity.setCustomerID(customerDTO.getCustomerID());
+            customerEntity.setLastEditUser(customerDTO.getLoginUser());
+            int affectRow = customerMapper.updatePassword(customerEntity);
+            return UnifiedResponseManager.buildSuccessResponse(affectRow);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse change(Object dto) {
         try {
             CustomerDTO customerDTO = (CustomerDTO) dto;
             CustomerEntity customerEntity = new CustomerEntity();
             ConvertObjectUtils.convertJavaBean(customerEntity,customerDTO);
             customerEntity.setCustomerID(customerDTO.getCustomerID());
-            customerEntity.setStatus(customerDTO.getStatus());
+            customerEntity.setLastEditUser(customerDTO.getLoginUser());
             int affectRow = customerMapper.update(customerEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (StoreException ex){
@@ -91,5 +166,14 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-
+    @Override
+    public UnifiedResponse delete(int id) {
+        try {
+            int affectRow = customerMapper.delete(id);
+            return UnifiedResponseManager.buildSuccessResponse(affectRow);
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
 }
