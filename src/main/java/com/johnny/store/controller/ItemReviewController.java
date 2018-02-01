@@ -15,14 +15,14 @@ public class ItemReviewController {
     @Autowired
     private ItemReviewServiceImpl customerReviewServiceImpl;
 
-    @RequestMapping(value = "/api/itemReview/{pageNumber}/{pageSize}", method = RequestMethod.GET)
-    public UnifiedResponse getAll(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize){
-        return customerReviewServiceImpl.findList(pageNumber, pageSize);
-    }
-
-    @RequestMapping(value = "/api/itemReview/condition/{customerId}/{itemId}/{reviewLevel}/{reviewStatus}", method = RequestMethod.GET)
-    public UnifiedResponse get(@PathVariable("customerId") int customerId,@PathVariable("itemId") int itemId,@PathVariable("reviewLevel") String reviewLevel,@PathVariable("reviewStatus") String reviewStatus){
-        return customerReviewServiceImpl.find(customerId, itemId, reviewLevel, reviewStatus);
+    @RequestMapping(value = "/api/itemReview/{pageNumber}/{pageSize}/{customerID}/{itemCode}/{reviewLevel}/{reviewStatus}", method = RequestMethod.GET)
+    public UnifiedResponse getAll(@PathVariable("pageNumber") int pageNumber,
+                                  @PathVariable("pageSize") int pageSize,
+                                  @PathVariable("customerID") int customerID,
+                                  @PathVariable("itemCode") String itemCode,
+                                  @PathVariable("reviewLevel") String reviewLevel,
+                                  @PathVariable("reviewStatus") String reviewStatus){
+        return customerReviewServiceImpl.findList(pageNumber, pageSize, customerID, itemCode, reviewLevel, reviewStatus);
     }
 
     @RequestMapping(value="/api/itemReview", method = RequestMethod.PUT)
