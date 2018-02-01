@@ -3,7 +3,7 @@ package com.johnny.store.vo;
 /**
  * Created by 13425 on 2018/1/31.
  */
-public class CustomerReviewVO {
+public class ItemReviewVO {
     private int reviewID;
     private int itemID;
     private int customerID;

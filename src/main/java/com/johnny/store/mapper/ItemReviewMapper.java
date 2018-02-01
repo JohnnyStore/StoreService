@@ -10,13 +10,9 @@ import java.util.List;
  */
 @Mapper
 public interface ItemReviewMapper {
-    int searchTotalCount();
+    int searchTotalCount(int customerID,String itemCode,String reviewLevel,String reviewStatus);
 
-    List<ItemReviewEntity> searchList(int startIndex, int pageSize);
-
-    ItemReviewEntity search(int customerID, int itemID, String reviewLevel, String reviewStatus);
-
-    ItemReviewEntity search(int reviewID);
+    List<ItemReviewEntity> searchList(int startIndex, int pageSize,int customerID, String itemCode, String reviewLevel, String reviewStatus);
 
     int insert(ItemReviewEntity entity);
 

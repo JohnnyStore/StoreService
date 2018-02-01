@@ -50,50 +50,78 @@
         ON A.ItemID = B.ItemID
         INNER JOIN Customer C
         ON A.CustomerID = C.CustomerID
+        WHERE 1 = 1
+        <if test="arg2 != 0">
+            and A.CustomerID=#{arg2}
+        </if>
+        <if test="arg3 != null">
+            and B.ItemCode=#{arg3}
+        </if>
+        <if test="arg4 != null">
+            and A.ReviewLevel=#{arg4}
+        </if>
+        <if test="arg5 != null">
+            and A.ReviewStatus=#{arg5}
+        </if>
         ORDER BY A.InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount
-        FROM CustomerReview;
-    </select>
-    <select id="search" resultMap="BaseResultMapOfCity">
-         SELECT
-        A.ReviewID,
-        A.ItemID,
-        A.CustomerID,
-        A.ReviewText,
-        B.ItemCode,
-        B.ItemShortDescriptionCN,
-        B.ItemShortDescriptionEN,
-        C.Cellphone,
-        C.CustomerName,
-        A.ReviewLevel,
-        (CASE A.ReviewLevel WHEN 'G' THEN '好评'
-        WHEN 'N' THEN '中评'
-        WHEN 'B' THEN '差评'
-        END) AS ReviewLevelText,
-         A.ReviewStatus,
-        (CASE A.ReviewStatus WHEN 'I' THEN '待审核'
-        WHEN 'P' THEN '审核通过'
-        WHEN 'N' THEN '审核未通过'
-        END) AS ReviewStatusText,
-        A.InUser,
-        DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
-        A.LastEditUser,
-        DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM CustomerReview A
         INNER JOIN Item B
         ON A.ItemID = B.ItemID
-        INNER JOIN Customer C
-        ON A.CustomerID = C.CustomerID
-        WHERE A.CustomerID = #{arg0,jdbcType=INTEGER}
-        AND A.ItemID = #{arg1,jdbcType=VARCHAR}
-        AND A.ReviewLevel = #{arg2,jdbcType=VARCHAR}
-        AND A.ReviewStatus = #{arg3,jdbcType=VARCHAR}
-        ORDER BY A.InDate DESC
+        WHERE 1 = 1
+        <if test="arg0 != 0">
+            and CustomerID=#{arg0}
+        </if>
+        <if test="arg1 != null">
+            and B.ItemCode=#{arg1}
+        </if>
+        <if test="arg2 != null">
+            and ReviewLevel=#{arg2}
+        </if>
+        <if test="arg3 != null">
+            and ReviewStatus=#{arg3}
+        </if>
     </select>
+    <!--<select id="search" resultMap="BaseResultMapOfCity">-->
+         <!--SELECT-->
+        <!--A.ReviewID,-->
+        <!--A.ItemID,-->
+        <!--A.CustomerID,-->
+        <!--A.ReviewText,-->
+        <!--B.ItemCode,-->
+        <!--B.ItemShortDescriptionCN,-->
+        <!--B.ItemShortDescriptionEN,-->
+        <!--C.Cellphone,-->
+        <!--C.CustomerName,-->
+        <!--A.ReviewLevel,-->
+        <!--(CASE A.ReviewLevel WHEN 'G' THEN '好评'-->
+        <!--WHEN 'N' THEN '中评'-->
+        <!--WHEN 'B' THEN '差评'-->
+        <!--END) AS ReviewLevelText,-->
+         <!--A.ReviewStatus,-->
+        <!--(CASE A.ReviewStatus WHEN 'I' THEN '待审核'-->
+        <!--WHEN 'P' THEN '审核通过'-->
+        <!--WHEN 'N' THEN '审核未通过'-->
+        <!--END) AS ReviewStatusText,-->
+        <!--A.InUser,-->
+        <!--DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,-->
+        <!--A.LastEditUser,-->
+        <!--DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate-->
+        <!--FROM CustomerReview A-->
+        <!--INNER JOIN Item B-->
+        <!--ON A.ItemID = B.ItemID-->
+        <!--INNER JOIN Customer C-->
+        <!--ON A.CustomerID = C.CustomerID-->
+        <!--WHERE A.CustomerID = #{arg0,jdbcType=INTEGER}-->
+        <!--AND A.ItemID = #{arg1,jdbcType=VARCHAR}-->
+        <!--AND A.ReviewLevel = #{arg2,jdbcType=VARCHAR}-->
+        <!--AND A.ReviewStatus = #{arg3,jdbcType=VARCHAR}-->
+        <!--ORDER BY A.InDate DESC-->
+    <!--</select>-->
     <insert id="insert" parameterType="com.johnny.store.entity.ItemReviewEntity" >
         INSERT INTO CustomerReview (
         ReviewID,
