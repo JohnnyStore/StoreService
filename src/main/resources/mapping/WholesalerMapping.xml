@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.johnny.store.mapper.WholesalerMapper" >
+    <resultMap id="BaseResultMapOfWholesaler" type="com.johnny.store.entity.WholesalerEntity" >
+        <id column="WholesalerID" property="wholesalerID" jdbcType="INTEGER" />
+        <result column="Password" property="password" jdbcType="VARCHAR" />
+        <result column="Cellphone" property="cellphone" jdbcType="VARCHAR" />
+        <result column="Email" property="email" jdbcType="VARCHAR" />
+        <result column="Status" property="status" jdbcType="VARCHAR" />
+        <result column="StatusText" property="statusText" jdbcType="VARCHAR" />
+        <result column="InUser" property="inUser" jdbcType="VARCHAR" />
+        <result column="InDate" property="inDate" jdbcType="VARCHAR" />
+        <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
+        <result column="LastEditDate" property="lastEditDate" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchTotalCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1) AS TotalCount
+        FROM Wholesaler;
+    </select>
+    <select id="searchList" resultMap="BaseResultMapOfWholesaler">
+        SELECT
+        WholesalerID,
+        Password,
+        Cellphone,
+        Email,
+        Status,
+        (CASE Status WHEN 'A' THEN '激活'
+        WHEN 'F' THEN '冻结'
+        END) AS StatusText,
+        InUser,
+        DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+        LastEditUser,
+        DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+        FROM Wholesaler
+        WHERE 1 = 1
+        <if test="arg2 != null">
+            and Cellphone=#{arg2}
+        </if>
+        <if test="arg3 != null">
+            and Status=#{arg3}
+        </if>
+        ORDER BY InDate DESC
+        LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
+    </select>
+    <select id="search" resultMap="BaseResultMapOfWholesaler">
+        SELECT
+        WholesalerID,
+        Password,
+        Cellphone,
+        Email,
+        Status,
+        (CASE Status WHEN 'A' THEN '激活'
+        WHEN 'F' THEN '冻结'
+        END) AS StatusText,
+        InUser,
+        InDate,
+        LastEditUser,
+        LastEditDate
+        FROM Wholesaler
+        WHERE WholesalerID = #{wholesalerID,jdbcType=INTEGER}
+    </select>
+    <insert id="insert" parameterType="com.johnny.store.entity.wholesalerEntity" >
+        INSERT INTO Wholesaler (
+        Cellphone,
+        Email,
+        Password,
+        InUser,
+        LastEditUser
+        )
+        VALUES (
+        #{cellphone, jdbcType=NVARCHAR},
+        #{email, jdbcType=VARCHAR},
+        #{password, jdbcType=VARCHAR},
+        #{inUser, jdbcType=VARCHAR},
+        #{lastEditUser, jdbcType=VARCHAR}
+        )
+    </insert>
+    <update id="update" parameterType="com.johnny.store.entity.WholesalerEntity" >
+        UPDATE Wholesaler SET
+        Password = #{password,jdbcType=NVARCHAR},
+        Cellphone = #{cellphone,jdbcType=NVARCHAR},
+        Email = #{email,jdbcType=NVARCHAR},
+        LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+        WHERE WholesalerID = #{wholesalerID,jdbcType=INTEGER}
+    </update>
+    <update id="updateStatus" parameterType="com.johnny.store.entity.WholesalerEntity" >
+        UPDATE Wholesaler SET
+        Status = #{status,jdbcType=NVARCHAR},
+        LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+        WHERE WholesalerID = #{wholesalerID,jdbcType=INTEGER}
+    </update>
+    <update id="updatePassword" parameterType="com.johnny.store.entity.WholesalerEntity" >
+        UPDATE Wholesaler SET
+        Password = #{password,jdbcType=NVARCHAR},
+        LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+        WHERE WholesalerID = #{wholesalerID,jdbcType=INTEGER}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer" >
+        DELETE FROM Wholesaler
+        WHERE WholesalerID = #{wholesalerID,jdbcType=INTEGER}
+    </delete>
+</mapper>
