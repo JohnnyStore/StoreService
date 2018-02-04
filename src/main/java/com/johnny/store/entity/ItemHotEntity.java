@@ -3,16 +3,21 @@ package com.johnny.store.entity;
 public class ItemHotEntity {
 	private int itemHotID;
 	private int itemID;
+	private String ItemCode;
+	private String itemShortDescriptionCN;
+	private String itemShortDescriptionEN;
+	private String itemImageUrl;
 	private String startDate;
 	private String endDate;
 	private String status;
+	private String statusText;
 	private String inUser;
 	private String inDate;
 	private String lastEditUser;
 	private String lastEditDate;
 
 	public int getItemHotID() {
-		return this.itemHotID;
+		return itemHotID;
 	}
 
 	public void setItemHotID(int itemHotID) {
@@ -20,15 +25,23 @@ public class ItemHotEntity {
 	}
 
 	public int getItemID() {
-		return this.itemID;
+		return itemID;
 	}
 
 	public void setItemID(int itemID) {
 		this.itemID = itemID;
 	}
 
+	public String getItemImageUrl() {
+		return itemImageUrl;
+	}
+
+	public void setItemImageUrl(String itemImageUrl) {
+		this.itemImageUrl = itemImageUrl;
+	}
+
 	public String getStartDate() {
-		return this.startDate;
+		return startDate;
 	}
 
 	public void setStartDate(String startDate) {
@@ -36,7 +49,7 @@ public class ItemHotEntity {
 	}
 
 	public String getEndDate() {
-		return this.endDate;
+		return endDate;
 	}
 
 	public void setEndDate(String endDate) {
@@ -44,15 +57,23 @@ public class ItemHotEntity {
 	}
 
 	public String getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
+	public String getStatusText() {
+		return statusText;
+	}
+
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
+	}
+
 	public String getInUser() {
-		return this.inUser;
+		return inUser;
 	}
 
 	public void setInUser(String inUser) {
@@ -60,7 +81,7 @@ public class ItemHotEntity {
 	}
 
 	public String getInDate() {
-		return this.inDate;
+		return inDate;
 	}
 
 	public void setInDate(String inDate) {
@@ -68,7 +89,7 @@ public class ItemHotEntity {
 	}
 
 	public String getLastEditUser() {
-		return this.lastEditUser;
+		return lastEditUser;
 	}
 
 	public void setLastEditUser(String lastEditUser) {
@@ -76,11 +97,34 @@ public class ItemHotEntity {
 	}
 
 	public String getLastEditDate() {
-		return this.lastEditDate;
+		return lastEditDate;
 	}
 
 	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
 
+	public String getItemCode() {
+		return ItemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		ItemCode = itemCode;
+	}
+
+	public String getItemShortDescriptionEN() {
+		return itemShortDescriptionEN;
+	}
+
+	public void setItemShortDescriptionEN(String itemShortDescriptionEN) {
+		this.itemShortDescriptionEN = itemShortDescriptionEN;
+	}
+
+	public String getItemShortDescriptionCN() {
+		return itemShortDescriptionCN;
+	}
+
+	public void setItemShortDescriptionCN(String itemShortDescriptionCN) {
+		this.itemShortDescriptionCN = itemShortDescriptionCN;
+	}
 }

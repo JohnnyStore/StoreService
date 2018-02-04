@@ -6,23 +6,17 @@ import com.johnny.store.common.StoreException;
 import com.johnny.store.constant.ResponseCodeConsts;
 import com.johnny.store.dto.ItemReviewDTO;
 import com.johnny.store.dto.UnifiedResponse;
-import com.johnny.store.entity.ItemEntity;
 import com.johnny.store.entity.ItemReviewEntity;
 import com.johnny.store.manager.UnifiedResponseManager;
-import com.johnny.store.mapper.ItemMapper;
 import com.johnny.store.mapper.ItemReviewMapper;
 import com.johnny.store.service.ItemReviewService;
 import com.johnny.store.vo.ItemReviewVO;
-import com.johnny.store.vo.ItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by 13425 on 2018/1/31.
- */
 @Service
 public class ItemReviewServiceImpl implements ItemReviewService {
     
@@ -39,10 +33,25 @@ public class ItemReviewServiceImpl implements ItemReviewService {
             }
             List<ItemReviewEntity> entityList =  itemReviewMapper.searchList(startIndex, pageSize, customerID, itemCode.equals("A") ? null : itemCode, reviewLevel.equals("A") ? null : reviewLevel, reviewStatus.equals("A") ? null : reviewStatus);
             for (ItemReviewEntity itemReviewEntity : entityList) {
-
                 ItemReviewVO itemReviewVO = new ItemReviewVO();
                 ConvertObjectUtils.convertJavaBean(itemReviewVO, itemReviewEntity);
-
+                switch (itemReviewEntity.getReviewStatus()){
+                    case "I":
+                        itemReviewVO.setPending(true);
+                        itemReviewVO.setApproved(false);
+                        itemReviewVO.setReject(false);
+                        break;
+                    case "P":
+                        itemReviewVO.setPending(false);
+                        itemReviewVO.setApproved(true);
+                        itemReviewVO.setReject(false);
+                        break;
+                    case "N":
+                        itemReviewVO.setPending(false);
+                        itemReviewVO.setApproved(false);
+                        itemReviewVO.setReject(true);
+                        break;
+                }
                 itemReviewVO.setReviewID(itemReviewEntity.getReviewID());
                 itemReviewVO.setItemID(itemReviewEntity.getItemID());
                 itemReviewVO.setCustomerID(itemReviewEntity.getCustomerID());

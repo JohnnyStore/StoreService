@@ -3,16 +3,25 @@ package com.johnny.store.entity;
 public class ItemPromotionEntity {
 	private int itemPromotionID;
 	private int itemID;
+	private String itemCode;
+	private String itemShortDescriptionEN;
+	private String itemShortDescriptionCN;
+	private Double unitPrice4RMB;
+	private Double promotionPrice4RMB;
+	private Double unitPrice4USD;
+	private Double promotionPrice4USD;
+	private String itemImageUrl;
 	private String startDate;
 	private String endDate;
 	private String status;
+	private String statusText;
 	private String inUser;
 	private String inDate;
 	private String lastEditUser;
 	private String lastEditDate;
 
 	public int getItemPromotionID() {
-		return this.itemPromotionID;
+		return itemPromotionID;
 	}
 
 	public void setItemPromotionID(int itemPromotionID) {
@@ -20,15 +29,31 @@ public class ItemPromotionEntity {
 	}
 
 	public int getItemID() {
-		return this.itemID;
+		return itemID;
 	}
 
 	public void setItemID(int itemID) {
 		this.itemID = itemID;
 	}
 
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+
+	public String getItemImageUrl() {
+		return itemImageUrl;
+	}
+
+	public void setItemImageUrl(String itemImageUrl) {
+		this.itemImageUrl = itemImageUrl;
+	}
+
 	public String getStartDate() {
-		return this.startDate;
+		return startDate;
 	}
 
 	public void setStartDate(String startDate) {
@@ -36,7 +61,7 @@ public class ItemPromotionEntity {
 	}
 
 	public String getEndDate() {
-		return this.endDate;
+		return endDate;
 	}
 
 	public void setEndDate(String endDate) {
@@ -44,15 +69,23 @@ public class ItemPromotionEntity {
 	}
 
 	public String getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
+	public String getStatusText() {
+		return statusText;
+	}
+
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
+	}
+
 	public String getInUser() {
-		return this.inUser;
+		return inUser;
 	}
 
 	public void setInUser(String inUser) {
@@ -60,7 +93,7 @@ public class ItemPromotionEntity {
 	}
 
 	public String getInDate() {
-		return this.inDate;
+		return inDate;
 	}
 
 	public void setInDate(String inDate) {
@@ -68,7 +101,7 @@ public class ItemPromotionEntity {
 	}
 
 	public String getLastEditUser() {
-		return this.lastEditUser;
+		return lastEditUser;
 	}
 
 	public void setLastEditUser(String lastEditUser) {
@@ -76,11 +109,58 @@ public class ItemPromotionEntity {
 	}
 
 	public String getLastEditDate() {
-		return this.lastEditDate;
+		return lastEditDate;
 	}
 
 	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
 
+	public String getItemShortDescriptionEN() {
+		return itemShortDescriptionEN;
+	}
+
+	public void setItemShortDescriptionEN(String itemShortDescriptionEN) {
+		this.itemShortDescriptionEN = itemShortDescriptionEN;
+	}
+
+	public String getItemShortDescriptionCN() {
+		return itemShortDescriptionCN;
+	}
+
+	public void setItemShortDescriptionCN(String itemShortDescriptionCN) {
+		this.itemShortDescriptionCN = itemShortDescriptionCN;
+	}
+
+	public Double getUnitPrice4RMB() {
+		return unitPrice4RMB;
+	}
+
+	public void setUnitPrice4RMB(Double unitPrice4RMB) {
+		this.unitPrice4RMB = unitPrice4RMB;
+	}
+
+	public Double getPromotionPrice4RMB() {
+		return promotionPrice4RMB;
+	}
+
+	public void setPromotionPrice4RMB(Double promotionPrice4RMB) {
+		this.promotionPrice4RMB = promotionPrice4RMB;
+	}
+
+	public Double getUnitPrice4USD() {
+		return unitPrice4USD;
+	}
+
+	public void setUnitPrice4USD(Double unitPrice4USD) {
+		this.unitPrice4USD = unitPrice4USD;
+	}
+
+	public Double getPromotionPrice4USD() {
+		return promotionPrice4USD;
+	}
+
+	public void setPromotionPrice4USD(Double promotionPrice4USD) {
+		this.promotionPrice4USD = promotionPrice4USD;
+	}
 }

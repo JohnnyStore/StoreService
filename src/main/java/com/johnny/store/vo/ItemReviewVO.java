@@ -17,6 +17,9 @@ public class ItemReviewVO {
     private String reviewLevelText;   //评论级别
     private String cellphone;
     private String customerName;
+    private boolean isPending;
+    private boolean isApproved;
+    private boolean isReject;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -165,5 +168,29 @@ public class ItemReviewVO {
 
     public void setItemShortDescriptionCN(String itemShortDescriptionCN) {
         this.itemShortDescriptionCN = itemShortDescriptionCN;
+    }
+
+    public boolean isPending() {
+        return isPending;
+    }
+
+    public void setPending(boolean pending) {
+        isPending = pending;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
+    }
+
+    public boolean isReject() {
+        return isReject;
+    }
+
+    public void setReject(boolean reject) {
+        isReject = reject;
     }
 }

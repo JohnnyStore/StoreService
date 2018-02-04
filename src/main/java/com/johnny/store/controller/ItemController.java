@@ -21,6 +21,11 @@ public class ItemController {
         return itemServiceImpl.find(itemId);
     }
 
+    @RequestMapping(value = "/api/item/byCode/{itemCode}", method = RequestMethod.GET)
+    public UnifiedResponse get(@PathVariable("itemCode") String itemCode){
+        return itemServiceImpl.find(itemCode);
+    }
+
     @RequestMapping(value = "/api/item/exist/{itemCode}", method = RequestMethod.GET)
     public UnifiedResponse checkName(@PathVariable("itemCode") String itemCode){
         return itemServiceImpl.existCheck(itemCode);
