@@ -9,6 +9,8 @@
         <result column="CustomerSex" property="customerSex" jdbcType="VARCHAR" />
         <result column="Cellphone" property="cellphone" jdbcType="VARCHAR" />
         <result column="Email" property="email" jdbcType="VARCHAR" />
+        <result column="CustomerType" property="customerType" jdbcType="VARCHAR" />
+        <result column="CustomerTypeText" property="customerTypeText" jdbcType="VARCHAR" />
         <result column="Status" property="status" jdbcType="VARCHAR" />
         <result column="StatusText" property="statusText" jdbcType="VARCHAR" />
         <result column="InUser" property="inUser" jdbcType="VARCHAR" />
@@ -30,6 +32,10 @@
             CustomerSex,
             Cellphone,
             Email,
+            CustomerType,
+            (CASE CustomerType WHEN 'N' THEN '一般客户'
+            WHEN 'W' THEN '批发商'
+            END) AS CustomerTypeText,
             Status,
             (CASE Status WHEN 'A' THEN '激活'
                         WHEN 'F' THEN '冻结'
@@ -58,6 +64,10 @@
             CustomerSex,
             Cellphone,
             Email,
+            CustomerType,
+            (CASE CustomerType WHEN 'N' THEN '一般客户'
+             WHEN 'W' THEN '批发商'
+             END) AS CustomerTypeText,
             Status,
             (CASE Status WHEN 'A' THEN '激活'
              WHEN 'F' THEN '冻结'
@@ -74,6 +84,7 @@
             Cellphone,
             Email,
             Password,
+            CustomerType,
             InUser,
             LastEditUser
         )
@@ -81,6 +92,7 @@
             #{cellphone, jdbcType=NVARCHAR},
             #{email, jdbcType=VARCHAR},
             #{password, jdbcType=VARCHAR},
+            #{customerType, jdbcType=VARCHAR},
             #{inUser, jdbcType=VARCHAR},
             #{lastEditUser, jdbcType=VARCHAR}
         )

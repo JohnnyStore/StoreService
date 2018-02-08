@@ -8,6 +8,7 @@ public class CustomerDTO {
     private String customerSex;
     private String cellphone;
     private String email;
+    private String customerType;
     private String status;
     private String loginUser;
 
@@ -81,5 +82,13 @@ public class CustomerDTO {
 
     public void setLoginUser(String loginUser) {
         this.loginUser = loginUser;
+    }
+
+    public String getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
     }
 }

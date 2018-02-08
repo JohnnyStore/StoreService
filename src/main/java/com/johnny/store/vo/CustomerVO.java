@@ -8,6 +8,8 @@ public class CustomerVO {
     private String customerSex;
     private String cellphone;
     private String email;
+    private String customerType;
+    private String customerTypeText;
     private String status;
     private String statusText;
     private boolean isActive;
@@ -135,5 +137,21 @@ public class CustomerVO {
 
     public void setFrozen(boolean frozen) {
         isFrozen = frozen;
+    }
+
+    public String getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
+    }
+
+    public String getCustomerTypeText() {
+        return customerTypeText;
+    }
+
+    public void setCustomerTypeText(String customerTypeText) {
+        this.customerTypeText = customerTypeText;
     }
 }
