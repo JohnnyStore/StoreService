@@ -37,6 +37,19 @@
         COUNT(1) AS TotalCount
         FROM Province;
     </select>
+    <select id="search" resultMap="BaseResultMapOfProvince">
+        SELECT
+        ProvinceID,
+        CountryID,
+        ProvinceNameCN,
+        ProvinceNameEN,
+        InUser,
+        InDate,
+        LastEditUser,
+        LastEditDate
+        FROM Province
+        WHERE ProvinceID = #{provinceID,jdbcType=INTEGER};
+    </select>
     <select id="searchByName" resultMap="BaseResultMapOfProvince">
         SELECT
         ProvinceID,

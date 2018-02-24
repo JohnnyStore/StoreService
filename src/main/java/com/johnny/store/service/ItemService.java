@@ -8,5 +8,5 @@ import com.johnny.store.vo.ItemVO;
 public interface ItemService extends BaseService {
     UnifiedResponse find(String itemCode);
 
-    ItemVO buildViewModel(ItemEntity entity) throws StoreException;
+//    ItemVO buildViewModel(ItemEntity entity) throws StoreException;
 }

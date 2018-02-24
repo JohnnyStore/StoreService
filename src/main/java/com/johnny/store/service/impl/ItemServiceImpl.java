@@ -10,11 +10,10 @@ import com.johnny.store.dto.ItemDTO;
 import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.entity.ImageEntity;
 import com.johnny.store.entity.ItemEntity;
-import com.johnny.store.entity.MaterialEntity;
+import com.johnny.store.manager.BuildViewModel;
 import com.johnny.store.manager.UnifiedResponseManager;
 import com.johnny.store.mapper.ItemMapper;
 import com.johnny.store.mapper.ImageMapper;
-import com.johnny.store.mapper.MaterialMapper;
 import com.johnny.store.service.ItemService;
 import com.johnny.store.vo.ItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class ItemServiceImpl implements ItemService {
     private ItemMapper itemMapper;
 
     @Autowired
-    private MaterialMapper materialMapper;
+    private BuildViewModel buildViewModel;
 
     @Autowired
     private ImageMapper imageMapper;
@@ -50,7 +49,7 @@ public class ItemServiceImpl implements ItemService {
                     entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
                 }
 
-                ItemVO model = buildViewModel(entity);
+                ItemVO model = buildViewModel.buildItemViewModel(entity);
                 modelList.add(model);
             }
             return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
@@ -71,7 +70,7 @@ public class ItemServiceImpl implements ItemService {
             if(imageEntityList != null && imageEntityList.size() > 0){
                 entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
             }
-            ItemVO model = buildViewModel(entity);
+            ItemVO model = buildViewModel.buildItemViewModel(entity);
             return UnifiedResponseManager.buildSuccessResponse(model);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
@@ -93,7 +92,7 @@ public class ItemServiceImpl implements ItemService {
             if(imageEntityList != null && imageEntityList.size() > 0){
                 entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
             }
-            ItemVO model = buildViewModel(entity);
+            ItemVO model = buildViewModel.buildItemViewModel(entity);
             return UnifiedResponseManager.buildSuccessResponse(model);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
@@ -104,36 +103,36 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
-    @Override
-    public ItemVO buildViewModel(ItemEntity entity) throws StoreException{
-        ItemVO model = null;
-        if(entity != null){
-            model = new ItemVO();
-            String[] itemMaterialArray = entity.getItemMaterial().split(",");
-            List<String> itemMaterialList = new ArrayList<>();
-            for (String itemMaterialID : itemMaterialArray) {
-                MaterialEntity materialEntity = materialMapper.search(Integer.parseInt(itemMaterialID));
-                itemMaterialList.add(materialEntity.getMaterialCN());
-            }
-            ConvertObjectUtils.convertJavaBean(model, entity);
-            model.setItemMaterialName(String.join(",", itemMaterialList));
-            model.setItemID(entity.getItemID());
-            model.setBrandID(entity.getBrandID());
-            model.setCategoryID(entity.getCategoryID());
-            model.setSubCategoryID(entity.getSubCategoryID());
-            model.setItemGroupID(entity.getItemGroupID());
-            model.setSeriesID(entity.getSeriesID());
-            model.setUnitPrice4RMB(entity.getUnitPrice4RMB());
-            model.setPromotionPrice4RMB(entity.getPromotionPrice4RMB());
-            model.setUnitPrice4USD(entity.getUnitPrice4USD());
-            model.setPromotionPrice4USD(entity.getPromotionPrice4USD());
-            model.setRate(entity.getRate());
-            model.setColorID(entity.getColorID());
-            model.setSizeID(entity.getSizeID());
-            model.setMadeInID(entity.getMadeInID());
-        }
-        return model;
-    }
+//    @Override
+//    public ItemVO buildViewModel(ItemEntity entity) throws StoreException{
+//        ItemVO model = null;
+//        if(entity != null){
+//            model = new ItemVO();
+//            String[] itemMaterialArray = entity.getItemMaterial().split(",");
+//            List<String> itemMaterialList = new ArrayList<>();
+//            for (String itemMaterialID : itemMaterialArray) {
+//                MaterialEntity materialEntity = materialMapper.search(Integer.parseInt(itemMaterialID));
+//                itemMaterialList.add(materialEntity.getMaterialCN());
+//            }
+//            ConvertObjectUtils.convertJavaBean(model, entity);
+//            model.setItemMaterialName(String.join(",", itemMaterialList));
+//            model.setItemID(entity.getItemID());
+//            model.setBrandID(entity.getBrandID());
+//            model.setCategoryID(entity.getCategoryID());
+//            model.setSubCategoryID(entity.getSubCategoryID());
+//            model.setItemGroupID(entity.getItemGroupID());
+//            model.setSeriesID(entity.getSeriesID());
+//            model.setUnitPrice4RMB(entity.getUnitPrice4RMB());
+//            model.setPromotionPrice4RMB(entity.getPromotionPrice4RMB());
+//            model.setUnitPrice4USD(entity.getUnitPrice4USD());
+//            model.setPromotionPrice4USD(entity.getPromotionPrice4USD());
+//            model.setRate(entity.getRate());
+//            model.setColorID(entity.getColorID());
+//            model.setSizeID(entity.getSizeID());
+//            model.setMadeInID(entity.getMadeInID());
+//        }
+//        return model;
+//    }
 
     @Override
     public UnifiedResponse existCheck(String itemCode) {

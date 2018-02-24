@@ -4,21 +4,21 @@ public class OrderEntity {
 	private int orderID;
 	private int customerID;
 	private String orderDate;
-	private double orderAmount;
-	private int countryID;
-	private int shippingAddressProvinceID;
-	private int shippingAddressCityID;
-	private String shippingAddress;
+	private String orderAmount;
+	private int shippingAddressID;
 	private String orderStatus;
-	private String trackingNumber;
+	private String orderStatusText;
 	private int expressCompanyID;
+	private String trackingNumber;
+	private String refundReason;
+	private String memo;
 	private String inUser;
 	private String inDate;
 	private String lastEditUser;
 	private String lastEditDate;
 
 	public int getOrderID() {
-		return this.orderID;
+		return orderID;
 	}
 
 	public void setOrderID(int orderID) {
@@ -26,7 +26,7 @@ public class OrderEntity {
 	}
 
 	public int getCustomerID() {
-		return this.customerID;
+		return customerID;
 	}
 
 	public void setCustomerID(int customerID) {
@@ -34,79 +34,79 @@ public class OrderEntity {
 	}
 
 	public String getOrderDate() {
-		return this.orderDate;
+		return orderDate;
 	}
 
 	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
 
-	public double getOrderAmount() {
-		return this.orderAmount;
+	public String getOrderAmount() {
+		return orderAmount;
 	}
 
-	public void setOrderAmount(double orderAmount) {
+	public void setOrderAmount(String orderAmount) {
 		this.orderAmount = orderAmount;
 	}
 
-	public int getCountryID() {
-		return this.countryID;
+	public int getShippingAddressID() {
+		return shippingAddressID;
 	}
 
-	public void setCountryID(int countryID) {
-		this.countryID = countryID;
-	}
-
-	public int getShippingAddressProvinceID() {
-		return this.shippingAddressProvinceID;
-	}
-
-	public void setShippingAddressProvinceID(int shippingAddressProvinceID) {
-		this.shippingAddressProvinceID = shippingAddressProvinceID;
-	}
-
-	public int getShippingAddressCityID() {
-		return this.shippingAddressCityID;
-	}
-
-	public void setShippingAddressCityID(int shippingAddressCityID) {
-		this.shippingAddressCityID = shippingAddressCityID;
-	}
-
-	public String getShippingAddress() {
-		return this.shippingAddress;
-	}
-
-	public void setShippingAddress(String shippingAddress) {
-		this.shippingAddress = shippingAddress;
+	public void setShippingAddressID(int shippingAddressID) {
+		this.shippingAddressID = shippingAddressID;
 	}
 
 	public String getOrderStatus() {
-		return this.orderStatus;
+		return orderStatus;
 	}
 
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
 
-	public String getTrackingNumber() {
-		return this.trackingNumber;
+	public String getOrderStatusText() {
+		return orderStatusText;
 	}
 
-	public void setTrackingNumber(String trackingNumber) {
-		this.trackingNumber = trackingNumber;
+	public void setOrderStatusText(String orderStatusText) {
+		this.orderStatusText = orderStatusText;
 	}
 
 	public int getExpressCompanyID() {
-		return this.expressCompanyID;
+		return expressCompanyID;
 	}
 
 	public void setExpressCompanyID(int expressCompanyID) {
 		this.expressCompanyID = expressCompanyID;
 	}
 
+	public String getTrackingNumber() {
+		return trackingNumber;
+	}
+
+	public void setTrackingNumber(String trackingNumber) {
+		this.trackingNumber = trackingNumber;
+	}
+
+	public String getRefundReason() {
+		return refundReason;
+	}
+
+	public void setRefundReason(String refundReason) {
+		this.refundReason = refundReason;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
 	public String getInUser() {
-		return this.inUser;
+		return inUser;
 	}
 
 	public void setInUser(String inUser) {
@@ -114,7 +114,7 @@ public class OrderEntity {
 	}
 
 	public String getInDate() {
-		return this.inDate;
+		return inDate;
 	}
 
 	public void setInDate(String inDate) {
@@ -122,7 +122,7 @@ public class OrderEntity {
 	}
 
 	public String getLastEditUser() {
-		return this.lastEditUser;
+		return lastEditUser;
 	}
 
 	public void setLastEditUser(String lastEditUser) {
@@ -130,11 +130,10 @@ public class OrderEntity {
 	}
 
 	public String getLastEditDate() {
-		return this.lastEditDate;
+		return lastEditDate;
 	}
 
 	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
 	}
-
 }
