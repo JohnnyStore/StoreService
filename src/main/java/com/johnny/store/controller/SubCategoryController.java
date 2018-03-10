@@ -21,8 +21,13 @@ public class SubCategoryController {
     }
 
     @RequestMapping(value = "/api/subCategory/{subCategoryId}", method = RequestMethod.GET)
-    public UnifiedResponse getBrand(@PathVariable("subCategoryId") int subCategoryId){
+    public UnifiedResponse get(@PathVariable("subCategoryId") int subCategoryId){
         return subCategoryServiceImpl.find(subCategoryId);
+    }
+
+    @RequestMapping(value = "/api/subCategory/distinct/{categoryId}", method = RequestMethod.GET)
+    public UnifiedResponse getByCategory(@PathVariable("categoryId") int categoryId){
+        return subCategoryServiceImpl.findByCategory(categoryId);
     }
 
     @RequestMapping(value = "/api/subCategory/exist/{subCategoryName}", method = RequestMethod.GET)

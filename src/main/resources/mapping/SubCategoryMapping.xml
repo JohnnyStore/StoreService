@@ -40,6 +40,23 @@
         FROM SubCategory
         WHERE SubCategoryID = #{subCategoryID,jdbcType=INTEGER}
     </select>
+    <select id="searchByCategory" resultMap="BaseResultMap">
+        SELECT
+            A.SubCategoryID,
+            B.SubCategoryCN,
+            B.SubCategoryEN,
+            B.InUser,
+            B.InDate,
+            B.LastEditUser,
+            B.LastEditDate
+        FROM
+            (
+                SELECT DISTINCT SubCategoryID
+                FROM Item WHERE CategoryID = #{categoryID,jdbcType=INTEGER}
+            ) A
+        INNER JOIN SubCategory B
+        ON A.SubCategoryID = B.SubCategoryID;
+    </select>
     <select id="searchByName" resultMap="BaseResultMap">
         SELECT
         SubCategoryID,

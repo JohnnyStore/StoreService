@@ -79,6 +79,34 @@ public class ItemPromotionServiceImpl implements ItemPromotionService{
     }
 
     @Override
+    public UnifiedResponse findList(int categoryID, String startDate, String endDate) {
+        try {
+            List<ItemPromotionVO> modelList = new ArrayList<>();
+            List<ItemPromotionEntity> entityList =  itemPromotionMapper.searchList4Category(categoryID, startDate, endDate);
+            for (ItemPromotionEntity entity : entityList) {
+                List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.NORMAL);
+                if(imageEntityList != null && imageEntityList.size() > 0){
+                    entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+                }
+
+                ItemPromotionVO model = new ItemPromotionVO();
+                ConvertObjectUtils.convertJavaBean(model, entity);
+                model.setItemPromotionID(entity.getItemPromotionID());
+                model.setItemID(entity.getItemID());
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+
+    @Override
     public UnifiedResponse find(int id) {
         return null;
     }

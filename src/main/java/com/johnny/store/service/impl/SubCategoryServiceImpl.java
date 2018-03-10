@@ -19,10 +19,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 商品二级分类 ServiceImpl
- * @Author liqian
- */
 @Service
 public class SubCategoryServiceImpl implements SubCategoryService {
     @Autowired
@@ -65,6 +61,29 @@ public class SubCategoryServiceImpl implements SubCategoryService {
                 model.setSubCategoryID(entity.getSubCategoryID());
             }
             return UnifiedResponseManager.buildSuccessResponse(model);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse findByCategory(int categoryID) {
+        try {
+            List<SubCategoryVO> modelList = new ArrayList<>();
+            List<SubCategoryEntity> entityList = subCategoryMapper.searchByCategory(categoryID);
+            if(entityList != null){
+                for (SubCategoryEntity subCategoryEntity : entityList) {
+                    SubCategoryVO model = new SubCategoryVO();
+                    ConvertObjectUtils.convertJavaBean(model, subCategoryEntity);
+                    model.setSubCategoryID(subCategoryEntity.getSubCategoryID());
+                    modelList.add(model);
+                }
+            }
+            return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());

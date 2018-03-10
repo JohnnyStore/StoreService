@@ -11,6 +11,7 @@ import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.entity.BrandEntity;
 import com.johnny.store.entity.ImageEntity;
 import com.johnny.store.manager.UnifiedResponseManager;
+import com.johnny.store.mapper.CategoryMapper;
 import com.johnny.store.mapper.ImageMapper;
 import com.johnny.store.service.BrandService;
 import com.johnny.store.vo.BrandVO;

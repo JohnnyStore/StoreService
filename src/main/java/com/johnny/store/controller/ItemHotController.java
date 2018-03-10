@@ -21,6 +21,7 @@ public class ItemHotController {
         return itemHotServiceImpl.findList(pageNumber, pageSize, itemID, startDate, endDate, status);
     }
 
+
     @RequestMapping(value="/api/itemHot", method = RequestMethod.POST)
     public UnifiedResponse add(@RequestBody ItemHotDTO dto){
         return itemHotServiceImpl.add(dto);

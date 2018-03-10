@@ -17,6 +17,8 @@ public interface SubCategoryMapper {
 
     SubCategoryEntity search(int subCategoryID);
 
+    List<SubCategoryEntity> searchByCategory(int categoryID);
+
     SubCategoryEntity searchByName(String subCategoryName);
 
     int insert(SubCategoryEntity entity);

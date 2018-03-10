@@ -6,6 +6,10 @@ public class ItemHotVO {
     private String itemCode;
     private String itemShortDescriptionCN;
     private String itemShortDescriptionEN;
+    private String brandCN;
+    private String brandEN;
+    private String unitPrice4RMB;
+    private String unitPrice4USD;
     private String itemImageUrl;
     private String startDate;
     private String endDate;
@@ -126,5 +130,37 @@ public class ItemHotVO {
 
     public void setItemShortDescriptionEN(String itemShortDescriptionEN) {
         this.itemShortDescriptionEN = itemShortDescriptionEN;
+    }
+
+    public String getUnitPrice4RMB() {
+        return unitPrice4RMB;
+    }
+
+    public void setUnitPrice4RMB(String unitPrice4RMB) {
+        this.unitPrice4RMB = unitPrice4RMB;
+    }
+
+    public String getUnitPrice4USD() {
+        return unitPrice4USD;
+    }
+
+    public void setUnitPrice4USD(String unitPrice4USD) {
+        this.unitPrice4USD = unitPrice4USD;
+    }
+
+    public String getBrandCN() {
+        return brandCN;
+    }
+
+    public void setBrandCN(String brandCN) {
+        this.brandCN = brandCN;
+    }
+
+    public String getBrandEN() {
+        return brandEN;
+    }
+
+    public void setBrandEN(String brandEN) {
+        this.brandEN = brandEN;
     }
 }

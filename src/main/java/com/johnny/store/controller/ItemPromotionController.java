@@ -21,6 +21,13 @@ public class ItemPromotionController {
         return itemPromotionServiceImpl.findList(pageNumber, pageSize, itemID, startDate, endDate, status);
     }
 
+    @RequestMapping(value = "/api/itemPromotion/{categoryID}/{startDate}/{endDate}", method = RequestMethod.GET)
+    public UnifiedResponse getAll(@PathVariable("categoryID") int categoryID,
+                                  @PathVariable("startDate") String startDate,
+                                  @PathVariable("endDate") String endDate){
+        return itemPromotionServiceImpl.findList(categoryID, startDate, endDate);
+    }
+
     @RequestMapping(value="/api/itemPromotion", method = RequestMethod.POST)
     public UnifiedResponse add(@RequestBody ItemPromotionDTO dto){
         return itemPromotionServiceImpl.add(dto);

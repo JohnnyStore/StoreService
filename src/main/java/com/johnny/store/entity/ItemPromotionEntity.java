@@ -5,11 +5,13 @@ public class ItemPromotionEntity {
 	private int itemID;
 	private String itemCode;
 	private String itemShortDescriptionEN;
+	private String brandCN;
+	private String brandEN;
 	private String itemShortDescriptionCN;
-	private Double unitPrice4RMB;
-	private Double promotionPrice4RMB;
-	private Double unitPrice4USD;
-	private Double promotionPrice4USD;
+	private String unitPrice4RMB;
+	private String promotionPrice4RMB;
+	private String unitPrice4USD;
+	private String promotionPrice4USD;
 	private String itemImageUrl;
 	private String startDate;
 	private String endDate;
@@ -132,35 +134,51 @@ public class ItemPromotionEntity {
 		this.itemShortDescriptionCN = itemShortDescriptionCN;
 	}
 
-	public Double getUnitPrice4RMB() {
+	public String getUnitPrice4RMB() {
 		return unitPrice4RMB;
 	}
 
-	public void setUnitPrice4RMB(Double unitPrice4RMB) {
+	public void setUnitPrice4RMB(String unitPrice4RMB) {
 		this.unitPrice4RMB = unitPrice4RMB;
 	}
 
-	public Double getPromotionPrice4RMB() {
+	public String getPromotionPrice4RMB() {
 		return promotionPrice4RMB;
 	}
 
-	public void setPromotionPrice4RMB(Double promotionPrice4RMB) {
+	public void setPromotionPrice4RMB(String promotionPrice4RMB) {
 		this.promotionPrice4RMB = promotionPrice4RMB;
 	}
 
-	public Double getUnitPrice4USD() {
+	public String getUnitPrice4USD() {
 		return unitPrice4USD;
 	}
 
-	public void setUnitPrice4USD(Double unitPrice4USD) {
+	public void setUnitPrice4USD(String unitPrice4USD) {
 		this.unitPrice4USD = unitPrice4USD;
 	}
 
-	public Double getPromotionPrice4USD() {
+	public String getPromotionPrice4USD() {
 		return promotionPrice4USD;
 	}
 
-	public void setPromotionPrice4USD(Double promotionPrice4USD) {
+	public void setPromotionPrice4USD(String promotionPrice4USD) {
 		this.promotionPrice4USD = promotionPrice4USD;
+	}
+
+	public String getBrandCN() {
+		return brandCN;
+	}
+
+	public void setBrandCN(String brandCN) {
+		this.brandCN = brandCN;
+	}
+
+	public String getBrandEN() {
+		return brandEN;
+	}
+
+	public void setBrandEN(String brandEN) {
+		this.brandEN = brandEN;
 	}
 }

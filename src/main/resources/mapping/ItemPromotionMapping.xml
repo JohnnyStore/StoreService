@@ -13,6 +13,9 @@
         <result column="PromotionPrice4USD" property="promotionPrice4USD" jdbcType="VARCHAR" />
         <result column="StartDate" property="startDate" jdbcType="VARCHAR" />
         <result column="EndDate" property="endDate" jdbcType="VARCHAR" />
+
+        <result column="BrandCN" property="brandCN" jdbcType="VARCHAR" />
+        <result column="BrandEN" property="brandEN" jdbcType="VARCHAR" />
         <result column="Status" property="status" jdbcType="VARCHAR" />
         <result column="StatusText" property="statusText" jdbcType="VARCHAR" />
         <result column="InUser" property="inUser" jdbcType="VARCHAR" />
@@ -59,6 +62,41 @@
         </if>
         ORDER BY A.InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
+    </select>
+    <select id="searchList4Category" resultMap="BaseResultMap">
+        SELECT
+        A.ItemPromotionID,
+        A.ItemID,
+        B.ItemCode,
+        B.ItemShortDescriptionCN,
+        B.ItemShortDescriptionEN,
+        B.UnitPrice4RMB,
+        B.PromotionPrice4RMB,
+        B.UnitPrice4USD,
+        B.PromotionPrice4USD,
+        C.BrandCN,
+        C.BrandEN,
+        DATE_FORMAT(A.StartDate, '%Y-%m-%d %H:%i:%s') AS StartDate,
+        DATE_FORMAT(A.EndDate, '%Y-%m-%d %H:%i:%s') AS EndDate,
+        A.Status,
+        (CASE A.Status WHEN 'A' THEN '激活'
+        WHEN 'F' THEN '禁用'
+        END) AS StatusText,
+        A.InUser,
+        DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+        A.LastEditUser,
+        DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+        FROM ItemPromotion A
+        INNER JOIN Item B
+        ON A.ItemID = B.ItemID
+        AND (B.CategoryID = #{arg0} OR B.CategoryID = 3)
+        INNER JOIN Brand C
+        ON B.BrandID = C.BrandID
+        WHERE <![CDATA[ A.StartDate >= #{arg1} ]]>
+        <![CDATA[ AND A.EndDate <= #{arg2} ]]>
+        AND A.Status = 'A'
+        ORDER BY A.InDate
+        LIMIT 0, 7;
     </select>
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT

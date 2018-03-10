@@ -7,6 +7,11 @@
         <result column="ItemCode" property="ItemCode" jdbcType="VARCHAR" />
         <result column="ItemShortDescriptionCN" property="itemShortDescriptionCN" jdbcType="NVARCHAR" />
         <result column="ItemShortDescriptionEN" property="itemShortDescriptionEN" jdbcType="VARCHAR" />
+        <result column="BrandCN" property="brandCN" jdbcType="VARCHAR" />
+        <result column="BrandEN" property="brandEN" jdbcType="VARCHAR" />
+        <result column="UnitPrice4RMB" property="unitPrice4RMB" jdbcType="VARCHAR" />
+        <result column="UnitPrice4USD" property="unitPrice4USD" jdbcType="VARCHAR" />
+
         <result column="StartDate" property="startDate" jdbcType="VARCHAR" />
         <result column="EndDate" property="endDate" jdbcType="VARCHAR" />
         <result column="Status" property="status" jdbcType="VARCHAR" />
@@ -23,6 +28,10 @@
         B.ItemCode,
         B.ItemShortDescriptionCN,
         B.ItemShortDescriptionEN,
+        C.BrandCN,
+        C.BrandEN,
+        B.UnitPrice4RMB,
+        B.UnitPrice4USD,
         DATE_FORMAT(A.StartDate, '%Y-%m-%d %H:%i:%s') AS StartDate,
         DATE_FORMAT(A.EndDate, '%Y-%m-%d %H:%i:%s') AS EndDate,
         A.Status,
@@ -36,6 +45,8 @@
         FROM ItemHot A
         INNER JOIN Item B
         ON A.ItemID = B.ItemID
+        INNER JOIN Brand C
+        ON B.BrandID = C.BrandID
         WHERE 1 = 1
         <if test="arg2 != 0">
             AND A.ItemID=#{arg2}
