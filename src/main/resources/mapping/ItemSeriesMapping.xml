@@ -28,6 +28,26 @@
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
+    <select id="searchList4Item" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        A.SeriesID,
+        B.ItemSeriesCN,
+        B.ItemSeriesEN,
+        B.InUser,
+        DATE_FORMAT(B.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+        B.LastEditUser,
+        DATE_FORMAT(B.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+        FROM
+        (
+        SELECT DISTINCT SeriesID
+        FROM Item
+        WHERE ItemGroupID = (SELECT ItemGroupID
+                              FROM Item
+                              WHERE ItemID = #{itemID,jdbcType=INTEGER})
+        ) A
+        INNER JOIN ItemSeries B
+        ON A.SeriesID = B.SeriesID;
+    </select>
     <select id="search" resultMap="BaseResultMap">
         SELECT
         SeriesID,

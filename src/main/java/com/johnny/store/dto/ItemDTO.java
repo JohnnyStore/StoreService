@@ -30,6 +30,7 @@ public class ItemDTO {
     private String itemDescriptionCN;
     private String itemDescriptionEN;
     private String itemStatus;
+    private Boolean showInListPage;
     private List<String> itemOriginalImageList;
     private List<String> itemNormalImageList;
     private List<String> itemThumbnailImageList;
@@ -282,5 +283,13 @@ public class ItemDTO {
 
     public void setItemMaterialName(String itemMaterialName) {
         this.itemMaterialName = itemMaterialName;
+    }
+
+    public Boolean getShowInListPage() {
+        return showInListPage;
+    }
+
+    public void setShowInListPage(Boolean showInListPage) {
+        this.showInListPage = showInListPage;
     }
 }

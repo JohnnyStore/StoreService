@@ -19,6 +19,11 @@ public class ColorController {
         return colorServiceImpl.findList(pageNumber, pageSize);
     }
 
+    @RequestMapping(value = "/api/color/item/{itemID}", method = RequestMethod.GET)
+    public UnifiedResponse getItemColor(@PathVariable("itemID") int itemID){
+        return colorServiceImpl.findList(itemID);
+    }
+
     @RequestMapping(value = "/api/color/{colorId}", method = RequestMethod.GET)
     public UnifiedResponse getColor(@PathVariable("colorId") int colorId){
         return colorServiceImpl.find(colorId);

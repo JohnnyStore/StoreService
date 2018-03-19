@@ -44,6 +44,7 @@ public class ItemEntity {
 	private String itemDescriptionEN;
 	private String itemStatus;
 	private String itemStatusText;
+	private Boolean showInListPage;
 	private String inUser;
 	private String inDate;
 	private String lastEditUser;
@@ -424,4 +425,12 @@ public class ItemEntity {
 	public void setItemMaterial(String itemMaterial) {
 		this.itemMaterial = itemMaterial;
 	}
+
+    public Boolean getShowInListPage() {
+        return showInListPage;
+    }
+
+    public void setShowInListPage(Boolean showInListPage) {
+        this.showInListPage = showInListPage;
+    }
 }

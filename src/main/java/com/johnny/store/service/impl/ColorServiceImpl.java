@@ -49,6 +49,27 @@ public class ColorServiceImpl implements ColorService{
     }
 
     @Override
+    public UnifiedResponse findList(int itemID) {
+        try {
+            List<ColorVO> modelList = new ArrayList<>();
+            List<ColorEntity> entityList =  colorMapper.searchList4Item(itemID);
+            for (ColorEntity entity : entityList) {
+                ColorVO model = new ColorVO();
+                ConvertObjectUtils.convertJavaBean(model, entity);
+                model.setColorID(entity.getColorID());
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(entityList.size(), modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse find(int id) {
         try {
             ColorVO model = null;

@@ -49,6 +49,27 @@ public class SizeServiceImpl implements SizeService{
     }
 
     @Override
+    public UnifiedResponse findList(int itemID) {
+        try {
+            List<SizeVO> modelList = new ArrayList<>();
+            List<SizeEntity> entityList =  sizeMapper.searchList4Item(itemID);
+            for (SizeEntity entity : entityList) {
+                SizeVO model = new SizeVO();
+                ConvertObjectUtils.convertJavaBean(model, entity);
+                model.setSizeID(entity.getSizeID());
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(entityList.size(), modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse find(int id) {
         try {
             SizeVO model = null;

@@ -19,6 +19,11 @@ public class ItemSeriesController {
         return itemSeriesServiceImpl.findList(pageNumber, pageSize);
     }
 
+    @RequestMapping(value = "/api/itemSeries/item/{itemID}", method = RequestMethod.GET)
+    public UnifiedResponse getAllItemSeries(@PathVariable("itemID") int itemID){
+        return itemSeriesServiceImpl.findList(itemID);
+    }
+
     @RequestMapping(value = "/api/itemSeries/{seriesId}", method = RequestMethod.GET)
     public UnifiedResponse getItemSeries(@PathVariable("seriesId") int seriesId){
         return itemSeriesServiceImpl.find(seriesId);

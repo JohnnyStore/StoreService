@@ -48,6 +48,27 @@ public class ItemSeriesServiceImpl implements ItemSeriesService {
     }
 
     @Override
+    public UnifiedResponse findList(int itemID) {
+        try {
+            List<ItemSeriesVO> modelList = new ArrayList<>();
+            List<ItemSeriesEntity> entityList =  itemSeriesMapper.searchList4Item(itemID);
+            for (ItemSeriesEntity entity : entityList) {
+                ItemSeriesVO model = new ItemSeriesVO();
+                ConvertObjectUtils.convertJavaBean(model, entity);
+                model.setSeriesID(entity.getSeriesID());
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(entityList.size(), modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse find(int id) {
         try {
             ItemSeriesVO model = null;

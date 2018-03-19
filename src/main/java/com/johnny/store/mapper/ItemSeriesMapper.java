@@ -11,6 +11,8 @@ public interface ItemSeriesMapper {
 
     List<ItemSeriesEntity> searchList(int startIndex, int pageSize);
 
+    List<ItemSeriesEntity> searchList4Item(int itemID);
+
     ItemSeriesEntity search(int seriesID);
 
     ItemSeriesEntity searchByName(String itemSeriesName);

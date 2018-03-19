@@ -63,6 +63,48 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public UnifiedResponse findSalesList(int pageNumber, int pageSize, int brandID, int categoryID, int subCategoryID) {
+        try{
+            int startIndex = (pageNumber - 1) * pageSize;
+            List<ItemVO> modelList = new ArrayList<>();
+            List<ItemEntity> entityList =  itemMapper.searchSalesList(startIndex, pageSize, brandID, categoryID, subCategoryID);
+
+            for (ItemEntity entity : entityList) {
+                List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.NORMAL);
+                if(imageEntityList != null && imageEntityList.size() > 0){
+                    entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+                }
+
+                ItemVO model = buildViewModel.buildItemViewModel(entity);
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse changeItemToShowInList(ItemDTO itemDTO) {
+        try{
+            ItemEntity itemEntity = new ItemEntity();
+            itemEntity.setItemID(itemDTO.getItemID());
+            itemEntity.setShowInListPage(itemDTO.getShowInListPage());
+            itemEntity.setLastEditUser(itemDTO.getLoginUser());
+
+            int affectRow = itemMapper.updateItemToShowInList(itemEntity);
+            return UnifiedResponseManager.buildSuccessResponse(affectRow);
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse find(int id) {
         try {
             ItemEntity entity = itemMapper.search(id);
@@ -102,37 +144,6 @@ public class ItemServiceImpl implements ItemService {
             return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
         }
     }
-
-//    @Override
-//    public ItemVO buildViewModel(ItemEntity entity) throws StoreException{
-//        ItemVO model = null;
-//        if(entity != null){
-//            model = new ItemVO();
-//            String[] itemMaterialArray = entity.getItemMaterial().split(",");
-//            List<String> itemMaterialList = new ArrayList<>();
-//            for (String itemMaterialID : itemMaterialArray) {
-//                MaterialEntity materialEntity = materialMapper.search(Integer.parseInt(itemMaterialID));
-//                itemMaterialList.add(materialEntity.getMaterialCN());
-//            }
-//            ConvertObjectUtils.convertJavaBean(model, entity);
-//            model.setItemMaterialName(String.join(",", itemMaterialList));
-//            model.setItemID(entity.getItemID());
-//            model.setBrandID(entity.getBrandID());
-//            model.setCategoryID(entity.getCategoryID());
-//            model.setSubCategoryID(entity.getSubCategoryID());
-//            model.setItemGroupID(entity.getItemGroupID());
-//            model.setSeriesID(entity.getSeriesID());
-//            model.setUnitPrice4RMB(entity.getUnitPrice4RMB());
-//            model.setPromotionPrice4RMB(entity.getPromotionPrice4RMB());
-//            model.setUnitPrice4USD(entity.getUnitPrice4USD());
-//            model.setPromotionPrice4USD(entity.getPromotionPrice4USD());
-//            model.setRate(entity.getRate());
-//            model.setColorID(entity.getColorID());
-//            model.setSizeID(entity.getSizeID());
-//            model.setMadeInID(entity.getMadeInID());
-//        }
-//        return model;
-//    }
 
     @Override
     public UnifiedResponse existCheck(String itemCode) {

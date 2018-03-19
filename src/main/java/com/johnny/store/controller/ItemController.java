@@ -16,6 +16,15 @@ public class ItemController {
         return itemServiceImpl.findList(pageNumber, pageSize);
     }
 
+    @RequestMapping(value = "/api/item/sales/{pageNumber}/{pageSize}/{brandID}/{categoryID}/{subCategoryID}", method = RequestMethod.GET)
+    public UnifiedResponse getAll(@PathVariable("pageNumber") int pageNumber,
+                                  @PathVariable("pageSize") int pageSize,
+                                  @PathVariable("brandID") int brandID,
+                                  @PathVariable("categoryID") int categoryID,
+                                  @PathVariable("subCategoryID") int subCategoryID){
+        return itemServiceImpl.findSalesList(pageNumber, pageSize, brandID, categoryID, subCategoryID);
+    }
+
     @RequestMapping(value = "/api/item/{itemId}", method = RequestMethod.GET)
     public UnifiedResponse get(@PathVariable("itemId") int itemId){
         return itemServiceImpl.find(itemId);
@@ -48,6 +57,11 @@ public class ItemController {
     @RequestMapping(value="/api/item", method = RequestMethod.PUT)
     public UnifiedResponse change(@RequestBody ItemDTO dto){
         return itemServiceImpl.change(dto);
+    }
+
+    @RequestMapping(value="/api/item/showInList", method = RequestMethod.PUT)
+    public UnifiedResponse changeItemToShowInList(@RequestBody ItemDTO dto){
+        return itemServiceImpl.changeItemToShowInList(dto);
     }
 
     @RequestMapping(value="/api/item/{itemId}", method = RequestMethod.DELETE)

@@ -9,6 +9,8 @@ public interface ItemMapper {
 
     List<ItemEntity> searchList(int startIndex, int pageSize);
 
+    List<ItemEntity> searchSalesList(int startIndex, int pageSize, int brandID, int categoryID, int subCategoryID);
+
     ItemEntity search(int itemID);
 
     ItemEntity searchByItemCode(String itemCode);
@@ -18,6 +20,8 @@ public interface ItemMapper {
     int insert(ItemEntity entity);
 
     int update(ItemEntity entity);
+
+    int updateItemToShowInList(ItemEntity entity);
 
     int delete(int brandID);
 }

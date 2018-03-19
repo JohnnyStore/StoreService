@@ -50,6 +50,7 @@ public class ItemVO {
     private String itemDescriptionEN;
     private String itemStatus;
     private String itemStatusText;
+    private Boolean showInListPage;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -453,5 +454,13 @@ public class ItemVO {
 
     public void setItemMaterialName(String itemMaterialName) {
         this.itemMaterialName = itemMaterialName;
+    }
+
+    public Boolean getShowInListPage() {
+        return showInListPage;
+    }
+
+    public void setShowInListPage(Boolean showInListPage) {
+        this.showInListPage = showInListPage;
     }
 }

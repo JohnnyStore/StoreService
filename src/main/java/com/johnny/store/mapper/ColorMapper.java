@@ -12,6 +12,8 @@ public interface ColorMapper {
 
     List<ColorEntity> searchList(int startIndex, int pageSize);
 
+    List<ColorEntity> searchList4Item(int itemID);
+
     ColorEntity search(int colorID);
 
     ColorEntity searchByName(String colorName);

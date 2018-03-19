@@ -19,6 +19,11 @@ public class SizeController {
         return sizeServiceImpl.findList(pageNumber, pageSize);
     }
 
+    @RequestMapping(value = "/api/size/item/{itemID}", method = RequestMethod.GET)
+    public UnifiedResponse getItemSize(@PathVariable("itemID") int itemID){
+        return sizeServiceImpl.findList(itemID);
+    }
+
     @RequestMapping(value = "/api/size/{sizeId}", method = RequestMethod.GET)
     public UnifiedResponse getSize(@PathVariable("sizeId") int sizeId){
         return sizeServiceImpl.find(sizeId);

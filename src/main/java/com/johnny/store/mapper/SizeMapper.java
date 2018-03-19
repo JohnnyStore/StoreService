@@ -10,6 +10,8 @@ public interface SizeMapper {
 
     List<SizeEntity> searchList(int startIndex, int pageSize);
 
+    List<SizeEntity> searchList4Item(int itemID);
+
     SizeEntity search(int sizeID);
 
     SizeEntity searchByName(String sizeName);
