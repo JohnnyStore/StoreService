@@ -13,6 +13,8 @@ public interface ItemMapper {
 
     ItemEntity search(int itemID);
 
+    ItemEntity searchByParameters(int brandID, int categoryID, int subCategoryID, int itemGroupID, int seriesID, int colorID, int sizeID);
+
     ItemEntity searchByItemCode(String itemCode);
 
     ItemEntity searchByItemName(int brandID, int categoryID, int subCategoryID, int seriesID, String itemName);

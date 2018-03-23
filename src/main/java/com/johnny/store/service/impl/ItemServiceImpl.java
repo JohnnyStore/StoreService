@@ -10,10 +10,12 @@ import com.johnny.store.dto.ItemDTO;
 import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.entity.ImageEntity;
 import com.johnny.store.entity.ItemEntity;
+import com.johnny.store.entity.MaterialEntity;
 import com.johnny.store.manager.BuildViewModel;
 import com.johnny.store.manager.UnifiedResponseManager;
 import com.johnny.store.mapper.ItemMapper;
 import com.johnny.store.mapper.ImageMapper;
+import com.johnny.store.mapper.MaterialMapper;
 import com.johnny.store.service.ItemService;
 import com.johnny.store.vo.ItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private BuildViewModel buildViewModel;
+
+    @Autowired
+    private MaterialMapper materialMapper;
 
     @Autowired
     private ImageMapper imageMapper;
@@ -112,6 +117,27 @@ public class ItemServiceImpl implements ItemService {
             if(imageEntityList != null && imageEntityList.size() > 0){
                 entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
             }
+
+            ItemVO model = buildViewModel.buildItemViewModel(entity);
+            return UnifiedResponseManager.buildSuccessResponse(model);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse find(int brandID, int categoryID, int subCategoryID, int itemGroupID, int seriesID, int colorID, int sizeID) {
+        try {
+            ItemEntity entity = itemMapper.searchByParameters(brandID, categoryID, subCategoryID, itemGroupID, seriesID, colorID, sizeID);
+            List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.THUMBNAIL);
+            if(imageEntityList != null && imageEntityList.size() > 0){
+                entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+            }
+
             ItemVO model = buildViewModel.buildItemViewModel(entity);
             return UnifiedResponseManager.buildSuccessResponse(model);
         } catch (StoreException ex){

@@ -1,11 +1,9 @@
 package com.johnny.store.service;
 
-/**
- * todo 描述
- *
- * @author liqian
- * @version 1.0.0
- * @since 1.0.0+
- */
+import com.johnny.store.dto.UnifiedResponse;
+
 public interface ItemReviewService extends BaseService {
+    UnifiedResponse findList(int pageNumber, int pageSize, int customerID, String itemCode, String reviewLevel, String reviewStatus);
+
+    UnifiedResponse findList(int pageNumber, int pageSize, int itemID, String reviewLevel);
 }

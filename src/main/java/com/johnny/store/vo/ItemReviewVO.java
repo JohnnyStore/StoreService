@@ -13,6 +13,7 @@ public class ItemReviewVO {
     private String reviewText;  //评论内容
     private String itemShortDescriptionCN;
     private String itemShortDescriptionEN;
+    private int starNum;
     private String reviewLevel;
     private String reviewLevelText;   //评论级别
     private String cellphone;
@@ -192,5 +193,13 @@ public class ItemReviewVO {
 
     public void setReject(boolean reject) {
         isReject = reject;
+    }
+
+    public int getStarNum() {
+        return starNum;
+    }
+
+    public void setStarNum(int starNum) {
+        this.starNum = starNum;
     }
 }

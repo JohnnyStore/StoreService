@@ -242,8 +242,8 @@
       G.SizeEN,
       A.ItemMaterial,
       A.MadeInID,
-      I.MadeInCN,
-      I.MadeInEN,
+      I.CountryNameCN,
+      I.CountryNameEN,
       A.ItemLength,
       A.AdjustLength,
       A.SuitablePetCN,
@@ -274,12 +274,88 @@
         ON A.ColorID = F.ColorID
       LEFT JOIN SizeMapping G
         ON A.SizeID = G.SizeID
-      LEFT JOIN MadeInMapping I
-        ON A.MadeInID = I.MadeInID
+      LEFT JOIN Country I
+        ON A.MadeInID = I.CountryID
       LEFT JOIN ItemGroup J
         ON A.ItemGroupID = J.ItemGroupID
     WHERE ItemID = #{itemID,jdbcType=INTEGER}
     ORDER BY InDate DESC
+  </select>
+  <select id="searchByParameters" resultMap="BaseResultMap">
+    SELECT
+    A.ItemID,
+    A.BrandID,
+    B.BrandCN,
+    B.BrandEN,
+    A.CategoryID,
+    C.CategoryCN,
+    C.CategoryEN,
+    A.SubCategoryID,
+    D.SubCategoryCN,
+    D.SubCategoryEN,
+    A.ItemGroupID,
+    J.ItemGroupCN,
+    J.ItemGroupEN,
+    A.SeriesID,
+    A.ItemCode,
+    E.ItemSeriesCN,
+    E.ItemSeriesEN,
+    A.UnitPrice4RMB,
+    A.PromotionPrice4RMB,
+    A.UnitPrice4USD,
+    A.PromotionPrice4USD,
+    A.Rate,
+    A.ColorID,
+    F.ColorCN,
+    F.ColorEN,
+    A.SizeID,
+    G.SizeCN,
+    G.SizeEN,
+    A.ItemMaterial,
+    A.MadeInID,
+    I.CountryNameCN,
+    I.CountryNameEN,
+    A.ItemLength,
+    A.AdjustLength,
+    A.SuitablePetCN,
+    A.SuitablePetEN,
+    A.ItemShortDescriptionCN,
+    A.ItemShortDescriptionEN,
+    A.ItemDescriptionCN,
+    A.ItemDescriptionEN,
+    A.ItemStatus,
+    (CASE A.ItemStatus WHEN 'P' THEN '待上架'
+    WHEN 'N' THEN '已上架'
+    WHEN 'E' THEN '已下架'
+    END) AS ItemStatusText,
+    A.InUser,
+    DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+    A.LastEditUser,
+    DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+    FROM Item A
+    LEFT JOIN Brand B
+    ON A.BrandID = B.BrandID
+    LEFT JOIN Category C
+    ON A.CategoryID = C.CategoryID
+    LEFT JOIN SubCategory D
+    ON A.SubCategoryID = D.SubCategoryID
+    LEFT JOIN ItemSeries E
+    ON A.SeriesID = E.SeriesID
+    LEFT JOIN Color F
+    ON A.ColorID = F.ColorID
+    LEFT JOIN SizeMapping G
+    ON A.SizeID = G.SizeID
+    LEFT JOIN Country I
+    ON A.MadeInID = I.CountryID
+    LEFT JOIN ItemGroup J
+    ON A.ItemGroupID = J.ItemGroupID
+    WHERE A.BrandID = #{arg0,jdbcType=INTEGER}
+        AND A.CategoryID = #{arg1,jdbcType=INTEGER}
+        AND A.SubCategoryID = #{arg2,jdbcType=INTEGER}
+        AND A.ItemGroupID = #{arg3,jdbcType=INTEGER}
+        AND A.SeriesID = #{arg4,jdbcType=INTEGER}
+        AND A.ColorID = #{arg5,jdbcType=INTEGER}
+        AND A.SizeID = #{arg6,jdbcType=INTEGER};
   </select>
   <select id="searchByItemCode" resultMap="BaseResultMap">
     SELECT
@@ -313,8 +389,8 @@
       G.SizeEN,
       A.ItemMaterial,
       A.MadeInID,
-      I.MadeInCN,
-      I.MadeInEN,
+      I.CountryNameCN,
+      I.CountryNameEN,
       A.ItemLength,
       A.AdjustLength,
       A.SuitablePetCN,
@@ -345,8 +421,8 @@
         ON A.ColorID = F.ColorID
       LEFT JOIN SizeMapping G
         ON A.SizeID = G.SizeID
-      LEFT JOIN MadeInMapping I
-        ON A.MadeInID = I.MadeInID
+      LEFT JOIN Country I
+        ON A.MadeInID = I.CountryID
       LEFT JOIN ItemGroup J
         ON A.ItemGroupID = J.ItemGroupID
     WHERE A.ItemCode = #{itemCode,jdbcType=NVARCHAR}
@@ -383,8 +459,8 @@
       G.SizeEN,
       A.ItemMaterial,
       A.MadeInID,
-      I.MadeInCN,
-      I.MadeInEN,
+      I.CountryNameCN,
+      I.CountryNameEN,
       A.ItemLength,
       A.AdjustLength,
       A.SuitablePetCN,
@@ -415,8 +491,8 @@
         ON A.ColorID = F.ColorID
       LEFT JOIN SizeMapping G
         ON A.SizeID = G.SizeID
-      LEFT JOIN MadeInMapping I
-        ON A.MadeInID = I.MadeInID
+      LEFT JOIN Country I
+        ON A.MadeInID = I.CountryID
       LEFT JOIN ItemGroup J
         ON A.ItemGroupID = J.ItemGroupID
     WHERE A.BrandID = #{arg0,jdbcType=INTEGER}
@@ -512,14 +588,12 @@
       LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
     WHERE ItemID = #{itemID,jdbcType=INTEGER}
   </update>
-
   <update id="updateItemToShowInList" parameterType="com.johnny.store.entity.ItemEntity" >
     UPDATE Item SET
     ShowInListPage = #{showInListPage, jdbcType=BOOLEAN},
     LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
     WHERE ItemID = #{itemID,jdbcType=INTEGER}
   </update>
-
   <delete id="delete" parameterType="java.lang.Integer" >
     DELETE FROM Item
     WHERE ItemID = #{itemID,jdbcType=INTEGER}

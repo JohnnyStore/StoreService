@@ -31,6 +31,8 @@ public class ItemEntity {
 	private String sizeCN;
 	private String sizeEN;
 	private String itemMaterial;
+	private String itemMaterialNameCN;
+	private String itemMaterialNameEN;
 	private int madeInID;
 	private String madeInCN;
 	private String madeInEN;
@@ -433,4 +435,20 @@ public class ItemEntity {
     public void setShowInListPage(Boolean showInListPage) {
         this.showInListPage = showInListPage;
     }
+
+	public String getItemMaterialNameCN() {
+		return itemMaterialNameCN;
+	}
+
+	public void setItemMaterialNameCN(String itemMaterialNameCN) {
+		this.itemMaterialNameCN = itemMaterialNameCN;
+	}
+
+	public String getItemMaterialNameEN() {
+		return itemMaterialNameEN;
+	}
+
+	public void setItemMaterialNameEN(String itemMaterialNameEN) {
+		this.itemMaterialNameEN = itemMaterialNameEN;
+	}
 }

@@ -25,6 +25,14 @@ public class ItemReviewController {
         return customerReviewServiceImpl.findList(pageNumber, pageSize, customerID, itemCode, reviewLevel, reviewStatus);
     }
 
+    @RequestMapping(value = "/api/itemReview/item/{pageNumber}/{pageSize}/{itemID}/{reviewLevel}", method = RequestMethod.GET)
+    public UnifiedResponse getAll(@PathVariable("pageNumber") int pageNumber,
+                                  @PathVariable("pageSize") int pageSize,
+                                  @PathVariable("itemID") int itemID,
+                                  @PathVariable("reviewLevel") String reviewLevel){
+        return customerReviewServiceImpl.findList(pageNumber, pageSize, itemID, reviewLevel);
+    }
+
     @RequestMapping(value="/api/itemReview", method = RequestMethod.PUT)
     public UnifiedResponse change(@RequestBody ItemReviewDTO dto){
         return customerReviewServiceImpl.change(dto);

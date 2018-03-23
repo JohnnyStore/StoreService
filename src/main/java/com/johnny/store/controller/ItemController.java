@@ -30,6 +30,18 @@ public class ItemController {
         return itemServiceImpl.find(itemId);
     }
 
+    @RequestMapping(value = "/api/item/{brandId}/{categoryId}/{subCategoryId}/{itemGroupId}/{seriesID}/{colorID}/{sizeID}", method = RequestMethod.GET)
+    public UnifiedResponse get(@PathVariable("brandId") int brandId,
+                               @PathVariable("categoryId") int categoryId,
+                               @PathVariable("subCategoryId") int subCategoryId,
+                               @PathVariable("itemGroupId") int itemGroupId,
+                               @PathVariable("seriesID") int seriesID,
+                               @PathVariable("colorID") int colorID,
+                               @PathVariable("sizeID") int sizeID){
+        return itemServiceImpl.find(brandId, categoryId, subCategoryId, itemGroupId, seriesID, colorID, sizeID);
+    }
+
+
     @RequestMapping(value = "/api/item/byCode/{itemCode}", method = RequestMethod.GET)
     public UnifiedResponse get(@PathVariable("itemCode") String itemCode){
         return itemServiceImpl.find(itemCode);

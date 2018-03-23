@@ -22,13 +22,16 @@ public class BuildViewModel {
         if(entity != null){
             model = new ItemVO();
             String[] itemMaterialArray = entity.getItemMaterial().split(",");
-            List<String> itemMaterialList = new ArrayList<>();
+            List<String> itemMaterialListCN = new ArrayList<>();
+            List<String> itemMaterialListEN = new ArrayList<>();
             for (String itemMaterialID : itemMaterialArray) {
                 MaterialEntity materialEntity = materialMapper.search(Integer.parseInt(itemMaterialID));
-                itemMaterialList.add(materialEntity.getMaterialCN());
+                itemMaterialListCN.add(materialEntity.getMaterialCN());
+                itemMaterialListEN.add(materialEntity.getMaterialEN());
             }
             ConvertObjectUtils.convertJavaBean(model, entity);
-            model.setItemMaterialName(String.join(",", itemMaterialList));
+            model.setItemMaterialNameCN(String.join(",", itemMaterialListCN));
+            model.setItemMaterialNameEN(String.join(",", itemMaterialListEN));
             model.setItemID(entity.getItemID());
             model.setBrandID(entity.getBrandID());
             model.setCategoryID(entity.getCategoryID());

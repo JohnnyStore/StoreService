@@ -34,7 +34,8 @@ public class ItemVO {
     private String sizeCN;
     private String sizeEN;
     private String itemMaterial;
-    private String itemMaterialName;
+    private String itemMaterialNameCN;
+    private String itemMaterialNameEN;
     private String materialCN;
     private String materialEN;
     private int madeInID;
@@ -448,19 +449,27 @@ public class ItemVO {
         this.itemMaterial = itemMaterial;
     }
 
-    public String getItemMaterialName() {
-        return itemMaterialName;
-    }
-
-    public void setItemMaterialName(String itemMaterialName) {
-        this.itemMaterialName = itemMaterialName;
-    }
-
     public Boolean getShowInListPage() {
         return showInListPage;
     }
 
     public void setShowInListPage(Boolean showInListPage) {
         this.showInListPage = showInListPage;
+    }
+
+    public String getItemMaterialNameCN() {
+        return itemMaterialNameCN;
+    }
+
+    public void setItemMaterialNameCN(String itemMaterialNameCN) {
+        this.itemMaterialNameCN = itemMaterialNameCN;
+    }
+
+    public String getItemMaterialNameEN() {
+        return itemMaterialNameEN;
+    }
+
+    public void setItemMaterialNameEN(String itemMaterialNameEN) {
+        this.itemMaterialNameEN = itemMaterialNameEN;
     }
 }
