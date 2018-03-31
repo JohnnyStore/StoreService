@@ -11,6 +11,7 @@ import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.entity.ImageEntity;
 import com.johnny.store.entity.ItemEntity;
 import com.johnny.store.entity.ShoppingCartEntity;
+import com.johnny.store.manager.BuildViewModel;
 import com.johnny.store.manager.UnifiedResponseManager;
 import com.johnny.store.mapper.ImageMapper;
 import com.johnny.store.mapper.ItemMapper;
@@ -26,7 +27,6 @@ import java.util.List;
 
 /**
  * ShoppingCartServiceImpl
- *
  * @author liqian
  * @version 1.0.0
  * @since 1.0.0+
@@ -41,6 +41,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Autowired
     private ImageMapper imageMapper;
+
+    @Autowired
+    private BuildViewModel buildViewModel;
+
 
     @Override
     public UnifiedResponse findList(int pageNumber, int pageSize) {
@@ -64,25 +68,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     itemEntity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
                 }
                 ShoppingCartVO shoppingCartVO = new ShoppingCartVO();
-                ItemVO itemVO = new ItemVO();
-                ConvertObjectUtils.convertJavaBean(itemVO, itemEntity);
+                ItemVO itemVO = buildViewModel.buildItemViewModel(itemEntity);
                 ConvertObjectUtils.convertJavaBean(shoppingCartVO, shoppingCartentity);
-
-                itemVO.setItemID(itemEntity.getItemID());
-                itemVO.setBrandID(itemEntity.getBrandID());
-                itemVO.setCategoryID(itemEntity.getCategoryID());
-                itemVO.setSubCategoryID(itemEntity.getSubCategoryID());
-                itemVO.setItemGroupID(itemEntity.getItemGroupID());
-                itemVO.setSeriesID(itemEntity.getSeriesID());
-                itemVO.setUnitPrice4RMB(itemEntity.getUnitPrice4RMB());
-                itemVO.setPromotionPrice4RMB(itemEntity.getPromotionPrice4RMB());
-                itemVO.setUnitPrice4USD(itemEntity.getUnitPrice4USD());
-                itemVO.setPromotionPrice4USD(itemEntity.getPromotionPrice4USD());
-                itemVO.setRate(itemEntity.getRate());
-                itemVO.setColorID(itemEntity.getColorID());
-                itemVO.setSizeID(itemEntity.getSizeID());
-                itemVO.setMadeInID(itemEntity.getMadeInID());
-
                 shoppingCartVO.setShoppingCartID(shoppingCartentity.getShoppingCartID());
                 shoppingCartVO.setItemID(shoppingCartentity.getItemID());
                 shoppingCartVO.setCustomerID(shoppingCartentity.getCustomerID());
@@ -93,6 +80,47 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 modelList.add(shoppingCartVO);
             }
             return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse findList4Customer(int customerID) {
+        try{
+            List<ShoppingCartVO> modelList = new ArrayList<>();
+            List<ShoppingCartEntity> entityList =  shoppingCartMapper.searchList4Customer(customerID);
+            if(entityList == null){
+                return UnifiedResponseManager.buildSuccessResponse(0, null);
+            }
+            for (ShoppingCartEntity shoppingCartentity : entityList) {
+                ItemEntity itemEntity = itemMapper.search(shoppingCartentity.getItemID());
+                List<ImageEntity> imageEntityList = imageMapper.searchList(shoppingCartentity.getItemID(), ImageObjectType.ITEM, ImageType.NORMAL);
+                if(imageEntityList != null && imageEntityList.size() > 0){
+                    itemEntity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+                }
+                ShoppingCartVO shoppingCartVO = new ShoppingCartVO();
+                ItemVO itemVO = buildViewModel.buildItemViewModel(itemEntity);
+                ConvertObjectUtils.convertJavaBean(shoppingCartVO, shoppingCartentity);
+
+                shoppingCartVO.setShoppingCartID(shoppingCartentity.getShoppingCartID());
+                shoppingCartVO.setItemID(shoppingCartentity.getItemID());
+                shoppingCartVO.setCustomerID(shoppingCartentity.getCustomerID());
+                shoppingCartVO.setShoppingCount(shoppingCartentity.getShoppingCount());
+                shoppingCartVO.setItemVO(itemVO);
+                shoppingCartVO.setTotalPrice4RMB(itemEntity.getPromotionPrice4RMB() > 0 ?
+                        shoppingCartentity.getShoppingCount() * itemEntity.getPromotionPrice4RMB() :
+                        shoppingCartentity.getShoppingCount() * itemEntity.getUnitPrice4RMB());
+                shoppingCartVO.setTotalPrice4USD(itemEntity.getPromotionPrice4USD() > 0 ?
+                        shoppingCartentity.getShoppingCount() * itemEntity.getPromotionPrice4USD() :
+                        shoppingCartentity.getShoppingCount() * itemEntity.getUnitPrice4USD());
+                modelList.add(shoppingCartVO);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
@@ -123,7 +151,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             shoppingCartEntity.setItemID(shoppingCartDTO.getItemID());
             shoppingCartEntity.setCustomerID(shoppingCartDTO.getCustomerID());
             shoppingCartEntity.setShoppingCount(shoppingCartDTO.getShoppingCount());
-            shoppingCartEntity.setStatus(shoppingCartDTO.getStatus());
+            shoppingCartEntity.setStatus("I");
             shoppingCartEntity.setLastEditUser(shoppingCartDTO.getLoginUser());
             int affectRow = shoppingCartMapper.insert(shoppingCartEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);

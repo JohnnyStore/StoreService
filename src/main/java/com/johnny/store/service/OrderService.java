@@ -10,6 +10,8 @@ import java.util.List;
 public interface OrderService extends BaseService {
     UnifiedResponse findList(int startIndex, int pageSize, String customerTel, int recentMonth, String orderStatus);
 
+    UnifiedResponse findList(int startIndex, int pageSize, int customerID, String orderStatus);
+
     List<OrderVO> buildOrderVOList(List<OrderEntity> orderEntityList) throws StoreException;
 
     UnifiedResponse changeOrderStatus(Object dto);

@@ -30,6 +30,16 @@ public class BuildViewModel {
                 itemMaterialListEN.add(materialEntity.getMaterialEN());
             }
             ConvertObjectUtils.convertJavaBean(model, entity);
+            if(entity.getPromotionPrice4RMB() > 0){
+                model.setPromotion4RMB(true);
+            }else{
+                model.setPromotion4RMB(false);
+            }
+            if(entity.getPromotionPrice4USD() > 0){
+                model.setPromotion4USD(true);
+            }else{
+                model.setPromotion4USD(false);
+            }
             model.setItemMaterialNameCN(String.join(",", itemMaterialListCN));
             model.setItemMaterialNameEN(String.join(",", itemMaterialListEN));
             model.setItemID(entity.getItemID());

@@ -52,6 +52,8 @@ public class ItemVO {
     private String itemStatus;
     private String itemStatusText;
     private Boolean showInListPage;
+    private Boolean isPromotion4RMB;
+    private Boolean isPromotion4USD;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -471,5 +473,21 @@ public class ItemVO {
 
     public void setItemMaterialNameEN(String itemMaterialNameEN) {
         this.itemMaterialNameEN = itemMaterialNameEN;
+    }
+
+    public Boolean getPromotion4USD() {
+        return isPromotion4USD;
+    }
+
+    public void setPromotion4USD(Boolean promotion4USD) {
+        isPromotion4USD = promotion4USD;
+    }
+
+    public Boolean getPromotion4RMB() {
+        return isPromotion4RMB;
+    }
+
+    public void setPromotion4RMB(Boolean promotion4RMB) {
+        isPromotion4RMB = promotion4RMB;
     }
 }

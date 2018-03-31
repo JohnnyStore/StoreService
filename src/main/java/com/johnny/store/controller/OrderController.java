@@ -20,6 +20,14 @@ public class OrderController {
         return orderServiceImpl.findList(pageNumber, pageSize, cellphone, recentMonth, orderStatus);
     }
 
+    @RequestMapping(value = "/api/order/{pageNumber}/{pageSize}/{customerId}/{orderStatus}", method = RequestMethod.GET)
+    public UnifiedResponse getAll(@PathVariable("pageNumber") int pageNumber,
+                                  @PathVariable("pageSize") int pageSize,
+                                  @PathVariable("customerId") int customerId,
+                                  @PathVariable("orderStatus") String orderStatus){
+        return orderServiceImpl.findList(pageNumber, pageSize, customerId, orderStatus);
+    }
+
     @RequestMapping(value = "/api/order/{orderID}", method = RequestMethod.GET)
     public UnifiedResponse getAll(@PathVariable("orderID") int orderID){
         return orderServiceImpl.find(orderID);

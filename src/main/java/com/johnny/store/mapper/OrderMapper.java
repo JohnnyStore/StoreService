@@ -11,6 +11,8 @@ public interface OrderMapper {
 
     List<OrderEntity> searchList(int pageNumber, int pageSize, String cellphone, String beginDate, String orderStatus);
 
+    List<OrderEntity> searchList4Customer(int pageNumber, int pageSize, int customerID, String orderStatus);
+
     OrderEntity search(int orderID);
 
     int insert(OrderEntity entity);

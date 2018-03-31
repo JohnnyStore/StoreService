@@ -93,6 +93,27 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public UnifiedResponse findList(int startIndex, int pageSize, int customerID, String orderStatus) {
+        try {
+
+            List<OrderEntity> orderEntityList =  orderMapper.searchList4Customer(
+                    startIndex,
+                    pageSize,
+                    customerID,
+                    orderStatus.equals("N")? null: orderStatus);
+
+            List<OrderVO> orderVOList = buildOrderVOList(orderEntityList);
+            return UnifiedResponseManager.buildSuccessResponse(orderVOList.size(), orderVOList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public List<OrderVO> buildOrderVOList(List<OrderEntity> orderEntityList) throws StoreException{
         List<OrderVO> orderVOList = new ArrayList<>();
         for (OrderEntity orderEntity : orderEntityList) {

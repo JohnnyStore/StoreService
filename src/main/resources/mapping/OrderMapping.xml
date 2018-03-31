@@ -76,6 +76,42 @@
     LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
   </select>
 
+  <select id="searchList4Customer" resultMap="BaseResultMap">
+    SELECT
+    OrderID,
+    CustomerID,
+    DATE_FORMAT(OrderDate, '%Y-%m-%d %H:%i:%s') AS OrderDate,
+    OrderAmount,
+    ShippingAddressID,
+    OrderStatus,
+    (CASE OrderStatus WHEN 'O' THEN '待支付'
+    WHEN 'E' THEN '已过期'
+    WHEN 'P' THEN '已支付'
+    WHEN 'C' THEN '已取消'
+    WHEN 'S' THEN '配送中'
+    WHEN 'R' THEN '已退款'
+    WHEN 'F' THEN '已完成'
+    END) AS OrderStatusText,
+    ExpressCompanyID,
+    TrackingNumber,
+    RefundReason,
+    Memo,
+    InUser,
+    DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+    LastEditUser,
+    DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+    FROM `Order`
+    WHERE 1 = 1
+    <if test="arg2 != null">
+      AND CustomerID=#{arg2}
+    </if>
+    <if test="arg3 != null">
+      <![CDATA[ AND OrderStatus = #{arg3} ]]>
+    </if>
+    ORDER BY InDate DESC
+    LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
+  </select>
+
   <select id="search" resultMap="BaseResultMap">
     SELECT
     A.OrderID,

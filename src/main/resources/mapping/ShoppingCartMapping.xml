@@ -39,6 +39,26 @@
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
+    <select id="searchList4Customer" resultMap="BaseResultMap">
+        SELECT
+        ShoppingCartID,
+        ItemID,
+        CustomerID,
+        ShoppingCount,
+        Status,
+        (CASE Status WHEN 'I' THEN '待支付'
+        WHEN 'D' THEN '已删除'
+        WHEN 'P' THEN '已支付'
+        END) AS StatusText,
+        InUser,
+        DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+        LastEditUser,
+        DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+        FROM ShoppingCart
+        WHERE CustomerID=#{arg0}
+        AND Status = 'I'
+        ORDER BY InDate DESC;
+    </select>
     <select id="searchTotalCount" resultType="java.lang.Integer">
         SELECT
         COUNT(1) AS TotalCount

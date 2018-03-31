@@ -1,23 +1,22 @@
-package com.johnny.store.dto;
+package com.johnny.store.entity;
 
-public class ShoppingCartDTO {
-    private int shoppingCartID;
+public class CollectionEntity {
+    private int collectionID;
     private int itemID;
     private int customerID;
-    private int shoppingCount;
     private String status;
+    private String statusText;
     private String inUser;
     private String inDate;
     private String lastEditUser;
     private String lastEditDate;
-    private String loginUser;
 
-    public int getShoppingCartID() {
-        return shoppingCartID;
+    public int getCollectionID() {
+        return collectionID;
     }
 
-    public void setShoppingCartID(int shoppingCartID) {
-        this.shoppingCartID = shoppingCartID;
+    public void setCollectionID(int collectionID) {
+        this.collectionID = collectionID;
     }
 
     public int getItemID() {
@@ -36,18 +35,16 @@ public class ShoppingCartDTO {
         this.customerID = customerID;
     }
 
-    public int getShoppingCount() {
-        return shoppingCount;
+    public String getStatus() {
+        return status;
     }
 
-    public void setShoppingCount(int shoppingCount) {
-        this.shoppingCount = shoppingCount;
+    public void setStatus(String status) {
+        this.status = status;
     }
-
-
 
     public String getInUser() {
-        return inUser;
+        return this.inUser;
     }
 
     public void setInUser(String inUser) {
@@ -55,7 +52,7 @@ public class ShoppingCartDTO {
     }
 
     public String getInDate() {
-        return inDate;
+        return this.inDate;
     }
 
     public void setInDate(String inDate) {
@@ -63,7 +60,7 @@ public class ShoppingCartDTO {
     }
 
     public String getLastEditUser() {
-        return lastEditUser;
+        return this.lastEditUser;
     }
 
     public void setLastEditUser(String lastEditUser) {
@@ -71,26 +68,18 @@ public class ShoppingCartDTO {
     }
 
     public String getLastEditDate() {
-        return lastEditDate;
+        return this.lastEditDate;
     }
 
     public void setLastEditDate(String lastEditDate) {
         this.lastEditDate = lastEditDate;
     }
 
-    public String getLoginUser() {
-        return loginUser;
+    public String getStatusText() {
+        return statusText;
     }
 
-    public void setLoginUser(String loginUser) {
-        this.loginUser = loginUser;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 }
