@@ -24,6 +24,11 @@ public class CustomerController {
         return customerServiceImpl.find(customerID);
     }
 
+    @RequestMapping(value = "api/customer/login/{userName}/{password}",method = RequestMethod.GET)
+    public UnifiedResponse getCustomer(@PathVariable("userName") String userName, @PathVariable("password") String password){
+        return customerServiceImpl.login(userName, password);
+    }
+
     @RequestMapping(value="api/customer", method = RequestMethod.POST)
     public UnifiedResponse addBrand(@RequestBody CustomerDTO customerDTO){
         return customerServiceImpl.add(customerDTO);

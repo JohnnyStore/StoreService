@@ -14,6 +14,8 @@ public interface CustomerMapper {
 
     CustomerEntity search(int customerID);
 
+    CustomerEntity login(String userName, String password);
+
     int insert(CustomerEntity entity);
 
     int updateStatus(CustomerEntity entity);

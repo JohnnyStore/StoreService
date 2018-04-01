@@ -79,6 +79,33 @@
         FROM Customer
         WHERE CustomerID = #{customerID,jdbcType=INTEGER}
     </select>
+    <select id="login" resultMap="BaseResultMapOfCustomer">
+        SELECT
+            CustomerID,
+            CustomerName,
+            Account,
+            Password,
+            CustomerSex,
+            Cellphone,
+            Email,
+            CustomerType,
+            (CASE CustomerType WHEN 'N' THEN '一般客户'
+            WHEN 'W' THEN '批发商'
+            END) AS CustomerTypeText,
+            Status,
+            (CASE Status WHEN 'A' THEN '激活'
+            WHEN 'F' THEN '冻结'
+            END) AS StatusText,
+            InUser,
+            InDate,
+            LastEditUser,
+            LastEditDate
+        FROM Customer
+        WHERE (Account = #{arg0, jdbcType=VARCHAR}
+                OR Cellphone = #{arg0, jdbcType=VARCHAR}
+                OR Email = #{arg0, jdbcType=VARCHAR})
+          AND Password = #{arg1, jdbcType=VARCHAR}
+    </select>
     <insert id="insert" parameterType="com.johnny.store.entity.CustomerEntity" >
         INSERT INTO Customer (
             Cellphone,

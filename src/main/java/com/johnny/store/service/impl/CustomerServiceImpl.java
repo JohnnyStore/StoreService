@@ -68,6 +68,33 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public UnifiedResponse login(String userName, String password) {
+        try {
+            CustomerVO model = null;
+            CustomerEntity entity = customerMapper.login(userName, password);
+            if (entity != null){
+                model = new CustomerVO();
+                ConvertObjectUtils.convertJavaBean(model,entity);
+                if(model.getStatus().equals("A")){
+                    model.setActive(true);
+                    model.setFrozen(false);
+                }else{
+                    model.setActive(false);
+                    model.setFrozen(true);
+                }
+                model.setCustomerID(entity.getCustomerID());
+            }
+            return UnifiedResponseManager.buildSuccessResponse(model);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse find(int id) {
         try {
             CustomerVO model = null;
