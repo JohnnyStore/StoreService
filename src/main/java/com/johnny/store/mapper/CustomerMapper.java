@@ -14,6 +14,12 @@ public interface CustomerMapper {
 
     CustomerEntity search(int customerID);
 
+    CustomerEntity searchByAccount(String account);
+
+    CustomerEntity searchByCellphone(String cellphone);
+
+    CustomerEntity searchByEmail(String email);
+
     CustomerEntity login(String userName, String password);
 
     int insert(CustomerEntity entity);

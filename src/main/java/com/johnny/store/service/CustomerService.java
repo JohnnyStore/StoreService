@@ -6,4 +6,10 @@ public interface CustomerService extends BaseService {
     UnifiedResponse findList(int pageNumber, int pageSize, String cellphone, String status);
 
     UnifiedResponse login(String userName, String password);
+
+    UnifiedResponse findByAccount(String account);
+
+    UnifiedResponse findByCellphone(String cellphone);
+
+    UnifiedResponse findByEmail(String email);
 }

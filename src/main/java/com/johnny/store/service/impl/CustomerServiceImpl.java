@@ -95,6 +95,66 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public UnifiedResponse findByAccount(String account) {
+        try {
+            CustomerVO model = null;
+            CustomerEntity entity = customerMapper.searchByAccount(account);
+            if (entity != null){
+                model = new CustomerVO();
+                ConvertObjectUtils.convertJavaBean(model,entity);
+                model.setCustomerID(entity.getCustomerID());
+            }
+            return UnifiedResponseManager.buildSuccessResponse(model);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse findByCellphone(String cellphone) {
+        try {
+            CustomerVO model = null;
+            CustomerEntity entity = customerMapper.searchByCellphone(cellphone);
+            if (entity != null){
+                model = new CustomerVO();
+                ConvertObjectUtils.convertJavaBean(model,entity);
+                model.setCustomerID(entity.getCustomerID());
+            }
+            return UnifiedResponseManager.buildSuccessResponse(model);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse findByEmail(String email) {
+        try {
+            CustomerVO model = null;
+            CustomerEntity entity = customerMapper.searchByEmail(email);
+            if (entity != null){
+                model = new CustomerVO();
+                ConvertObjectUtils.convertJavaBean(model,entity);
+                model.setCustomerID(entity.getCustomerID());
+            }
+            return UnifiedResponseManager.buildSuccessResponse(model);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse find(int id) {
         try {
             CustomerVO model = null;
@@ -125,6 +185,11 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerDTO customerDTO = (CustomerDTO)dto;
             CustomerEntity customerEntity = new CustomerEntity();
             ConvertObjectUtils.convertJavaBean(customerEntity, customerDTO);
+            if(customerDTO.getCustomerType().equals("N")){
+                customerEntity.setStatus("A");
+            }else{
+                customerEntity.setStatus("P");
+            }
             customerEntity.setInUser(customerDTO.getLoginUser());
             customerEntity.setLastEditUser(customerDTO.getLoginUser());
             int affectRow = customerMapper.insert(customerEntity);

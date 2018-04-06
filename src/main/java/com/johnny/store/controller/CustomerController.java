@@ -2,6 +2,7 @@ package com.johnny.store.controller;
 
 import com.johnny.store.dto.CustomerDTO;
 import com.johnny.store.dto.UnifiedResponse;
+import com.johnny.store.dto.VerificationCodeDTO;
 import com.johnny.store.service.impl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +25,28 @@ public class CustomerController {
         return customerServiceImpl.find(customerID);
     }
 
+    @RequestMapping(value = "api/customer/account/{account}",method = RequestMethod.GET)
+    public UnifiedResponse getCustomerByAccount(@PathVariable("account") String account){
+        return customerServiceImpl.findByAccount(account);
+    }
+
+    @RequestMapping(value = "api/customer/cellphone/{cellphone}",method = RequestMethod.GET)
+    public UnifiedResponse getCustomerByCellphone(@PathVariable("cellphone") String cellphone){
+        return customerServiceImpl.findByCellphone(cellphone);
+    }
+
+    @RequestMapping(value = "api/customer/email/{email}",method = RequestMethod.GET)
+    public UnifiedResponse getCustomerByEmail(@PathVariable("email") String email){
+        return customerServiceImpl.findByEmail(email);
+    }
+
     @RequestMapping(value = "api/customer/login/{userName}/{password}",method = RequestMethod.GET)
-    public UnifiedResponse getCustomer(@PathVariable("userName") String userName, @PathVariable("password") String password){
+    public UnifiedResponse login(@PathVariable("userName") String userName, @PathVariable("password") String password){
         return customerServiceImpl.login(userName, password);
     }
 
     @RequestMapping(value="api/customer", method = RequestMethod.POST)
-    public UnifiedResponse addBrand(@RequestBody CustomerDTO customerDTO){
+    public UnifiedResponse add(@RequestBody CustomerDTO customerDTO){
         return customerServiceImpl.add(customerDTO);
     }
 

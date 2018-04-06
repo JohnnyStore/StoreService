@@ -1,5 +1,8 @@
 package com.johnny.store.common;
 
+import org.joda.time.Months;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +15,11 @@ public class DateUtils {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return simpleDateFormat.format(date);
+    }
+
+    public static Date convert(String value) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return simpleDateFormat.parse(value);
     }
 
     public static String getRecentMonthDateTime(int recentMonth){
@@ -140,10 +148,19 @@ public class DateUtils {
         calendar.set(Calendar.MILLISECOND, calendar.getActualMaximum(Calendar.MILLISECOND));
     }
 
-
-
     public static String format(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_PATTERN);
         return sdf.format(date);
+    }
+
+    /**
+     * 对比date1与date2两个时间之间的小时差
+     * @param date1 待对比的时间
+     * @param date2 对比时间
+     * @return 返回两个时间的小时差值
+     */
+    public static long differenceHour(Date date1, Date date2){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return (date1.getTime() - date2.getTime()) / (3600 * 1000);
     }
 }

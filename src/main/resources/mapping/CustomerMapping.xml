@@ -79,6 +79,78 @@
         FROM Customer
         WHERE CustomerID = #{customerID,jdbcType=INTEGER}
     </select>
+    <select id="searchByAccount" resultMap="BaseResultMapOfCustomer">
+        SELECT
+            CustomerID,
+            CustomerName,
+            Account,
+            Password,
+            CustomerSex,
+            Cellphone,
+            Email,
+            CustomerType,
+            (CASE CustomerType WHEN 'N' THEN '一般客户'
+             WHEN 'W' THEN '批发商'
+             END) AS CustomerTypeText,
+            Status,
+            (CASE Status WHEN 'A' THEN '激活'
+             WHEN 'F' THEN '冻结'
+             END) AS StatusText,
+            InUser,
+            InDate,
+            LastEditUser,
+            LastEditDate
+        FROM Customer
+        WHERE Account = #{account,jdbcType=INTEGER}
+    </select>
+    <select id="searchByCellphone" resultMap="BaseResultMapOfCustomer">
+        SELECT
+            CustomerID,
+            CustomerName,
+            Account,
+            Password,
+            CustomerSex,
+            Cellphone,
+            Email,
+            CustomerType,
+            (CASE CustomerType WHEN 'N' THEN '一般客户'
+             WHEN 'W' THEN '批发商'
+             END) AS CustomerTypeText,
+            Status,
+            (CASE Status WHEN 'A' THEN '激活'
+             WHEN 'F' THEN '冻结'
+             END) AS StatusText,
+            InUser,
+            InDate,
+            LastEditUser,
+            LastEditDate
+        FROM Customer
+        WHERE Cellphone = #{cellphone,jdbcType=INTEGER}
+    </select>
+    <select id="searchByEmail" resultMap="BaseResultMapOfCustomer">
+        SELECT
+            CustomerID,
+            CustomerName,
+            Account,
+            Password,
+            CustomerSex,
+            Cellphone,
+            Email,
+            CustomerType,
+            (CASE CustomerType WHEN 'N' THEN '一般客户'
+             WHEN 'W' THEN '批发商'
+             END) AS CustomerTypeText,
+            Status,
+            (CASE Status WHEN 'A' THEN '激活'
+             WHEN 'F' THEN '冻结'
+             END) AS StatusText,
+            InUser,
+            InDate,
+            LastEditUser,
+            LastEditDate
+        FROM Customer
+        WHERE Email = #{email,jdbcType=INTEGER}
+    </select>
     <select id="login" resultMap="BaseResultMapOfCustomer">
         SELECT
             CustomerID,
@@ -108,18 +180,22 @@
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.CustomerEntity" >
         INSERT INTO Customer (
+            Account,
+            Password,
             Cellphone,
             Email,
-            Password,
             CustomerType,
+            Status,
             InUser,
             LastEditUser
         )
         VALUES (
-            #{cellphone, jdbcType=NVARCHAR},
-            #{email, jdbcType=VARCHAR},
+            #{account, jdbcType=NVARCHAR},
             #{password, jdbcType=VARCHAR},
+            #{cellphone, jdbcType=VARCHAR},
+            #{email, jdbcType=VARCHAR},
             #{customerType, jdbcType=VARCHAR},
+            #{status, jdbcType=VARCHAR},
             #{inUser, jdbcType=VARCHAR},
             #{lastEditUser, jdbcType=VARCHAR}
         )
