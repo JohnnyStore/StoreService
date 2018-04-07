@@ -222,6 +222,18 @@
             LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE CustomerID = #{customerID,jdbcType=INTEGER}
     </update>
+    <update id="changePassword" parameterType="com.johnny.store.entity.CustomerEntity" >
+        UPDATE Customer SET
+            Password = #{password,jdbcType=NVARCHAR},
+            LastEditUser = 'sys'
+        WHERE 1 = 1
+        <if test="cellphone != null">
+            AND Cellphone = #{cellphone,jdbcType=VARCHAR}
+        </if>
+        <if test="email != null">
+            AND Email = #{email,jdbcType=VARCHAR}
+        </if>
+    </update>
     <delete id="delete" parameterType="java.lang.Integer" >
         DELETE FROM Customer
         WHERE CustomerID = #{customerID,jdbcType=INTEGER}

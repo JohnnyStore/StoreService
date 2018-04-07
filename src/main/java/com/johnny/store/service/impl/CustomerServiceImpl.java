@@ -185,11 +185,7 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerDTO customerDTO = (CustomerDTO)dto;
             CustomerEntity customerEntity = new CustomerEntity();
             ConvertObjectUtils.convertJavaBean(customerEntity, customerDTO);
-            if(customerDTO.getCustomerType().equals("N")){
-                customerEntity.setStatus("A");
-            }else{
-                customerEntity.setStatus("P");
-            }
+            customerEntity.setStatus("A");
             customerEntity.setInUser(customerDTO.getLoginUser());
             customerEntity.setLastEditUser(customerDTO.getLoginUser());
             int affectRow = customerMapper.insert(customerEntity);
@@ -221,7 +217,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-    public UnifiedResponse changePassword(Object dto){
+    public UnifiedResponse updatePassword(Object dto){
         try {
             CustomerDTO customerDTO = (CustomerDTO) dto;
             CustomerEntity customerEntity = new CustomerEntity();
@@ -248,6 +244,29 @@ public class CustomerServiceImpl implements CustomerService {
             customerEntity.setCustomerID(customerDTO.getCustomerID());
             customerEntity.setLastEditUser(customerDTO.getLoginUser());
             int affectRow = customerMapper.update(customerEntity);
+            return UnifiedResponseManager.buildSuccessResponse(affectRow);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse changePassword(Object dto) {
+        try {
+            CustomerDTO customerDTO = (CustomerDTO) dto;
+            CustomerEntity customerEntity = new CustomerEntity();
+            ConvertObjectUtils.convertJavaBean(customerEntity,customerDTO);
+            if(customerDTO.getCellphone().isEmpty()){
+                customerEntity.setCellphone(null);
+            }
+            if(customerDTO.getEmail().isEmpty()){
+                customerEntity.setEmail(null);
+            }
+            int affectRow = customerMapper.changePassword(customerEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);

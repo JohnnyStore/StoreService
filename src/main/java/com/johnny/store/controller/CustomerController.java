@@ -56,6 +56,11 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "api/customer/changePassword",method = RequestMethod.PUT)
+    public UnifiedResponse updateCustomerPassword(@RequestBody CustomerDTO customerDTO){
+        return customerServiceImpl.updatePassword(customerDTO);
+    }
+
+    @RequestMapping(value = "api/customer/forgetPassword",method = RequestMethod.PUT)
     public UnifiedResponse changeCustomerPassword(@RequestBody CustomerDTO customerDTO){
         return customerServiceImpl.changePassword(customerDTO);
     }

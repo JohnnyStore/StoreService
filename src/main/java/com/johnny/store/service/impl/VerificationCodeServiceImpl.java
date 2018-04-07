@@ -33,10 +33,13 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     }
 
     @Override
-    public UnifiedResponse find(String cellphone, String verificationCode) {
+    public UnifiedResponse find(String cellphone, String email, String verificationCode) {
         try {
             VerificationCodeVO model = null;
-            VerificationCodeEntity entity = verificationCodeMapper.search(cellphone, verificationCode);
+            if(cellphone.equals("null")) cellphone = "";
+            if(email.equals("null")) email = "";
+
+            VerificationCodeEntity entity = verificationCodeMapper.search(cellphone, email, verificationCode);
             if (entity != null){
                 model = new VerificationCodeVO();
                 Date now = new Date();

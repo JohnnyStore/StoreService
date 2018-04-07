@@ -11,9 +11,11 @@ public class VerificationCodeController {
     @Autowired
     private VerificationCodeServiceImpl verificationCodeImpl;
 
-    @RequestMapping(value = "/api/verificationCode/{cellphone}/{verificationCode}", method = RequestMethod.GET)
-    public UnifiedResponse get(@PathVariable("cellphone") String cellphone, @PathVariable("verificationCode") String verificationCode){
-        return verificationCodeImpl.find(cellphone, verificationCode);
+    @RequestMapping(value = "/api/verificationCode/{cellphone}/{email}/{verificationCode}", method = RequestMethod.GET)
+    public UnifiedResponse get(@PathVariable("cellphone") String cellphone,
+                               @PathVariable("email") String email,
+                               @PathVariable("verificationCode") String verificationCode){
+        return verificationCodeImpl.find(cellphone, email, verificationCode);
     }
 
     @RequestMapping(value="/api/verificationCode", method = RequestMethod.POST)

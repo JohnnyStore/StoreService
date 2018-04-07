@@ -26,6 +26,8 @@ public interface CustomerMapper {
 
     int updateStatus(CustomerEntity entity);
 
+    int changePassword(CustomerEntity entity);
+
     int update(CustomerEntity entity);
 
     int updatePassword(CustomerEntity entity);

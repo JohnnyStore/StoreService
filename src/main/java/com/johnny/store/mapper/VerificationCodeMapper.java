@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface VerificationCodeMapper {
-    VerificationCodeEntity search(String cellphone, String verificationCode);
+    VerificationCodeEntity search(String cellphone, String email, String verificationCode);
 
     int insert(VerificationCodeEntity entity);
 }

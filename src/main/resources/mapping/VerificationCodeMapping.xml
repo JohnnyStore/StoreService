@@ -25,7 +25,8 @@
             DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM VerificationCode
         WHERE Cellphone = #{arg0,jdbcType=VARCHAR}
-        AND VerificationCode = #{arg1,jdbcType=VARCHAR}
+        AND Email = #{arg1,jdbcType=VARCHAR}
+        AND VerificationCode = #{arg2,jdbcType=VARCHAR}
     </select>
     <insert id="insert" parameterType="com.johnny.store.entity.VerificationCodeEntity" >
         INSERT INTO VerificationCode (
