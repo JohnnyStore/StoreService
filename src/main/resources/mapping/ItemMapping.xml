@@ -210,6 +210,82 @@
     ORDER BY InDate DESC
     LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
   </select>
+  <select id="searchListByItemName" resultMap="BaseResultMap">
+        SELECT
+        A.ItemID,
+        A.BrandID,
+        B.BrandCN,
+        B.BrandEN,
+        A.CategoryID,
+        C.CategoryCN,
+        C.CategoryEN,
+        A.SubCategoryID,
+        D.SubCategoryCN,
+        D.SubCategoryEN,
+        A.ItemGroupID,
+        J.ItemGroupCN,
+        J.ItemGroupEN,
+        A.SeriesID,
+        A.ItemCode,
+        E.ItemSeriesCN,
+        E.ItemSeriesEN,
+        A.UnitPrice4RMB,
+        A.PromotionPrice4RMB,
+        A.UnitPrice4USD,
+        A.PromotionPrice4USD,
+        A.Rate,
+        A.ColorID,
+        F.ColorCN,
+        F.ColorEN,
+        A.SizeID,
+        G.SizeCN,
+        G.SizeEN,
+        A.ItemMaterial,
+        A.MadeInID,
+        I.CountryNameCN,
+        I.CountryNameEN,
+        A.ItemLength,
+        A.AdjustLength,
+        A.SuitablePetCN,
+        A.SuitablePetEN,
+        A.ItemShortDescriptionCN,
+        A.ItemShortDescriptionEN,
+        A.ItemDescriptionCN,
+        A.ItemDescriptionEN,
+        A.ItemStatus,
+        (CASE A.ItemStatus WHEN 'P' THEN '待上架'
+        WHEN 'N' THEN '已上架'
+        WHEN 'E' THEN '已下架'
+        END) AS ItemStatusText,
+        A.ShowInListPage,
+        A.InUser,
+        DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+        A.LastEditUser,
+        DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+        FROM Item A
+        LEFT JOIN Brand B
+        ON A.BrandID = B.BrandID
+        LEFT JOIN Category C
+        ON A.CategoryID = C.CategoryID
+        LEFT JOIN SubCategory D
+        ON A.SubCategoryID = D.SubCategoryID
+        LEFT JOIN ItemSeries E
+        ON A.SeriesID = E.SeriesID
+        LEFT JOIN Color F
+        ON A.ColorID = F.ColorID
+        LEFT JOIN SizeMapping G
+        ON A.SizeID = G.SizeID
+        LEFT JOIN Country I
+        ON A.MadeInID = I.CountryID
+        LEFT JOIN ItemGroup J
+        ON A.ItemGroupID = J.ItemGroupID
+        WHERE A.ItemStatus = 'N'
+        AND (A.ItemShortDescriptionCN LIKE #{arg2}
+              OR A.ItemShortDescriptionEN LIKE #{arg2})
+        ORDER BY A.InDate DESC
+        LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};;
+    </select>
+
   <select id="search" resultMap="BaseResultMap">
     SELECT
       A.ItemID,

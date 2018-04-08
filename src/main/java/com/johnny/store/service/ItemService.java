@@ -10,5 +10,7 @@ public interface ItemService extends BaseService {
 
     UnifiedResponse findSalesList(int pageNumber, int pageSize, int brandID, int categoryID, int subCategoryID);
 
+    UnifiedResponse findListByItemName(int pageNumber, int pageSize, String itemName);
+
     UnifiedResponse changeItemToShowInList(ItemDTO itemDTO);
 }

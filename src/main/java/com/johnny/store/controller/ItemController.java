@@ -30,6 +30,13 @@ public class ItemController {
         return itemServiceImpl.find(itemId);
     }
 
+    @RequestMapping(value = "/api/item/fuzzy/{pageNumber}/{pageSize}/{itemName}", method = RequestMethod.GET)
+    public UnifiedResponse getAll4ItemName(@PathVariable("pageNumber") int pageNumber,
+                                           @PathVariable("pageSize") int pageSize,
+                                           @PathVariable("itemName") String itemName){
+        return itemServiceImpl.findListByItemName(pageNumber, pageSize, itemName);
+    }
+
     @RequestMapping(value = "/api/item/{brandId}/{categoryId}/{subCategoryId}/{itemGroupId}/{seriesID}/{colorID}/{sizeID}", method = RequestMethod.GET)
     public UnifiedResponse get(@PathVariable("brandId") int brandId,
                                @PathVariable("categoryId") int categoryId,

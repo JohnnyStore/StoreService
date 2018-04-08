@@ -11,6 +11,8 @@ public interface ItemMapper {
 
     List<ItemEntity> searchSalesList(int startIndex, int pageSize, int brandID, int categoryID, int subCategoryID);
 
+    List<ItemEntity> searchListByItemName(int startIndex, int pageSize, String itemName);
+
     ItemEntity search(int itemID);
 
     ItemEntity searchByParameters(int brandID, int categoryID, int subCategoryID, int itemGroupID, int seriesID, int colorID, int sizeID);

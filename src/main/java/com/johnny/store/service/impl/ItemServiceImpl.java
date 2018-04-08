@@ -94,6 +94,32 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public UnifiedResponse findListByItemName(int pageNumber, int pageSize, String itemName) {
+        try{
+            int startIndex = (pageNumber - 1) * pageSize;
+            List<ItemVO> modelList = new ArrayList<>();
+            List<ItemEntity> entityList =  itemMapper.searchListByItemName(startIndex,pageSize, "%" + itemName + "%");
+
+            for (ItemEntity entity : entityList) {
+                List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.NORMAL);
+                if(imageEntityList != null && imageEntityList.size() > 0){
+                    entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+                }
+
+                ItemVO model = buildViewModel.buildItemViewModel(entity);
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse changeItemToShowInList(ItemDTO itemDTO) {
         try{
             ItemEntity itemEntity = new ItemEntity();
