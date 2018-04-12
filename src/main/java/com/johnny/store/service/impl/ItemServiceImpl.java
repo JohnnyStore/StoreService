@@ -120,22 +120,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public UnifiedResponse changeItemToShowInList(ItemDTO itemDTO) {
-        try{
-            ItemEntity itemEntity = new ItemEntity();
-            itemEntity.setItemID(itemDTO.getItemID());
-            itemEntity.setShowInListPage(itemDTO.getShowInListPage());
-            itemEntity.setLastEditUser(itemDTO.getLoginUser());
-
-            int affectRow = itemMapper.updateItemToShowInList(itemEntity);
-            return UnifiedResponseManager.buildSuccessResponse(affectRow);
-        } catch (Exception ex) {
-            LogUtils.processExceptionLog(ex);
-            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
-        }
-    }
-
-    @Override
     public UnifiedResponse find(int id) {
         try {
             ItemEntity entity = itemMapper.search(id);
@@ -287,6 +271,22 @@ public class ItemServiceImpl implements ItemService {
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse changeItemToShowInList(ItemDTO itemDTO) {
+        try{
+            ItemEntity itemEntity = new ItemEntity();
+            itemEntity.setItemID(itemDTO.getItemID());
+            itemEntity.setShowInListPage(itemDTO.getShowInListPage());
+            itemEntity.setLastEditUser(itemDTO.getLoginUser());
+
+            int affectRow = itemMapper.updateItemToShowInList(itemEntity);
+            return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (Exception ex) {
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
