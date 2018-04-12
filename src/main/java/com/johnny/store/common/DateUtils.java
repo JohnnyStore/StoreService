@@ -163,4 +163,16 @@ public class DateUtils {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return (date1.getTime() - date2.getTime()) / (3600 * 1000);
     }
+
+    /**
+     * 对比date1与date2两个时间之间的小时差
+     * @param date1 待对比的时间
+     * @param date2 对比时间
+     * @return 返回两个时间的小时差值
+     */
+    public static long differenceMinutes(Date date1, Date date2){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return (date1.getTime() - date2.getTime()) / (60 * 1000);
+    }
+
 }

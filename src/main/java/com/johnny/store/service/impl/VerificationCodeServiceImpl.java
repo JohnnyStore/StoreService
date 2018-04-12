@@ -44,10 +44,10 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
                 model = new VerificationCodeVO();
                 Date now = new Date();
                 Date sendTime = DateUtils.convert(entity.getSendTime());
-                long hour = DateUtils.differenceHour(now, sendTime);
+                long minutes = DateUtils.differenceMinutes(now, sendTime);
                 ConvertObjectUtils.convertJavaBean(model,entity);
                 model.setVerificationCodeID(entity.getVerificationCodeID());
-                if(hour >= 3){
+                if(minutes > 5){
                     model.setExpired(true);
                 }else{
                     model.setExpired(false);
