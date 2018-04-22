@@ -13,4 +13,6 @@ public interface ShoppingCartService extends BaseService {
     UnifiedResponse findList(int pageNumber, int pageSize, int customerID, String status);
 
     UnifiedResponse findList4Customer(int customerID);
+
+    UnifiedResponse changeStatus(Object dto);
 }

@@ -13,9 +13,11 @@ public interface ShippingAddressMapper {
 
     ShippingAddressEntity search(int shippingID);
 
+    List<ShippingAddressEntity> search4Customer(int customerID);
+
     int insert(ShippingAddressEntity entity);
 
-    int update(ShippingAddressEntity entity);
+    int updateDefaultAddress(ShippingAddressEntity entity);
 
     int delete(int colorID);
 }

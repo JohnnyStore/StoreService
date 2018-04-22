@@ -94,6 +94,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
                 model.setItemID(entity.getItemID());
                 model.setItemCount(entity.getItemCount());
                 model.setItemAmount(entity.getItemAmount());
+                model.setCurrencyType(entity.getCurrencyType());
                 model.setItemVO(itemVO);
             }
             return UnifiedResponseManager.buildSuccessResponse(model);
@@ -121,6 +122,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
             orderTransactionEntity.setItemID(orderTransactionDTO.getItemID());
             orderTransactionEntity.setItemCount(orderTransactionDTO.getItemCount());
             orderTransactionEntity.setItemAmount(orderTransactionDTO.getItemAmount());
+            orderTransactionEntity.setCurrencyType(orderTransactionDTO.getCurrencyType());
             orderTransactionEntity.setInUser(orderTransactionDTO.getLoginUser());
             orderTransactionEntity.setLastEditUser(orderTransactionDTO.getLoginUser());
             int affectRow = orderTransactionMapper.insert(orderTransactionEntity);

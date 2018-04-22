@@ -5,6 +5,7 @@ public class OrderEntity {
 	private int customerID;
 	private String orderDate;
 	private String orderAmount;
+	private String currencyType;
 	private int shippingAddressID;
 	private String orderStatus;
 	private String orderStatusText;
@@ -135,5 +136,13 @@ public class OrderEntity {
 
 	public void setLastEditDate(String lastEditDate) {
 		this.lastEditDate = lastEditDate;
+	}
+
+	public String getCurrencyType() {
+		return currencyType;
+	}
+
+	public void setCurrencyType(String currencyType) {
+		this.currencyType = currencyType;
 	}
 }

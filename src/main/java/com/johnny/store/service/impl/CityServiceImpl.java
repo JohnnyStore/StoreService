@@ -12,6 +12,7 @@ import com.johnny.store.mapper.CityMapper;
 import com.johnny.store.service.BaseService;
 import com.johnny.store.service.CityService;
 import com.johnny.store.vo.CityVO;
+import javafx.collections.transformation.TransformationList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +67,32 @@ public class CityServiceImpl implements CityService {
                 model.setCountryID(entity.getCountryID());
             }
             return UnifiedResponseManager.buildSuccessResponse(model);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse find(int cityID, int provinceID) {
+        try {
+            List<CityVO> modelList = new ArrayList<>();
+            List<CityEntity> entityList = cityMapper.search4Province(cityID, provinceID);
+            if(entityList.isEmpty()){
+                return UnifiedResponseManager.buildSuccessResponse(null);
+            }
+            for (CityEntity entity : entityList) {
+                CityVO model = new CityVO();
+                ConvertObjectUtils.convertJavaBean(model, entity);
+                model.setCityID(entity.getCityID());
+                model.setCountryID(entity.getCountryID());
+                model.setProvinceID(entity.getProvinceID());
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());

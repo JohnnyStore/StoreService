@@ -9,6 +9,7 @@ public class ShippingAddressDTO {
     private String shippingStreet;
     private String consignee;
     private String cellphone;
+    private boolean defaultAddress;
     private String loginUser;
 
     public int getShippingID() {
@@ -81,5 +82,13 @@ public class ShippingAddressDTO {
 
     public void setLoginUser(String loginUser) {
         this.loginUser = loginUser;
+    }
+
+    public boolean isDefaultAddress() {
+        return defaultAddress;
+    }
+
+    public void setDefaultAddress(boolean defaultAddress) {
+        this.defaultAddress = defaultAddress;
     }
 }

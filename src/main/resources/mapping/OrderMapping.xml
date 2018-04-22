@@ -6,6 +6,7 @@
     <result column="CustomerID" property="customerID" jdbcType="INTEGER" />
     <result column="OrderDate" property="orderDate" jdbcType="VARCHAR" />
     <result column="OrderAmount" property="orderAmount" jdbcType="VARCHAR" />
+    <result column="CurrencyType" property="currencyType" jdbcType="VARCHAR" />
     <result column="ShippingAddressID" property="shippingAddressID" jdbcType="INTEGER" />
     <result column="OrderStatus" property="orderStatus" jdbcType="VARCHAR" />
     <result column="OrderStatusText" property="orderStatusText" jdbcType="VARCHAR" />
@@ -41,6 +42,7 @@
     A.CustomerID,
     DATE_FORMAT(A.OrderDate, '%Y-%m-%d %H:%i:%s') AS OrderDate,
     A.OrderAmount,
+    A.CurrencyType,
     A.ShippingAddressID,
     A.OrderStatus,
     (CASE A.OrderStatus WHEN 'O' THEN '待支付'
@@ -82,6 +84,7 @@
     CustomerID,
     DATE_FORMAT(OrderDate, '%Y-%m-%d %H:%i:%s') AS OrderDate,
     OrderAmount,
+    A.CurrencyType,
     ShippingAddressID,
     OrderStatus,
     (CASE OrderStatus WHEN 'O' THEN '待支付'
@@ -118,6 +121,7 @@
     A.CustomerID,
     DATE_FORMAT(A.OrderDate, '%Y-%m-%d %H:%i:%s') AS OrderDate,
     A.OrderAmount,
+    A.CurrencyType,
     A.ShippingAddressID,
     A.OrderStatus,
     (CASE A.OrderStatus WHEN 'O' THEN '待支付'
@@ -146,6 +150,7 @@
       CustomerID,
       OrderDate,
       OrderAmount,
+      CurrencyType,
       ShippingAddressID,
       OrderStatus,
       ExpressCompanyID,
@@ -159,6 +164,7 @@
       #{customerID, jdbcType=INTEGER},
       #{orderDate, jdbcType=VARCHAR},
       #{orderAmount, jdbcType=VARCHAR},
+      #{currencyType, jdbcType=VARCHAR},
       #{shippingAddressID, jdbcType=INTEGER},
       #{orderStatus, jdbcType=VARCHAR},
       #{expressCompanyID, jdbcType=INTEGER},

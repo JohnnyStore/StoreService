@@ -12,27 +12,32 @@ public class ShippingAddressController {
     private ShippingAddressServiceImpl shippingAddressServiceImpl;
 
     @RequestMapping(value = "/api/shippingAddress/{pageNumber}/{pageSize}", method = RequestMethod.GET)
-    public UnifiedResponse getAllColor(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize){
+    public UnifiedResponse getAll(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize){
         return shippingAddressServiceImpl.findList(pageNumber, pageSize);
     }
 
     @RequestMapping(value = "/api/shippingAddress/{shippingAddressId}", method = RequestMethod.GET)
-    public UnifiedResponse getColor(@PathVariable("shippingAddressId") int shippingAddressId){
+    public UnifiedResponse get(@PathVariable("shippingAddressId") int shippingAddressId){
         return shippingAddressServiceImpl.find(shippingAddressId);
     }
 
+    @RequestMapping(value = "/api/shippingAddress/customer/{customerID}", method = RequestMethod.GET)
+    public UnifiedResponse get4Customer(@PathVariable("customerID") int customerID){
+        return shippingAddressServiceImpl.find4Customer(customerID);
+    }
+
     @RequestMapping(value="/api/shippingAddress", method = RequestMethod.POST)
-    public UnifiedResponse addColor(@RequestBody ShippingAddressDTO dto){
+    public UnifiedResponse add(@RequestBody ShippingAddressDTO dto){
         return shippingAddressServiceImpl.add(dto);
     }
 
     @RequestMapping(value="/api/shippingAddress", method = RequestMethod.PUT)
-    public UnifiedResponse changeColor(@RequestBody ShippingAddressDTO dto){
+    public UnifiedResponse change(@RequestBody ShippingAddressDTO dto){
         return shippingAddressServiceImpl.change(dto);
     }
 
     @RequestMapping(value="/api/shippingAddress/{shippingAddressId}", method = RequestMethod.DELETE)
-    public UnifiedResponse deleteColor(@PathVariable("shippingAddressId") int shippingAddressId){
+    public UnifiedResponse delete(@PathVariable("shippingAddressId") int shippingAddressId){
         return shippingAddressServiceImpl.delete(shippingAddressId);
     }
 }

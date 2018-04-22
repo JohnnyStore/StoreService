@@ -21,6 +21,11 @@ public class CityController {
         return cityServiceImpl.find(cityId);
     }
 
+    @RequestMapping(value = "api/city4Province/{countryID}/{provinceID}",method = RequestMethod.GET)
+    public UnifiedResponse getCity(@PathVariable("countryID") int countryID, @PathVariable("provinceID") int provinceID){
+        return cityServiceImpl.find(countryID, provinceID);
+    }
+
     @RequestMapping(value = "api/city/exist/{cityName}",method = RequestMethod.GET)
     public UnifiedResponse checkCityExist(@PathVariable("cityName") String cityName){
         return cityServiceImpl.existCheck(cityName);

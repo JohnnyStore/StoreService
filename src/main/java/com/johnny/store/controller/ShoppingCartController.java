@@ -33,6 +33,11 @@ public class ShoppingCartController {
         return shoppingCartServiceImpl.change(dto);
     }
 
+    @RequestMapping(value="/api/shoppingCart/status", method = RequestMethod.PUT)
+    public UnifiedResponse changeStatus(@RequestBody ShoppingCartDTO dto){
+        return shoppingCartServiceImpl.changeStatus(dto);
+    }
+
     @RequestMapping(value="/api/shoppingCart", method = RequestMethod.POST)
     public UnifiedResponse add(@RequestBody ShoppingCartDTO dto){
         return shoppingCartServiceImpl.add(dto);

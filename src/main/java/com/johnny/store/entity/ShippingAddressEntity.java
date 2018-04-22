@@ -9,6 +9,7 @@ public class ShippingAddressEntity {
     private String shippingStreet;
     private String consignee;
     private String cellphone;
+    private boolean defaultAddress;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -108,5 +109,13 @@ public class ShippingAddressEntity {
 
     public void setLastEditDate(String lastEditDate) {
         this.lastEditDate = lastEditDate;
+    }
+
+    public boolean isDefaultAddress() {
+        return defaultAddress;
+    }
+
+    public void setDefaultAddress(boolean defaultAddress) {
+        this.defaultAddress = defaultAddress;
     }
 }

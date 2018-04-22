@@ -1,16 +1,16 @@
 package com.johnny.store.dto;
 
-import java.util.List;
-
 public class OrderDTO {
     private int orderID;
     private int customerID;
     private String orderDate;
     private String orderAmount;
+    private String currencyType;
     private int shippingAddressID;
     private String orderStatus;
     private int expressCompanyID;
-    private List<OrderTransactionDTO> orderTransactionDTOList;
+    private String shoppingCartIdList;
+    private String orderItemsJson;
     private String trackingNumber;
     private String refundReason;
     private String memo;
@@ -104,11 +104,27 @@ public class OrderDTO {
         this.loginUser = loginUser;
     }
 
-    public List<OrderTransactionDTO> getOrderTransactionDTOList() {
-        return orderTransactionDTOList;
+    public String getOrderItemsJson() {
+        return orderItemsJson;
     }
 
-    public void setOrderTransactionDTOList(List<OrderTransactionDTO> orderTransactionDTOList) {
-        this.orderTransactionDTOList = orderTransactionDTOList;
+    public void setOrderItemsJson(String orderItemsJson) {
+        this.orderItemsJson = orderItemsJson;
+    }
+
+    public String getCurrencyType() {
+        return currencyType;
+    }
+
+    public void setCurrencyType(String currencyType) {
+        this.currencyType = currencyType;
+    }
+
+    public String getShoppingCartIdList() {
+        return shoppingCartIdList;
+    }
+
+    public void setShoppingCartIdList(String shoppingCartIdList) {
+        this.shoppingCartIdList = shoppingCartIdList;
     }
 }

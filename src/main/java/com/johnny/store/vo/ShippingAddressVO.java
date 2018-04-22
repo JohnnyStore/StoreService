@@ -12,6 +12,7 @@ public class ShippingAddressVO {
     private String shippingStreet;
     private String consignee;
     private String cellphone;
+    private boolean defaultAddress;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -135,5 +136,13 @@ public class ShippingAddressVO {
 
     public void setCityVO(CityVO cityVO) {
         this.cityVO = cityVO;
+    }
+
+    public boolean isDefaultAddress() {
+        return defaultAddress;
+    }
+
+    public void setDefaultAddress(boolean defaultAddress) {
+        this.defaultAddress = defaultAddress;
     }
 }

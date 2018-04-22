@@ -44,6 +44,21 @@
         COUNT(1) AS TotalCount
         FROM City;
     </select>
+    <select id="search4Province" resultMap="BaseResultMapOfCity">
+        SELECT
+        CityID,
+        ProvinceID,
+        CountryID,
+        CityNameCN,
+        CityNameEN,
+        InUser,
+        InDate,
+        LastEditUser,
+        LastEditDate
+        FROM City
+        WHERE CountryID = #{arg0,jdbcType=INTEGER}
+        AND ProvinceID = #{arg1,jdbcType=INTEGER};
+    </select>
     <select id="search" resultMap="BaseResultMapOfCity">
         SELECT
         CityID,

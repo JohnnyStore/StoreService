@@ -25,5 +25,7 @@ public interface ShoppingCartMapper {
 
     int update(ShoppingCartEntity entity);
 
+    int updateStatus(ShoppingCartEntity entity);
+
     int delete(int shoppingCartID);
 }

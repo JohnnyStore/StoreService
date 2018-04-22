@@ -7,6 +7,7 @@
     <result column="ItemID" property="itemID" jdbcType="INTEGER" />
     <result column="ItemCount" property="itemCount" jdbcType="INTEGER" />
     <result column="ItemAmount" property="itemAmount" jdbcType="VARCHAR" />
+    <result column="CurrencyType" property="currencyType" jdbcType="VARCHAR" />
     <result column="InUser" property="inUser" jdbcType="VARCHAR" />
     <result column="InDate" property="inDate" jdbcType="TIMESTAMP" />
     <result column="LastEditUser" property="lastEditUser" jdbcType="VARCHAR" />
@@ -19,6 +20,7 @@
     ItemID,
     ItemCount,
     ItemAmount,
+    CurrencyType,
     InUser,
     DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
     LastEditUser,
@@ -34,6 +36,7 @@
       ItemID,
       ItemCount,
       ItemAmount,
+      CurrencyType,
       InUser,
       DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
       LastEditUser,
@@ -47,6 +50,7 @@
       ItemID,
       ItemCount,
       ItemAmount,
+      CurrencyType,
       InUser,
       LastEditUser
     )
@@ -55,6 +59,7 @@
     #{itemID, jdbcType=INTEGER},
     #{itemCount, jdbcType=INTEGER},
     #{itemAmount, jdbcType=VARCHAR},
+    #{currencyType, jdbcType=VARCHAR},
     #{inUser, jdbcType=VARCHAR},
     #{lastEditUser, jdbcType=VARCHAR}
     )

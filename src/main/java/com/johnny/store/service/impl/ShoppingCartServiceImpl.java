@@ -188,6 +188,24 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    public UnifiedResponse changeStatus(Object dto) {
+        try {
+            ShoppingCartDTO shoppingCartDTO = (ShoppingCartDTO)dto;
+            ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity();
+            ConvertObjectUtils.convertJavaBean(shoppingCartEntity, shoppingCartDTO);
+            shoppingCartEntity.setLastEditUser(shoppingCartDTO.getLoginUser());
+            int affectRow = shoppingCartMapper.updateStatus(shoppingCartEntity);
+            return UnifiedResponseManager.buildSuccessResponse(affectRow);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse delete(int id) {
         try {
             int affectRow = shoppingCartMapper.delete(id);

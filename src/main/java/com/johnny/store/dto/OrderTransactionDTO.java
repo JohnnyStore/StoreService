@@ -5,6 +5,7 @@ public class OrderTransactionDTO {
     private int orderID;
     private int itemID;
     private int itemCount;
+    private String currencyType;
     private double itemAmount;
     private String loginUser;
 
@@ -40,19 +41,27 @@ public class OrderTransactionDTO {
         this.itemCount = itemCount;
     }
 
-    public double getItemAmount() {
-        return itemAmount;
-    }
-
-    public void setItemAmount(double itemAmount) {
-        this.itemAmount = itemAmount;
-    }
-
     public String getLoginUser() {
         return loginUser;
     }
 
     public void setLoginUser(String loginUser) {
         this.loginUser = loginUser;
+    }
+
+    public String getCurrencyType() {
+        return currencyType;
+    }
+
+    public void setCurrencyType(String currencyType) {
+        this.currencyType = currencyType;
+    }
+
+    public double getItemAmount() {
+        return itemAmount;
+    }
+
+    public void setItemAmount(double itemAmount) {
+        this.itemAmount = itemAmount;
     }
 }

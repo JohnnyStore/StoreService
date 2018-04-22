@@ -37,6 +37,9 @@ public class OrderServiceImpl implements OrderService {
     private ShippingAddressMapper shippingAddressMapper;
 
     @Autowired
+    private ShoppingCartMapper shoppingCartMapper;
+
+    @Autowired
     private ExpressCompanyMapper expressCompanyMapper;
 
     @Autowired
@@ -235,6 +238,7 @@ public class OrderServiceImpl implements OrderService {
                 orderTransactionVO.setItemID(orderTransactionEntity.getItemID());
                 orderTransactionVO.setItemCount(orderTransactionEntity.getItemCount());
                 orderTransactionVO.setItemAmount(orderTransactionEntity.getItemAmount());
+                orderTransactionVO.setCurrencyType(orderTransactionEntity.getCurrencyType());
                 orderTransactionVO.setItemVO(itemVO);
                 orderTransactionVOList.add(orderTransactionVO);
             }
@@ -312,37 +316,52 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public UnifiedResponse add(Object dto) {
         try{
+            int affectRowTotal = 0;
             OrderDTO orderDTO = (OrderDTO)dto;
-            List<OrderTransactionDTO> orderTransactionDTOList = orderDTO.getOrderTransactionDTOList();
+            String[] shoppingCartIdList = orderDTO.getShoppingCartIdList().split(",");
+            List orderTransactionDTOList = JsonUtils.deserializeToOrderTansactionList(orderDTO.getOrderItemsJson());
             OrderEntity orderEntity = new OrderEntity();
-            List<OrderTransactionEntity> orderTransactionEntityList = new ArrayList<>();
 
             //OrderDTO转OrderEntity
             ConvertObjectUtils.convertJavaBean(orderEntity, orderDTO);
-            orderEntity.setOrderID(orderDTO.getOrderID());
             orderEntity.setCustomerID(orderDTO.getCustomerID());
             orderEntity.setShippingAddressID(orderDTO.getShippingAddressID());
-            orderEntity.setExpressCompanyID(orderDTO.getExpressCompanyID());
+            orderEntity.setOrderAmount(orderDTO.getOrderAmount());
+            orderEntity.setOrderDate(DateUtils.getCurrentDateTime());
+            orderEntity.setOrderStatus("O");
             orderEntity.setInUser(orderDTO.getLoginUser());
             orderEntity.setLastEditUser(orderDTO.getLoginUser());
 
-            //List<OrderTransactionDTO>转List<OrderTransactionEntity>
-            for (OrderTransactionDTO orderTransactionDTO : orderTransactionDTOList) {
+            //保存订单信息
+            int affectRow4Order = orderMapper.insert(orderEntity);
+            affectRowTotal = affectRowTotal + affectRow4Order;
+
+            //保存订单明细信息
+            for (Object obj : orderTransactionDTOList) {
+                OrderTransactionDTO orderTransactionDTO = (OrderTransactionDTO)obj;
                 OrderTransactionEntity orderTransactionEntity = new OrderTransactionEntity();
                 orderTransactionEntity.setItemID(orderTransactionDTO.getItemID());
                 orderTransactionEntity.setItemCount(orderTransactionDTO.getItemCount());
                 orderTransactionEntity.setItemAmount(orderTransactionDTO.getItemAmount());
-                orderTransactionEntityList.add(orderTransactionEntity);
-            }
-
-            int affectRow4Order = orderMapper.insert(orderEntity);
-            for (OrderTransactionEntity orderTransactionEntity : orderTransactionEntityList) {
+                orderTransactionEntity.setCurrencyType(orderTransactionDTO.getCurrencyType());
                 orderTransactionEntity.setOrderID(orderEntity.getOrderID());
                 orderTransactionEntity.setInUser(orderDTO.getLoginUser());
                 orderTransactionEntity.setLastEditUser(orderDTO.getLoginUser());
-                orderTransactionMapper.insert(orderTransactionEntity);
+                int affectCount4Transaction = orderTransactionMapper.insert(orderTransactionEntity);
+                affectRowTotal = affectRowTotal + affectCount4Transaction;
             }
-            return UnifiedResponseManager.buildSuccessResponseWithID(affectRow4Order, orderEntity.getOrderID());
+
+            //更新购物车状态
+            for (String shoppingId : shoppingCartIdList) {
+                ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity();
+                shoppingCartEntity.setShoppingCartID(Integer.parseInt(shoppingId));
+                shoppingCartEntity.setStatus("S");
+                shoppingCartEntity.setLastEditUser(orderDTO.getLoginUser());
+                int affectRowCount4ShoppingCart = shoppingCartMapper.updateStatus(shoppingCartEntity);
+                affectRowTotal = affectRowTotal + affectRowCount4ShoppingCart;
+            }
+            
+            return UnifiedResponseManager.buildSuccessResponseWithID(affectRowTotal, orderEntity.getOrderID());
 
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);

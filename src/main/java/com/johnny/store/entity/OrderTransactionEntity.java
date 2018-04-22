@@ -6,6 +6,7 @@ public class OrderTransactionEntity {
 	private int itemID;
 	private int itemCount;
 	private double itemAmount;
+	private String currencyType;
 	private String inUser;
 	private String inDate;
 	private String lastEditUser;
@@ -43,14 +44,6 @@ public class OrderTransactionEntity {
 		this.itemCount = itemCount;
 	}
 
-	public double getItemAmount() {
-		return this.itemAmount;
-	}
-
-	public void setItemAmount(double itemAmount) {
-		this.itemAmount = itemAmount;
-	}
-
 	public String getInUser() {
 		return this.inUser;
 	}
@@ -83,4 +76,19 @@ public class OrderTransactionEntity {
 		this.lastEditDate = lastEditDate;
 	}
 
+	public String getCurrencyType() {
+		return currencyType;
+	}
+
+	public void setCurrencyType(String currencyType) {
+		this.currencyType = currencyType;
+	}
+
+	public double getItemAmount() {
+		return itemAmount;
+	}
+
+	public void setItemAmount(double itemAmount) {
+		this.itemAmount = itemAmount;
+	}
 }

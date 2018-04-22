@@ -13,6 +13,8 @@ public interface CityMapper {
 
     CityEntity search(int cityID);
 
+    List<CityEntity> search4Province(int cityID, int provinceID);
+
     CityEntity searchByName(String cityName);
 
     int insert(CityEntity entity);

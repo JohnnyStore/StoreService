@@ -7,6 +7,7 @@ public class OrderTransactionVO {
     private ItemVO itemVO;
     private int itemCount;
     private double itemAmount;
+    private String currencyType;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -42,14 +43,6 @@ public class OrderTransactionVO {
 
     public void setItemCount(int itemCount) {
         this.itemCount = itemCount;
-    }
-
-    public double getItemAmount() {
-        return itemAmount;
-    }
-
-    public void setItemAmount(double itemAmount) {
-        this.itemAmount = itemAmount;
     }
 
     public String getInUser() {
@@ -90,5 +83,21 @@ public class OrderTransactionVO {
 
     public void setItemVO(ItemVO itemVO) {
         this.itemVO = itemVO;
+    }
+
+    public double getItemAmount() {
+        return itemAmount;
+    }
+
+    public void setItemAmount(double itemAmount) {
+        this.itemAmount = itemAmount;
+    }
+
+    public String getCurrencyType() {
+        return currencyType;
+    }
+
+    public void setCurrencyType(String currencyType) {
+        this.currencyType = currencyType;
     }
 }

@@ -15,19 +15,19 @@
     </resultMap>
     <select id="searchList" resultMap="BaseResultMap">
         SELECT
-            ShoppingCartID,
-            ItemID,
-            CustomerID,
-            ShoppingCount,
-            Status,
-            (CASE Status WHEN 'I' THEN '待支付'
-            WHEN 'D' THEN '已删除'
-            WHEN 'P' THEN '已支付'
-            END) AS StatusText,
-            InUser,
-            DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
-            LastEditUser,
-            DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+        ShoppingCartID,
+        ItemID,
+        CustomerID,
+        ShoppingCount,
+        Status,
+        (CASE Status WHEN 'I' THEN '待支付'
+        WHEN 'D' THEN '已删除'
+        WHEN 'P' THEN '已支付'
+        END) AS StatusText,
+        InUser,
+        DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+        LastEditUser,
+        DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM ShoppingCart
         WHERE 1 = 1
         <if test="arg2 != 0">
@@ -94,6 +94,12 @@
         ItemID = #{itemID, jdbcType=INTEGER},
         CustomerID = #{customerID, jdbcType=INTEGER},
         ShoppingCount = #{shoppingCount, jdbcType=INTEGER},
+        Status = #{status, jdbcType=VARCHAR},
+        LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+        WHERE ShoppingCartID = #{shoppingCartID,jdbcType=INTEGER}
+    </update>
+    <update id="updateStatus" parameterType="com.johnny.store.entity.ShoppingCartEntity" >
+        UPDATE ShoppingCart SET
         Status = #{status, jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE ShoppingCartID = #{shoppingCartID,jdbcType=INTEGER}
