@@ -8,6 +8,7 @@ public class OrderVO {
     private CustomerVO customerVO;
     private String orderDate;
     private String orderAmount;
+    private String currencyType;
     private int shippingAddressID;
     private ShippingAddressVO shippingAddressVO;
     private String orderStatus;
@@ -173,5 +174,13 @@ public class OrderVO {
 
     public void setOrderTransactionList(List<OrderTransactionVO> orderTransactionList) {
         this.orderTransactionList = orderTransactionList;
+    }
+
+    public String getCurrencyType() {
+        return currencyType;
+    }
+
+    public void setCurrencyType(String currencyType) {
+        this.currencyType = currencyType;
     }
 }
