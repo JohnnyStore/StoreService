@@ -6,14 +6,15 @@ package com.johnny.store.entity;
 public class ItemReviewEntity {
     private int reviewID;
     private int itemID;
+    private int starNum;
     private int customerID;
+    private String account;
     private String reviewStatus;
     private String reviewStatusText;
     private String itemCode;
     private String reviewText;  //评论内容
     private String itemShortDescriptionCN;
     private String itemShortDescriptionEN;
-    private int starNum;
     private String reviewLevel;
     private String reviewLevelText;   //评论级别
     private String cellphone;
@@ -174,5 +175,13 @@ public class ItemReviewEntity {
 
     public void setStarNum(int starNum) {
         this.starNum = starNum;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }

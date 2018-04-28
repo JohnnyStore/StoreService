@@ -33,6 +33,11 @@ public class ItemReviewController {
         return customerReviewServiceImpl.findList(pageNumber, pageSize, itemID, reviewLevel);
     }
 
+    @RequestMapping(value="/api/itemReview", method = RequestMethod.POST)
+    public UnifiedResponse add(@RequestBody ItemReviewDTO dto){
+        return customerReviewServiceImpl.add(dto);
+    }
+
     @RequestMapping(value="/api/itemReview", method = RequestMethod.PUT)
     public UnifiedResponse change(@RequestBody ItemReviewDTO dto){
         return customerReviewServiceImpl.change(dto);

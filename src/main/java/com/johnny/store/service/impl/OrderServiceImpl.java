@@ -5,6 +5,7 @@ import com.johnny.store.constant.ImageObjectType;
 import com.johnny.store.constant.ImageType;
 import com.johnny.store.constant.ResponseCodeConsts;
 import com.johnny.store.dto.OrderDTO;
+import com.johnny.store.dto.OrderHistoryResponse;
 import com.johnny.store.dto.OrderTransactionDTO;
 import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.entity.*;
@@ -96,14 +97,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public UnifiedResponse findList(int startIndex, int pageSize, int customerID, String orderStatus) {
+    public UnifiedResponse findList(int pageNumber, int pageSize, int customerID, String orderStatus, int recentMonth) {
         try {
-
+            String beginDate = "N";
+            if(recentMonth > 0){
+                beginDate = DateUtils.getRecentMonthDateTime(recentMonth);
+            }
+            int startIndex = (pageNumber - 1) * pageSize;
             List<OrderEntity> orderEntityList =  orderMapper.searchList4Customer(
                     startIndex,
                     pageSize,
                     customerID,
-                    orderStatus.equals("N")? null: orderStatus);
+                    orderStatus.equals("N")? null: orderStatus,
+                    beginDate.equals("N") ? null : beginDate);
 
             List<OrderVO> orderVOList = buildOrderVOList(orderEntityList);
             return UnifiedResponseManager.buildSuccessResponse(orderVOList.size(), orderVOList);
@@ -113,6 +119,86 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception ex) {
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public OrderHistoryResponse findHistoryList(int pageNumber, int pageSize, int customerID, String orderStatus, int recentMonth) {
+        try {
+            String allOrderStatus = null;
+            String toPayOrderStatus = "O";
+            String toReceiveOrderStatus = "S";
+            String finishOrderStatus = "F";
+            String refundOrderStatus = "R";
+            String searchBeginDate = recentMonth == 0 ? null : DateUtils.getRecentMonthDateTime(recentMonth);
+            List<OrderHistoryVO> orderHistoryVOList = new ArrayList<>();
+            List<OrderHistoryEntity> orderHistoryEntityList = new ArrayList<>();
+            List<OrderHistoryEntity> refundOrderHistoryEntityList;
+            List<OrderHistoryEntity> finishOrderHistoryEntityList;
+            int startIndex = (pageNumber - 1) * pageSize;
+
+            //全部订单
+            int totalCount = orderMapper.searchHistoryListTotalCount(customerID, allOrderStatus, searchBeginDate);
+            //待付款
+            int toPayOrderCount = orderMapper.searchHistoryListTotalCount(customerID, toPayOrderStatus, searchBeginDate);
+            //待收货
+            int toReceiveOrderCount = orderMapper.searchHistoryListTotalCount(customerID, toReceiveOrderStatus, searchBeginDate);
+            //已完成
+            int finishOrderCount = orderMapper.searchHistoryListTotalCount(customerID, finishOrderStatus, searchBeginDate);
+            //已退款
+            int refundOrderCount = orderMapper.searchHistoryListTotalCount(customerID, refundOrderStatus, searchBeginDate);
+            //待评论
+            int toReviewOrderCount = finishOrderCount + refundOrderCount;
+
+            if(totalCount == 0){
+                return UnifiedResponseManager.buildSuccessResponse(0,0,0,0, null);
+            }
+
+            switch (orderStatus){
+                case "N"://全部订单信息
+                    orderHistoryEntityList =  orderMapper.searchHistoryList4Customer(startIndex, pageSize, customerID, allOrderStatus, searchBeginDate);
+                    break;
+                case "O"://待付款订单信息
+                    orderHistoryEntityList =  orderMapper.searchHistoryList4Customer(startIndex, pageSize, customerID, toPayOrderStatus, searchBeginDate);
+                    break;
+                case "S"://待收获订单信息
+                    orderHistoryEntityList =  orderMapper.searchHistoryList4Customer(startIndex, pageSize, customerID, toReceiveOrderStatus, searchBeginDate);
+                    break;
+                case "F"://待评价订单信息
+                    finishOrderHistoryEntityList =  orderMapper.searchHistoryList4Customer(startIndex, pageSize, customerID, finishOrderStatus, searchBeginDate);
+                    refundOrderHistoryEntityList =  orderMapper.searchHistoryList4Customer(startIndex, pageSize, customerID, refundOrderStatus, searchBeginDate);
+                    orderHistoryEntityList.addAll(finishOrderHistoryEntityList);
+                    orderHistoryEntityList.addAll(refundOrderHistoryEntityList);
+                    break;
+            }
+
+            for (OrderHistoryEntity orderHistoryEntity : orderHistoryEntityList) {
+                OrderHistoryVO orderHistoryVO = new OrderHistoryVO();
+                ItemEntity itemEntity = itemMapper.search(orderHistoryEntity.getItemID());
+                List<ImageEntity> imageEntityList = imageMapper.searchList(orderHistoryEntity.getItemID(), ImageObjectType.ITEM, ImageType.THUMBNAIL);
+                if(imageEntityList != null && imageEntityList.size() > 0){
+                    itemEntity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+                }
+                orderHistoryEntity.setItemEntity(itemEntity);
+                ConvertObjectUtils.convertJavaBean(orderHistoryVO, orderHistoryEntity);
+                orderHistoryVO.setOrderID(orderHistoryEntity.getOrderID());
+                orderHistoryVO.setCustomerID(orderHistoryEntity.getCustomerID());
+                orderHistoryVO.setItemID(orderHistoryEntity.getItemID());
+                orderHistoryVO.setItemCount(orderHistoryEntity.getItemCount());
+                orderHistoryVO.setShippingAddressID(orderHistoryEntity.getShippingAddressID());
+                orderHistoryVO.setExpressCompanyID(orderHistoryEntity.getExpressCompanyID());
+                ItemVO itemVO = buildViewModel.buildItemViewModel(itemEntity);
+                orderHistoryVO.setItemVO(itemVO);
+                orderHistoryVOList.add(orderHistoryVO);
+            }
+
+            return UnifiedResponseManager.buildSuccessResponse(totalCount, toPayOrderCount, toReceiveOrderCount, toReviewOrderCount, orderHistoryVOList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildErrorOrderHistoryResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildErrorOrderHistoryResponse(ResponseCodeConsts.UnKnownException);
         }
     }
 

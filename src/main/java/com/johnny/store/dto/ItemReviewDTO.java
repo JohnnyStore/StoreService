@@ -6,6 +6,7 @@ package com.johnny.store.dto;
 public class ItemReviewDTO {
     private int reviewID;
     private int itemID;
+    private int starNum;
     private int customerID;
     private String reviewStatus;
     private String reviewStatusText;
@@ -165,5 +166,13 @@ public class ItemReviewDTO {
 
     public void setItemShortDescriptionCN(String itemShortDescriptionCN) {
         this.itemShortDescriptionCN = itemShortDescriptionCN;
+    }
+
+    public int getStarNum() {
+        return starNum;
+    }
+
+    public void setStarNum(int starNum) {
+        this.starNum = starNum;
     }
 }

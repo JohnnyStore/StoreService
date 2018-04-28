@@ -7,6 +7,7 @@ public class ItemReviewVO {
     private int reviewID;
     private int itemID;
     private int customerID;
+    private String account;
     private String reviewStatus;
     private String reviewStatusText;
     private String itemCode;
@@ -201,5 +202,13 @@ public class ItemReviewVO {
 
     public void setStarNum(int starNum) {
         this.starNum = starNum;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }

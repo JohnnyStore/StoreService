@@ -132,9 +132,9 @@ public class ItemReviewServiceImpl implements ItemReviewService {
             ItemReviewDTO customerReviewDTO = (ItemReviewDTO)dto;
             ItemReviewEntity customerReviewEntity = new ItemReviewEntity();
             ConvertObjectUtils.convertJavaBean(customerReviewEntity, customerReviewDTO);
-            customerReviewEntity.setReviewID(customerReviewDTO.getReviewID());
             customerReviewEntity.setInUser(customerReviewDTO.getLoginUser());
             customerReviewEntity.setItemID(customerReviewDTO.getItemID());
+            customerReviewEntity.setStarNum(customerReviewDTO.getStarNum());
             customerReviewEntity.setCustomerID(customerReviewDTO.getCustomerID());
             customerReviewEntity.setReviewLevel(customerReviewDTO.getReviewLevel());
             customerReviewEntity.setReviewStatus(customerReviewDTO.getReviewStatus());

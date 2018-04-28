@@ -1,6 +1,7 @@
 package com.johnny.store.controller;
 
 import com.johnny.store.dto.OrderDTO;
+import com.johnny.store.dto.OrderHistoryResponse;
 import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.service.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,22 @@ public class OrderController {
         return orderServiceImpl.findList(pageNumber, pageSize, cellphone, recentMonth, orderStatus);
     }
 
-    @RequestMapping(value = "/api/order/{pageNumber}/{pageSize}/{customerId}/{orderStatus}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/order/customer/{pageNumber}/{pageSize}/{customerId}/{recentMonth}/{orderStatus}", method = RequestMethod.GET)
     public UnifiedResponse getAll(@PathVariable("pageNumber") int pageNumber,
                                   @PathVariable("pageSize") int pageSize,
                                   @PathVariable("customerId") int customerId,
+                                  @PathVariable("recentMonth") int recentMonth,
                                   @PathVariable("orderStatus") String orderStatus){
-        return orderServiceImpl.findList(pageNumber, pageSize, customerId, orderStatus);
+        return orderServiceImpl.findList(pageNumber, pageSize, customerId, orderStatus, recentMonth);
+    }
+
+    @RequestMapping(value = "/api/order/history/{pageNumber}/{pageSize}/{customerId}/{recentMonth}/{orderStatus}", method = RequestMethod.GET)
+    public OrderHistoryResponse getHistory(@PathVariable("pageNumber") int pageNumber,
+                                           @PathVariable("pageSize") int pageSize,
+                                           @PathVariable("customerId") int customerId,
+                                           @PathVariable("recentMonth") int recentMonth,
+                                           @PathVariable("orderStatus") String orderStatus){
+        return orderServiceImpl.findHistoryList(pageNumber, pageSize, customerId, orderStatus, recentMonth);
     }
 
     @RequestMapping(value = "/api/order/{orderID}", method = RequestMethod.GET)

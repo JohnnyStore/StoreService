@@ -5,6 +5,7 @@
         <id column="ReviewID" property="reviewID" jdbcType="INTEGER" />
         <result column="ItemID" property="itemID" jdbcType="INTEGER" />
         <result column="CustomerID" property="customerID" jdbcType="INTEGER" />
+        <result column="Account" property="account" jdbcType="VARCHAR" />
         <result column="StarNum" property="starNum" jdbcType="INTEGER" />
         <result column="ReviewLevel" property="reviewLevel" jdbcType="VARCHAR" />
         <result column="ReviewLevelText" property="reviewLevelText" jdbcType="VARCHAR" />
@@ -72,6 +73,7 @@
         A.ReviewID,
         A.ItemID,
         A.CustomerID,
+        B.Account,
         A.StarNum,
         A.ReviewText,
         B.Cellphone,
@@ -124,9 +126,9 @@
 
     <insert id="insert" parameterType="com.johnny.store.entity.ItemReviewEntity" >
         INSERT INTO CustomerReview (
-        ReviewID,
         CustomerID,
         ItemID,
+        StarNum,
         ReviewLevel,
         ReviewText,
         ReviewStatus,
@@ -134,9 +136,9 @@
         LastEditUser
         )
         VALUES (
-        #{reviewID, jdbcType=INTEGER},
         #{customerID, jdbcType=INTEGER},
         #{itemID, jdbcType=INTEGER},
+        #{starNum, jdbcType=INTEGER},
         #{reviewLevel, jdbcType=VARCHAR},
         #{reviewText, jdbcType=VARCHAR},
         #{reviewStatus, jdbcType=VARCHAR},

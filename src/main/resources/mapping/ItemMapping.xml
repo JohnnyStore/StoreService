@@ -127,6 +127,39 @@
     ORDER BY InDate DESC
     LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
   </select>
+  <select id="searchSalesCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+    COUNT(1) AS TotalCount
+    FROM Item A
+    LEFT JOIN Brand B
+    ON A.BrandID = B.BrandID
+    LEFT JOIN Category C
+    ON A.CategoryID = C.CategoryID
+    LEFT JOIN SubCategory D
+    ON A.SubCategoryID = D.SubCategoryID
+    LEFT JOIN ItemSeries E
+    ON A.SeriesID = E.SeriesID
+    LEFT JOIN Color F
+    ON A.ColorID = F.ColorID
+    LEFT JOIN SizeMapping G
+    ON A.SizeID = G.SizeID
+    LEFT JOIN Country I
+    ON A.MadeInID = I.CountryID
+    LEFT JOIN ItemGroup J
+    ON A.ItemGroupID = J.ItemGroupID
+    WHERE A.ItemStatus = 'N'
+      AND A.ShowInListPage = 1
+    <if test="arg0 != 0">
+      AND A.BrandID=#{arg0}
+    </if>
+    <if test="arg1 != 0">
+      AND A.CategoryID=#{arg1}
+    </if>
+    <if test="arg2 != 0">
+      AND A.SubCategoryID=#{arg2}
+    </if>
+  </select>
+
   <select id="searchSalesList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
     A.ItemID,
@@ -210,6 +243,8 @@
     ORDER BY InDate DESC
     LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
   </select>
+
+
   <select id="searchListByItemName" resultMap="BaseResultMap">
         SELECT
         A.ItemID,

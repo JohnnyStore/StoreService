@@ -72,6 +72,11 @@ public class ItemServiceImpl implements ItemService {
         try{
             int startIndex = (pageNumber - 1) * pageSize;
             List<ItemVO> modelList = new ArrayList<>();
+            int totalCount = itemMapper.searchSalesCount(brandID, categoryID, subCategoryID);
+            if(totalCount == 0){
+                return UnifiedResponseManager.buildSuccessResponse(0, null);
+            }
+
             List<ItemEntity> entityList =  itemMapper.searchSalesList(startIndex, pageSize, brandID, categoryID, subCategoryID);
 
             for (ItemEntity entity : entityList) {
@@ -83,7 +88,7 @@ public class ItemServiceImpl implements ItemService {
                 ItemVO model = buildViewModel.buildItemViewModel(entity);
                 modelList.add(model);
             }
-            return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);
+            return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());

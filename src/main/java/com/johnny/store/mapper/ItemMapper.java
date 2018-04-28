@@ -9,6 +9,8 @@ public interface ItemMapper {
 
     List<ItemEntity> searchList(int startIndex, int pageSize);
 
+    int searchSalesCount(int brandID, int categoryID, int subCategoryID);
+
     List<ItemEntity> searchSalesList(int startIndex, int pageSize, int brandID, int categoryID, int subCategoryID);
 
     List<ItemEntity> searchListByItemName(int startIndex, int pageSize, String itemName);
