@@ -13,6 +13,8 @@ public interface ItemPromotionMapper {
 
     List<ItemPromotionEntity> searchList4Category(int categoryID, String startDate, String endDate);
 
+    List<ItemPromotionEntity> searchList4Item(int itemID, String currentDate);
+
     int insert(ItemPromotionEntity entity);
 
     int update(ItemPromotionEntity entity);

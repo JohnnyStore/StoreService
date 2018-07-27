@@ -8,11 +8,13 @@ import com.johnny.store.constant.ImageType;
 import com.johnny.store.constant.ResponseCodeConsts;
 import com.johnny.store.dto.ItemDTO;
 import com.johnny.store.dto.UnifiedResponse;
+import com.johnny.store.entity.DailySnapUpEntity;
 import com.johnny.store.entity.ImageEntity;
 import com.johnny.store.entity.ItemEntity;
 import com.johnny.store.entity.MaterialEntity;
 import com.johnny.store.manager.BuildViewModel;
 import com.johnny.store.manager.UnifiedResponseManager;
+import com.johnny.store.mapper.DailySnapUpMapper;
 import com.johnny.store.mapper.ItemMapper;
 import com.johnny.store.mapper.ImageMapper;
 import com.johnny.store.mapper.MaterialMapper;
@@ -31,9 +33,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private BuildViewModel buildViewModel;
-
-    @Autowired
-    private MaterialMapper materialMapper;
 
     @Autowired
     private ImageMapper imageMapper;
@@ -58,6 +57,29 @@ public class ItemServiceImpl implements ItemService {
                 modelList.add(model);
             }
             return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse find(int itemID) {
+        try {
+            ItemEntity entity = itemMapper.search(itemID);
+            if(entity == null){
+                return UnifiedResponseManager.buildSuccessResponse(null);
+            }
+            List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.THUMBNAIL);
+            if(imageEntityList != null && imageEntityList.size() > 0){
+                entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+            }
+
+            ItemVO model = buildViewModel.buildItemViewModel(entity);
+            return UnifiedResponseManager.buildSuccessResponse(model);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
@@ -125,29 +147,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public UnifiedResponse find(int id) {
-        try {
-            ItemEntity entity = itemMapper.search(id);
-            List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.THUMBNAIL);
-            if(imageEntityList != null && imageEntityList.size() > 0){
-                entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
-            }
-
-            ItemVO model = buildViewModel.buildItemViewModel(entity);
-            return UnifiedResponseManager.buildSuccessResponse(model);
-        } catch (StoreException ex){
-            LogUtils.processExceptionLog(ex);
-            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
-        } catch (Exception ex) {
-            LogUtils.processExceptionLog(ex);
-            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
-        }
-    }
-
-    @Override
     public UnifiedResponse find(int brandID, int categoryID, int subCategoryID, int itemGroupID, int seriesID, int colorID, int sizeID) {
         try {
             ItemEntity entity = itemMapper.searchByParameters(brandID, categoryID, subCategoryID, itemGroupID, seriesID, colorID, sizeID);
+            if(entity == null){
+                return UnifiedResponseManager.buildSuccessResponse(null);
+            }
             List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.THUMBNAIL);
             if(imageEntityList != null && imageEntityList.size() > 0){
                 entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
@@ -229,9 +234,7 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setItemGroupID(itemDTO.getItemGroupID());
             itemEntity.setSeriesID(itemDTO.getSeriesID());
             itemEntity.setUnitPrice4RMB(itemDTO.getUnitPrice4RMB());
-            itemEntity.setPromotionPrice4RMB(itemDTO.getPromotionPrice4RMB());
             itemEntity.setUnitPrice4USD(itemDTO.getUnitPrice4USD());
-            itemEntity.setPromotionPrice4USD(itemDTO.getPromotionPrice4USD());
             itemEntity.setRate(itemDTO.getRate());
             itemEntity.setColorID(itemDTO.getColorID());
             itemEntity.setSizeID(itemDTO.getSizeID());
@@ -263,9 +266,7 @@ public class ItemServiceImpl implements ItemService {
             itemEntity.setItemGroupID(itemDTO.getItemGroupID());
             itemEntity.setSeriesID(itemDTO.getSeriesID());
             itemEntity.setUnitPrice4RMB(itemDTO.getUnitPrice4RMB());
-            itemEntity.setPromotionPrice4RMB(itemDTO.getPromotionPrice4RMB());
             itemEntity.setUnitPrice4USD(itemDTO.getUnitPrice4USD());
-            itemEntity.setPromotionPrice4USD(itemDTO.getPromotionPrice4USD());
             itemEntity.setRate(itemDTO.getRate());
             itemEntity.setColorID(itemDTO.getColorID());
             itemEntity.setSizeID(itemDTO.getSizeID());

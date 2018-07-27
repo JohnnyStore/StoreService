@@ -124,6 +124,8 @@ public class ItemPromotionServiceImpl implements ItemPromotionService{
             ConvertObjectUtils.convertJavaBean(itemPromotionEntity, itemPromotionDTO);
             itemPromotionEntity.setItemPromotionID(itemPromotionDTO.getItemPromotionID());
             itemPromotionEntity.setItemID(itemPromotionDTO.getItemID());
+            itemPromotionEntity.setPromotionPrice4RMB(itemPromotionDTO.getPromotionPrice4RMB());
+            itemPromotionEntity.setPromotionPrice4USD(itemPromotionDTO.getPromotionPrice4USD());
             itemPromotionEntity.setInUser(itemPromotionDTO.getLoginUser());
             itemPromotionEntity.setLastEditUser(itemPromotionDTO.getLoginUser());
             int affectRow = itemPromotionMapper.insert(itemPromotionEntity);
@@ -145,6 +147,8 @@ public class ItemPromotionServiceImpl implements ItemPromotionService{
             ConvertObjectUtils.convertJavaBean(itemPromotionEntity, itemPromotionDTO);
             itemPromotionEntity.setItemPromotionID(itemPromotionDTO.getItemPromotionID());
             itemPromotionEntity.setItemID(itemPromotionDTO.getItemID());
+            itemPromotionEntity.setPromotionPrice4RMB(itemPromotionDTO.getPromotionPrice4RMB());
+            itemPromotionEntity.setPromotionPrice4USD(itemPromotionDTO.getPromotionPrice4USD());
             itemPromotionEntity.setLastEditUser(itemPromotionDTO.getLoginUser());
             int affectRow = itemPromotionMapper.update(itemPromotionEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);

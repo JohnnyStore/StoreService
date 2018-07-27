@@ -1,5 +1,6 @@
 package com.johnny.store.common;
 
+import com.johnny.store.enums.DateEnum;
 import org.joda.time.Months;
 
 import java.text.ParseException;
@@ -30,6 +31,35 @@ public class DateUtils {
 
         return simpleDateFormat.format(gc.getTime());
     }
+
+    public static String calculateDate(DateEnum dateEnum, int value){
+        GregorianCalendar gc=new GregorianCalendar();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        switch (dateEnum){
+            case Year:
+                gc.add((GregorianCalendar.YEAR), value);
+                break;
+            case Month:
+                gc.add((GregorianCalendar.MONTH), value);
+                break;
+            case Day:
+                gc.add((GregorianCalendar.DATE), value);
+                break;
+            case Hour:
+                gc.add((GregorianCalendar.HOUR), value);
+                break;
+            case Minute:
+                gc.add((GregorianCalendar.MINUTE), value);
+                break;
+            case Second:
+                gc.add((GregorianCalendar.SECOND), value);
+                break;
+        }
+
+        return simpleDateFormat.format(gc.getTime());
+    }
+
     /**
      * 获取date的月份的时间范围
      * @param date

@@ -166,8 +166,8 @@
     DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
     A.LastEditUser,
     DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
-    FROM Luvpet.`Order` A
-    INNER JOIN Luvpet.OrderTransaction B
+    FROM `Order` A
+    INNER JOIN OrderTransaction B
     ON A.OrderID = B.OrderID
     WHERE OrderStatus != 'D'
     <if test="arg2 != null">
@@ -185,8 +185,8 @@
   <select id="searchHistoryListTotalCount" resultType="java.lang.Integer">
     SELECT
     COUNT(1) AS TotalCount
-    FROM Luvpet.`Order` A
-    INNER JOIN Luvpet.OrderTransaction B
+    FROM `Order` A
+    INNER JOIN OrderTransaction B
     ON A.OrderID = B.OrderID
     WHERE OrderStatus != 'D'
     <if test="arg0 != null">

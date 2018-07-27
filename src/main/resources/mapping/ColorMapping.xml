@@ -43,7 +43,8 @@
             FROM Item
             WHERE ItemGroupID = (SELECT ItemGroupID
                                  FROM Item
-                                 WHERE ItemID = #{itemID,jdbcType=INTEGER})
+                                 WHERE ItemID = #{arg0,jdbcType=INTEGER})
+            AND SeriesID = #{arg1,jdbcType=INTEGER}
           ) A
         INNER JOIN Color B
         ON A.ColorID = B.ColorID;

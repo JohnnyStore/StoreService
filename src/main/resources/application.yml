@@ -1,10 +1,10 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
     datasource:
         name: test
-        url: jdbc:mysql://101.132.97.177:3306/Luvpet?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        url: jdbc:mysql://101.132.97.177:3306/Luvpet_Prd?useSSL=false&useUnicode=true&characterEncoding=UTF-8
         username: root
         password: Lvgu@2017
         # 使用druid数据源

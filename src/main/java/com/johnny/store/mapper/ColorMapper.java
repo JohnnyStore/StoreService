@@ -12,7 +12,7 @@ public interface ColorMapper {
 
     List<ColorEntity> searchList(int startIndex, int pageSize);
 
-    List<ColorEntity> searchList4Item(int itemID);
+    List<ColorEntity> searchList4Item(int itemID, int seriesID);
 
     ColorEntity search(int colorID);
 

@@ -49,10 +49,10 @@ public class SizeServiceImpl implements SizeService{
     }
 
     @Override
-    public UnifiedResponse findList(int itemID) {
+    public UnifiedResponse findList(int itemID, int seriesID, int colorID) {
         try {
             List<SizeVO> modelList = new ArrayList<>();
-            List<SizeEntity> entityList =  sizeMapper.searchList4Item(itemID);
+            List<SizeEntity> entityList =  sizeMapper.searchList4Item(itemID, seriesID, colorID);
             for (SizeEntity entity : entityList) {
                 SizeVO model = new SizeVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);

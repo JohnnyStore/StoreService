@@ -49,10 +49,10 @@ public class ColorServiceImpl implements ColorService{
     }
 
     @Override
-    public UnifiedResponse findList(int itemID) {
+    public UnifiedResponse findListOfSeries(int itemID, int seriesID) {
         try {
             List<ColorVO> modelList = new ArrayList<>();
-            List<ColorEntity> entityList =  colorMapper.searchList4Item(itemID);
+            List<ColorEntity> entityList =  colorMapper.searchList4Item(itemID, seriesID);
             for (ColorEntity entity : entityList) {
                 ColorVO model = new ColorVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);

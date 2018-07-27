@@ -5,6 +5,8 @@ public class ItemPromotionDTO {
     private int itemID;
     private String startDate;
     private String endDate;
+    private String promotionPrice4RMB;
+    private String promotionPrice4USD;
     private String status;
     private String loginUser;
 
@@ -54,5 +56,21 @@ public class ItemPromotionDTO {
 
     public void setLoginUser(String loginUser) {
         this.loginUser = loginUser;
+    }
+
+    public String getPromotionPrice4RMB() {
+        return promotionPrice4RMB;
+    }
+
+    public void setPromotionPrice4RMB(String promotionPrice4RMB) {
+        this.promotionPrice4RMB = promotionPrice4RMB;
+    }
+
+    public String getPromotionPrice4USD() {
+        return promotionPrice4USD;
+    }
+
+    public void setPromotionPrice4USD(String promotionPrice4USD) {
+        this.promotionPrice4USD = promotionPrice4USD;
     }
 }

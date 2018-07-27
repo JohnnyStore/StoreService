@@ -52,10 +52,10 @@
             AND A.ItemID=#{arg2}
         </if>
         <if test="arg3 != null">
-            <![CDATA[ AND A.StartDate >= #{arg3} ]]>
+            <![CDATA[ AND A.StartDate <= #{arg3} ]]>
         </if>
         <if test="arg4 != null">
-            <![CDATA[ AND A.EndDate <= #{arg4} ]]>
+            <![CDATA[ AND A.EndDate >= #{arg4} ]]>
         </if>
         <if test="arg5 != null">
             <![CDATA[ AND A.Status = #{arg5} ]]>
@@ -72,10 +72,10 @@
             AND ItemID=#{arg0}
         </if>
         <if test="arg1 != null">
-            <![CDATA[ AND StartDate >= #{arg1} ]]>
+            <![CDATA[ AND StartDate <= #{arg1} ]]>
         </if>
         <if test="arg2 != null">
-            <![CDATA[ AND EndDate <= #{arg2} ]]>
+            <![CDATA[ AND EndDate >= #{arg2} ]]>
         </if>
         <if test="arg3 != null">
             <![CDATA[ AND Status = #{arg3} ]]>

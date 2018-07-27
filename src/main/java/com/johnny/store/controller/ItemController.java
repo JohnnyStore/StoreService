@@ -25,7 +25,7 @@ public class ItemController {
         return itemServiceImpl.findSalesList(pageNumber, pageSize, brandID, categoryID, subCategoryID);
     }
 
-    @RequestMapping(value = "/api/item/{itemId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/item/detail/{itemId}", method = RequestMethod.GET)
     public UnifiedResponse get(@PathVariable("itemId") int itemId){
         return itemServiceImpl.find(itemId);
     }

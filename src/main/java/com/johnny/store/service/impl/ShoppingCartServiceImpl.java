@@ -1,6 +1,7 @@
 package com.johnny.store.service.impl;
 
 import com.johnny.store.common.ConvertObjectUtils;
+import com.johnny.store.common.DateUtils;
 import com.johnny.store.common.LogUtils;
 import com.johnny.store.common.StoreException;
 import com.johnny.store.constant.ImageObjectType;
@@ -8,11 +9,13 @@ import com.johnny.store.constant.ImageType;
 import com.johnny.store.constant.ResponseCodeConsts;
 import com.johnny.store.dto.ShoppingCartDTO;
 import com.johnny.store.dto.UnifiedResponse;
+import com.johnny.store.entity.DailySnapUpEntity;
 import com.johnny.store.entity.ImageEntity;
 import com.johnny.store.entity.ItemEntity;
 import com.johnny.store.entity.ShoppingCartEntity;
 import com.johnny.store.manager.BuildViewModel;
 import com.johnny.store.manager.UnifiedResponseManager;
+import com.johnny.store.mapper.DailySnapUpMapper;
 import com.johnny.store.mapper.ImageMapper;
 import com.johnny.store.mapper.ItemMapper;
 import com.johnny.store.mapper.ShoppingCartMapper;
@@ -41,6 +44,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Autowired
     private ImageMapper imageMapper;
+
+    @Autowired
+    private DailySnapUpMapper dailySnapUpMapper;
 
     @Autowired
     private BuildViewModel buildViewModel;
@@ -107,17 +113,28 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 ItemVO itemVO = buildViewModel.buildItemViewModel(itemEntity);
                 ConvertObjectUtils.convertJavaBean(shoppingCartVO, shoppingCartentity);
 
+                //当前商品在当天是否有抢购，如果有，则使用抢购价格
+                String today = DateUtils.getCurrentDateTime().substring(0, 10);
+                List<DailySnapUpEntity> dailySnapUpEntityList = dailySnapUpMapper.searchByItemID(shoppingCartentity.getItemID(), today);
+//                if(dailySnapUpEntityList != null && dailySnapUpEntityList.size() > 0){
+//                    itemVO.setSalesPrice4RMB(dailySnapUpEntityList.get(0).getSnapUpPrice4RMB());
+//                    itemVO.setSalesPrice4USD(dailySnapUpEntityList.get(0).getSnapUpPrice4USD());
+//                }else if(itemEntity.getPromotionPrice4RMB() > 0){
+//                    itemVO.setSalesPrice4RMB(itemEntity.getPromotionPrice4RMB());
+//                    itemVO.setSalesPrice4USD(itemEntity.getPromotionPrice4USD());
+//                }else{
+//                    itemVO.setSalesPrice4RMB(itemEntity.getUnitPrice4RMB());
+//                    itemVO.setSalesPrice4USD(itemEntity.getUnitPrice4USD());
+//                }
+
                 shoppingCartVO.setShoppingCartID(shoppingCartentity.getShoppingCartID());
                 shoppingCartVO.setItemID(shoppingCartentity.getItemID());
                 shoppingCartVO.setCustomerID(shoppingCartentity.getCustomerID());
                 shoppingCartVO.setShoppingCount(shoppingCartentity.getShoppingCount());
                 shoppingCartVO.setItemVO(itemVO);
-                shoppingCartVO.setTotalPrice4RMB(itemEntity.getPromotionPrice4RMB() > 0 ?
-                        shoppingCartentity.getShoppingCount() * itemEntity.getPromotionPrice4RMB() :
-                        shoppingCartentity.getShoppingCount() * itemEntity.getUnitPrice4RMB());
-                shoppingCartVO.setTotalPrice4USD(itemEntity.getPromotionPrice4USD() > 0 ?
-                        shoppingCartentity.getShoppingCount() * itemEntity.getPromotionPrice4USD() :
-                        shoppingCartentity.getShoppingCount() * itemEntity.getUnitPrice4USD());
+                shoppingCartVO.setTotalPrice4RMB(shoppingCartentity.getShoppingCount() * itemVO.getSalesPrice4RMB());
+                shoppingCartVO.setTotalPrice4USD(shoppingCartentity.getShoppingCount() * itemVO.getSalesPrice4USD());
+
                 modelList.add(shoppingCartVO);
             }
             return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);

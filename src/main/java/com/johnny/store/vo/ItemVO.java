@@ -23,9 +23,14 @@ public class ItemVO {
     private String itemCode;
     private String itemImageUrl;
     private double unitPrice4RMB;
-    private double promotionPrice4RMB;
     private double unitPrice4USD;
+    private double promotionPrice4RMB;
     private double promotionPrice4USD;
+    private double snapUpPrice4RMB;
+    private double snapUpPrice4USD;
+    private double salesPrice4RMB;
+    private double salesPrice4USD;
+    private boolean hasDiscount;
     private float rate;
     private int colorID;
     private String colorCN;
@@ -52,8 +57,8 @@ public class ItemVO {
     private String itemStatus;
     private String itemStatusText;
     private Boolean showInListPage;
-    private Boolean isPromotion4RMB;
-    private Boolean isPromotion4USD;
+//    private Boolean isPromotion4RMB;
+//    private Boolean isPromotion4USD;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -235,28 +240,12 @@ public class ItemVO {
         this.unitPrice4RMB = unitPrice4RMB;
     }
 
-    public double getPromotionPrice4RMB() {
-        return promotionPrice4RMB;
-    }
-
-    public void setPromotionPrice4RMB(double promotionPrice4RMB) {
-        this.promotionPrice4RMB = promotionPrice4RMB;
-    }
-
     public double getUnitPrice4USD() {
         return unitPrice4USD;
     }
 
     public void setUnitPrice4USD(double unitPrice4USD) {
         this.unitPrice4USD = unitPrice4USD;
-    }
-
-    public double getPromotionPrice4USD() {
-        return promotionPrice4USD;
-    }
-
-    public void setPromotionPrice4USD(double promotionPrice4USD) {
-        this.promotionPrice4USD = promotionPrice4USD;
     }
 
     public String getItemLength() {
@@ -475,19 +464,75 @@ public class ItemVO {
         this.itemMaterialNameEN = itemMaterialNameEN;
     }
 
-    public Boolean getPromotion4USD() {
-        return isPromotion4USD;
+//    public Boolean getPromotion4USD() {
+//        return isPromotion4USD;
+//    }
+//
+//    public void setPromotion4USD(Boolean promotion4USD) {
+//        isPromotion4USD = promotion4USD;
+//    }
+//
+//    public Boolean getPromotion4RMB() {
+//        return isPromotion4RMB;
+//    }
+//
+//    public void setPromotion4RMB(Boolean promotion4RMB) {
+//        isPromotion4RMB = promotion4RMB;
+//    }
+
+    public double getSnapUpPrice4RMB() {
+        return snapUpPrice4RMB;
     }
 
-    public void setPromotion4USD(Boolean promotion4USD) {
-        isPromotion4USD = promotion4USD;
+    public void setSnapUpPrice4RMB(double snapUpPrice4RMB) {
+        this.snapUpPrice4RMB = snapUpPrice4RMB;
     }
 
-    public Boolean getPromotion4RMB() {
-        return isPromotion4RMB;
+    public double getSnapUpPrice4USD() {
+        return snapUpPrice4USD;
     }
 
-    public void setPromotion4RMB(Boolean promotion4RMB) {
-        isPromotion4RMB = promotion4RMB;
+    public void setSnapUpPrice4USD(double snapUpPrice4USD) {
+        this.snapUpPrice4USD = snapUpPrice4USD;
+    }
+
+    public double getSalesPrice4RMB() {
+        return salesPrice4RMB;
+    }
+
+    public void setSalesPrice4RMB(double salesPrice4RMB) {
+        this.salesPrice4RMB = salesPrice4RMB;
+    }
+
+    public double getSalesPrice4USD() {
+        return salesPrice4USD;
+    }
+
+    public void setSalesPrice4USD(double salesPrice4USD) {
+        this.salesPrice4USD = salesPrice4USD;
+    }
+
+    public double getPromotionPrice4RMB() {
+        return promotionPrice4RMB;
+    }
+
+    public void setPromotionPrice4RMB(double promotionPrice4RMB) {
+        this.promotionPrice4RMB = promotionPrice4RMB;
+    }
+
+    public double getPromotionPrice4USD() {
+        return promotionPrice4USD;
+    }
+
+    public void setPromotionPrice4USD(double promotionPrice4USD) {
+        this.promotionPrice4USD = promotionPrice4USD;
+    }
+
+    public boolean isHasDiscount() {
+        return hasDiscount;
+    }
+
+    public void setHasDiscount(boolean hasDiscount) {
+        this.hasDiscount = hasDiscount;
     }
 }

@@ -8,12 +8,11 @@
         <result column="ItemShortDescriptionCN" property="itemShortDescriptionCN" jdbcType="NVARCHAR" />
         <result column="ItemShortDescriptionEN" property="itemShortDescriptionEN" jdbcType="VARCHAR" />
         <result column="UnitPrice4RMB" property="unitPrice4RMB" jdbcType="VARCHAR" />
-        <result column="PromotionPrice4RMB" property="promotionPrice4RMB" jdbcType="VARCHAR" />
+        <result column="PromotionPrice4RMB" property="promotionPrice4RMB" jdbcType="DECIMAL" />
         <result column="UnitPrice4USD" property="unitPrice4USD" jdbcType="VARCHAR" />
-        <result column="PromotionPrice4USD" property="promotionPrice4USD" jdbcType="VARCHAR" />
+        <result column="PromotionPrice4USD" property="promotionPrice4USD" jdbcType="DECIMAL" />
         <result column="StartDate" property="startDate" jdbcType="VARCHAR" />
         <result column="EndDate" property="endDate" jdbcType="VARCHAR" />
-
         <result column="BrandCN" property="brandCN" jdbcType="VARCHAR" />
         <result column="BrandEN" property="brandEN" jdbcType="VARCHAR" />
         <result column="Status" property="status" jdbcType="VARCHAR" />
@@ -31,9 +30,9 @@
         B.ItemShortDescriptionCN,
         B.ItemShortDescriptionEN,
         B.UnitPrice4RMB,
-        B.PromotionPrice4RMB,
         B.UnitPrice4USD,
-        B.PromotionPrice4USD,
+        A.PromotionPrice4RMB,
+        A.PromotionPrice4USD,
         DATE_FORMAT(A.StartDate, '%Y-%m-%d %H:%i:%s') AS StartDate,
         DATE_FORMAT(A.EndDate, '%Y-%m-%d %H:%i:%s') AS EndDate,
         A.Status,
@@ -52,10 +51,10 @@
             AND A.ItemID=#{arg2}
         </if>
         <if test="arg3 != null">
-            <![CDATA[ AND A.StartDate >= #{arg3} ]]>
+            <![CDATA[ AND A.StartDate <= #{arg3} ]]>
         </if>
         <if test="arg4 != null">
-            <![CDATA[ AND A.EndDate <= #{arg4} ]]>
+            <![CDATA[ AND A.EndDate >= #{arg4} ]]>
         </if>
         <if test="arg5 != null">
             <![CDATA[ AND A.Status = #{arg5} ]]>
@@ -65,36 +64,36 @@
     </select>
     <select id="searchList4Category" resultMap="BaseResultMap">
         SELECT
-        A.ItemPromotionID,
-        A.ItemID,
-        B.ItemCode,
-        B.ItemShortDescriptionCN,
-        B.ItemShortDescriptionEN,
-        B.UnitPrice4RMB,
-        B.PromotionPrice4RMB,
-        B.UnitPrice4USD,
-        B.PromotionPrice4USD,
-        C.BrandCN,
-        C.BrandEN,
-        DATE_FORMAT(A.StartDate, '%Y-%m-%d %H:%i:%s') AS StartDate,
-        DATE_FORMAT(A.EndDate, '%Y-%m-%d %H:%i:%s') AS EndDate,
-        A.Status,
-        (CASE A.Status WHEN 'A' THEN '激活'
-        WHEN 'F' THEN '禁用'
-        END) AS StatusText,
-        A.InUser,
-        DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
-        A.LastEditUser,
-        DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+            A.ItemPromotionID,
+            A.ItemID,
+            B.ItemCode,
+            B.ItemShortDescriptionCN,
+            B.ItemShortDescriptionEN,
+            B.UnitPrice4RMB,
+            A.PromotionPrice4RMB,
+            B.UnitPrice4USD,
+            A.PromotionPrice4USD,
+            C.BrandCN,
+            C.BrandEN,
+            DATE_FORMAT(A.StartDate, '%Y-%m-%d %H:%i:%s') AS StartDate,
+            DATE_FORMAT(A.EndDate, '%Y-%m-%d %H:%i:%s') AS EndDate,
+            A.Status,
+            (CASE A.Status WHEN 'A' THEN '激活'
+            WHEN 'F' THEN '禁用'
+            END) AS StatusText,
+            A.InUser,
+            DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            A.LastEditUser,
+            DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM ItemPromotion A
         INNER JOIN Item B
-        ON A.ItemID = B.ItemID
-        AND (B.CategoryID = #{arg0} OR B.CategoryID = 3)
+            ON A.ItemID = B.ItemID
+            AND (B.CategoryID = #{arg0} OR B.CategoryID = 3)
         INNER JOIN Brand C
-        ON B.BrandID = C.BrandID
-        WHERE <![CDATA[ A.StartDate >= #{arg1} ]]>
-        <![CDATA[ AND A.EndDate <= #{arg2} ]]>
-        AND A.Status = 'A'
+          ON B.BrandID = C.BrandID
+        WHERE <![CDATA[ A.StartDate <= #{arg1} ]]>
+            <![CDATA[ AND A.EndDate >= #{arg2} ]]>
+            AND A.Status = 'A'
         ORDER BY A.InDate
         LIMIT 0, 7;
     </select>
@@ -107,20 +106,60 @@
             AND ItemID=#{arg0}
         </if>
         <if test="arg1 != null">
-            <![CDATA[ AND StartDate >= #{arg1} ]]>
+            <![CDATA[ AND StartDate <= #{arg1} ]]>
         </if>
         <if test="arg2 != null">
-            <![CDATA[ AND EndDate <= #{arg2} ]]>
+            <![CDATA[ AND EndDate >= #{arg2} ]]>
         </if>
         <if test="arg3 != null">
             <![CDATA[ AND Status = #{arg3} ]]>
         </if>;
     </select>
+
+    <select id="searchList4Item" resultMap="BaseResultMap">
+        SELECT
+            A.ItemPromotionID,
+            A.ItemID,
+            B.ItemCode,
+            B.ItemShortDescriptionCN,
+            B.ItemShortDescriptionEN,
+            B.UnitPrice4RMB,
+            B.UnitPrice4USD,
+            A.PromotionPrice4RMB,
+            A.PromotionPrice4USD,
+            DATE_FORMAT(A.StartDate, '%Y-%m-%d %H:%i:%s') AS StartDate,
+            DATE_FORMAT(A.EndDate, '%Y-%m-%d %H:%i:%s') AS EndDate,
+            A.Status,
+            (CASE A.Status WHEN 'A' THEN '激活'
+            WHEN 'F' THEN '禁用'
+            END) AS StatusText,
+            A.InUser,
+            DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+            A.LastEditUser,
+            DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+        FROM ItemPromotion A
+        INNER JOIN Item B
+        ON A.ItemID = B.ItemID
+        WHERE A.Status = 'A'
+        <if test="arg0 != 0">
+            AND A.ItemID=#{arg0}
+        </if>
+        <if test="arg1 != null">
+            <![CDATA[ AND A.StartDate <= #{arg1} ]]>
+        </if>
+        <if test="arg1 != null">
+            <![CDATA[ AND A.EndDate >= #{arg1} ]]>
+        </if>
+        ORDER BY A.InDate DESC;
+    </select>
+
     <insert id="insert" parameterType="com.johnny.store.entity.ItemPromotionEntity" >
         INSERT INTO ItemPromotion (
             ItemID,
             StartDate,
             EndDate,
+            PromotionPrice4RMB,
+            PromotionPrice4USD,
             Status,
             InUser,
             LastEditUser
@@ -129,6 +168,8 @@
             #{itemID, jdbcType=INTEGER},
             #{startDate, jdbcType=VARCHAR},
             #{endDate, jdbcType=VARCHAR},
+            #{promotionPrice4RMB, jdbcType=DECIMAL},
+            #{promotionPrice4USD, jdbcType=DECIMAL},
             #{status, jdbcType=VARCHAR},
             #{inUser, jdbcType=VARCHAR},
             #{lastEditUser, jdbcType=VARCHAR}
@@ -139,6 +180,8 @@
             ItemID = #{itemID, jdbcType=INTEGER},
             StartDate = #{startDate, jdbcType=VARCHAR},
             EndDate = #{endDate, jdbcType=VARCHAR},
+            PromotionPrice4RMB = #{promotionPrice4RMB, jdbcType=DECIMAL},
+            PromotionPrice4USD = #{promotionPrice4USD, jdbcType=DECIMAL},
             Status = #{status, jdbcType=VARCHAR},
             LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE ItemPromotionID = #{itemPromotionID,jdbcType=INTEGER}

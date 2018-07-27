@@ -43,37 +43,6 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
     @Override
     public UnifiedResponse findList(int orderID) {
         return null;
-//        try {
-//            List<OrderTransactionVO> modelList = new ArrayList<>();
-//            List<OrderTransactionEntity> entityList =  orderTransactionMapper.searchList(orderID);
-//            if(entityList.isEmpty()){
-//                return UnifiedResponseManager.buildSuccessResponse(null);
-//            }
-//
-//            for (OrderTransactionEntity entity : entityList) {
-//                OrderTransactionVO orderTransactionVO = new OrderTransactionVO();
-//                ItemEntity itemEntity = itemMapper.search(entity.getItemID());
-//                List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.THUMBNAIL);
-//                if(imageEntityList != null && imageEntityList.size() > 0){
-//                    itemEntity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
-//                }
-//                ItemVO itemVO = buildViewModel.buildItemViewModel(itemEntity);
-//                ConvertObjectUtils.convertJavaBean(orderTransactionVO, entity);
-//                orderTransactionVO.setOrderID(entity.getOrderID());
-//                orderTransactionVO.setItemID(entity.getItemID());
-//                orderTransactionVO.setItemCount(entity.getItemCount());
-//                orderTransactionVO.setItemAmount(entity.getItemAmount());
-//                orderTransactionVO.setItemVO(itemVO);
-//                modelList.add(orderTransactionVO);
-//            }
-//            return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);
-//        } catch (StoreException ex){
-//            LogUtils.processExceptionLog(ex);
-//            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
-//        } catch (Exception ex) {
-//            LogUtils.processExceptionLog(ex);
-//            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
-//        }
     }
 
     @Override

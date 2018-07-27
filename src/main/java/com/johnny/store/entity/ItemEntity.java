@@ -20,9 +20,9 @@ public class ItemEntity {
 	private String itemCode;
 	private String itemImageUrl;
 	private double unitPrice4RMB;
-	private double promotionPrice4RMB;
+//	private double promotionPrice4RMB;
 	private double unitPrice4USD;
-	private double promotionPrice4USD;
+//	private double promotionPrice4USD;
 	private float rate;
 	private int colorID;
 	private String colorCN;
@@ -228,13 +228,13 @@ public class ItemEntity {
 		this.unitPrice4RMB = unitPrice4RMB;
 	}
 
-	public double getPromotionPrice4RMB() {
-		return promotionPrice4RMB;
-	}
-
-	public void setPromotionPrice4RMB(double promotionPrice4RMB) {
-		this.promotionPrice4RMB = promotionPrice4RMB;
-	}
+//	public double getPromotionPrice4RMB() {
+//		return promotionPrice4RMB;
+//	}
+//
+//	public void setPromotionPrice4RMB(double promotionPrice4RMB) {
+//		this.promotionPrice4RMB = promotionPrice4RMB;
+//	}
 
 	public double getUnitPrice4USD() {
 		return unitPrice4USD;
@@ -244,13 +244,13 @@ public class ItemEntity {
 		this.unitPrice4USD = unitPrice4USD;
 	}
 
-	public double getPromotionPrice4USD() {
-		return promotionPrice4USD;
-	}
-
-	public void setPromotionPrice4USD(double promotionPrice4USD) {
-		this.promotionPrice4USD = promotionPrice4USD;
-	}
+//	public double getPromotionPrice4USD() {
+//		return promotionPrice4USD;
+//	}
+//
+//	public void setPromotionPrice4USD(double promotionPrice4USD) {
+//		this.promotionPrice4USD = promotionPrice4USD;
+//	}
 
 	public String getItemLength() {
 		return itemLength;

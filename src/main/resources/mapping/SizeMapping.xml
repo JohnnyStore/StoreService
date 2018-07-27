@@ -39,11 +39,13 @@
         DATE_FORMAT(B.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM
         (
-        SELECT DISTINCT SizeID
-        FROM Item
-        WHERE ItemGroupID = (SELECT ItemGroupID
-        FROM Item
-        WHERE ItemID = #{itemID,jdbcType=INTEGER})
+            SELECT DISTINCT SizeID
+            FROM Item
+            WHERE ItemGroupID = (SELECT ItemGroupID
+                                FROM Item
+                                WHERE ItemID = #{arg0,jdbcType=INTEGER})
+            AND SeriesID = #{arg1,jdbcType=INTEGER}
+            AND ColorID = #{arg2,jdbcType=INTEGER}
         ) A
         INNER JOIN SizeMapping B
         ON A.SizeID = B.SizeID;
