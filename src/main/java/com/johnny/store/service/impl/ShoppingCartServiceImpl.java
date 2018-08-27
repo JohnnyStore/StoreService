@@ -25,6 +25,7 @@ import com.johnny.store.vo.ShoppingCartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public UnifiedResponse findList(int pageNumber, int pageSize, int customerID, String status) {
         try {
             int startIndex = (pageNumber - 1) * pageSize;
+            DecimalFormat decimalFormat = new DecimalFormat("#.00");
             List<ShoppingCartVO> modelList = new ArrayList<>();
             int totalCount = shoppingCartMapper.searchTotalCount(customerID, status.equals("A") ? null : status);
             if(totalCount == 0){
@@ -75,14 +77,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 }
                 ShoppingCartVO shoppingCartVO = new ShoppingCartVO();
                 ItemVO itemVO = buildViewModel.buildItemViewModel(itemEntity);
+                double totalPrice4RMB = shoppingCartentity.getShoppingCount() * itemEntity.getUnitPrice4RMB();
+                double totalPrice4USD = shoppingCartentity.getShoppingCount() * itemEntity.getUnitPrice4USD();
                 ConvertObjectUtils.convertJavaBean(shoppingCartVO, shoppingCartentity);
                 shoppingCartVO.setShoppingCartID(shoppingCartentity.getShoppingCartID());
                 shoppingCartVO.setItemID(shoppingCartentity.getItemID());
                 shoppingCartVO.setCustomerID(shoppingCartentity.getCustomerID());
                 shoppingCartVO.setShoppingCount(shoppingCartentity.getShoppingCount());
                 shoppingCartVO.setItemVO(itemVO);
-                shoppingCartVO.setTotalPrice4RMB(shoppingCartentity.getShoppingCount() * itemEntity.getUnitPrice4RMB());
-                shoppingCartVO.setTotalPrice4USD(shoppingCartentity.getShoppingCount() * itemEntity.getUnitPrice4USD());
+                shoppingCartVO.setTotalPrice4RMB(Double.parseDouble(decimalFormat.format(totalPrice4RMB)));
+                shoppingCartVO.setTotalPrice4USD(Double.parseDouble(decimalFormat.format(totalPrice4USD)));
                 modelList.add(shoppingCartVO);
             }
             return UnifiedResponseManager.buildSuccessResponse(totalCount, modelList);

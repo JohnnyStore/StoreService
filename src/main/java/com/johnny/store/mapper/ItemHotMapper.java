@@ -10,6 +10,8 @@ public interface ItemHotMapper {
 
     List<ItemHotEntity> searchList(int startIndex, int pageSize, int itemID, String startDate, String endDate, String status);
 
+    List<ItemHotEntity> searchCurrentList(String currentDate);
+
     ItemHotEntity search(int itemID);
 
     ItemHotEntity find(String itemCode);

@@ -6,6 +6,8 @@ import net.sf.json.JSONObject;
 
 import java.util.List;
 
+import static net.sf.json.JSONArray.toCollection;
+
 public class JsonUtils {
     public static String getJsonStr(Object object){
         JSONObject jsonObject = JSONObject.fromObject(object);
@@ -25,5 +27,13 @@ public class JsonUtils {
     public static List deserializeToOrderTansactionList(String jsonStr){
         JSONArray jsonArray = JSONArray.fromObject(jsonStr);
         return (List) JSONArray.toCollection(jsonArray, OrderTransactionDTO.class);
+    }
+
+    public static<T> List deserializationToObject(String json, Class<T> tClass){
+        if (json.isEmpty()){
+            return null;
+        }
+        JSONArray jsonArray = JSONArray.fromObject(json);
+        return (List) toCollection(jsonArray, tClass);
     }
 }

@@ -22,6 +22,11 @@ public class ItemHotController {
     }
 
 
+    @RequestMapping(value = "/api/itemHot/current", method = RequestMethod.GET)
+    public UnifiedResponse get(){
+        return itemHotServiceImpl.findCurrentList();
+    }
+
     @RequestMapping(value="/api/itemHot", method = RequestMethod.POST)
     public UnifiedResponse add(@RequestBody ItemHotDTO dto){
         return itemHotServiceImpl.add(dto);

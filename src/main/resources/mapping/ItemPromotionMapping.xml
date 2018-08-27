@@ -115,7 +115,6 @@
             <![CDATA[ AND Status = #{arg3} ]]>
         </if>;
     </select>
-
     <select id="searchList4Item" resultMap="BaseResultMap">
         SELECT
             A.ItemPromotionID,
@@ -151,6 +150,42 @@
             <![CDATA[ AND A.EndDate >= #{arg1} ]]>
         </if>
         ORDER BY A.InDate DESC;
+    </select>
+
+    <select id="searchCurrentList" resultMap="BaseResultMap">
+        SELECT
+        A.ItemPromotionID,
+        C.BrandCN,
+        C.BrandEN,
+        A.ItemID,
+        B.ItemCode,
+        B.ItemShortDescriptionCN,
+        B.ItemShortDescriptionEN,
+        B.UnitPrice4RMB,
+        B.UnitPrice4USD,
+        A.PromotionPrice4RMB,
+        A.PromotionPrice4USD,
+        DATE_FORMAT(A.StartDate, '%Y-%m-%d %H:%i:%s') AS StartDate,
+        DATE_FORMAT(A.EndDate, '%Y-%m-%d %H:%i:%s') AS EndDate,
+        A.Status,
+        (CASE A.Status WHEN 'A' THEN '激活'
+        WHEN 'F' THEN '禁用'
+        END) AS StatusText,
+        A.InUser,
+        DATE_FORMAT(A.InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+        A.LastEditUser,
+        DATE_FORMAT(A.LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+        FROM ItemPromotion A
+        INNER JOIN Item B
+        ON A.ItemID = B.ItemID
+        INNER JOIN Brand C
+        ON B.BrandID = C.BrandID
+        WHERE A.Status = 'A'
+        <![CDATA[ AND A.StartDate <= #{arg0} ]]>
+        <![CDATA[ AND A.EndDate >= #{arg0} ]]>
+        AND B.CategoryID = #{arg1}
+        ORDER BY A.InDate DESC
+        LIMIT 0, 8;
     </select>
 
     <insert id="insert" parameterType="com.johnny.store.entity.ItemPromotionEntity" >

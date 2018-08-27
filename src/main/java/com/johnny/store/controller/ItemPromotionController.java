@@ -28,6 +28,11 @@ public class ItemPromotionController {
         return itemPromotionServiceImpl.findList(categoryID, startDate, endDate);
     }
 
+    @RequestMapping(value = "/api/itemPromotion/current/{categoryID}", method = RequestMethod.GET)
+    public UnifiedResponse get(@PathVariable("categoryID") int categoryID){
+        return itemPromotionServiceImpl.findCurrentList(categoryID);
+    }
+
     @RequestMapping(value="/api/itemPromotion", method = RequestMethod.POST)
     public UnifiedResponse add(@RequestBody ItemPromotionDTO dto){
         return itemPromotionServiceImpl.add(dto);

@@ -9,6 +9,7 @@ public class OrderHistoryVO {
     private int itemID;
     private int itemCount;
     private String itemAmount;
+    private String itemTotalAmount;
     private ItemVO itemVO;
     private int shippingAddressID;
     private String orderStatus;
@@ -180,5 +181,13 @@ public class OrderHistoryVO {
 
     public void setItemVO(ItemVO itemVO) {
         this.itemVO = itemVO;
+    }
+
+    public String getItemTotalAmount() {
+        return itemTotalAmount;
+    }
+
+    public void setItemTotalAmount(String itemTotalAmount) {
+        this.itemTotalAmount = itemTotalAmount;
     }
 }

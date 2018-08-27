@@ -78,6 +78,38 @@ public class ItemHotServiceImpl implements ItemHotService{
     }
 
     @Override
+    public UnifiedResponse findCurrentList() {
+        try {
+            List<ItemHotVO> modelList = new ArrayList<>();
+            String currentDate = DateUtils.getCurrentDateTime();
+
+            List<ItemHotEntity> entityList =  itemHotMapper.searchCurrentList(currentDate);
+            if(entityList == null){
+                return UnifiedResponseManager.buildSuccessResponse(0, null);
+            }
+            for (ItemHotEntity entity : entityList) {
+                List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.NORMAL);
+                if(imageEntityList != null && imageEntityList.size() > 0){
+                    entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+                }
+
+                ItemHotVO model = new ItemHotVO();
+                ConvertObjectUtils.convertJavaBean(model, entity);
+                model.setItemHotID(entity.getItemHotID());
+                model.setItemID(entity.getItemID());
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(entityList.size(), modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse find(int id) {
         try {
             ItemHotVO model = null;

@@ -19,6 +19,8 @@ import com.johnny.store.service.OrderService;
 import com.johnny.store.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -126,6 +128,8 @@ public class OrderServiceImpl implements OrderService {
     public OrderHistoryResponse findHistoryList(int pageNumber, int pageSize, int customerID, String orderStatus, int recentMonth) {
         try {
             String allOrderStatus = null;
+            DecimalFormat decimalFormat = new DecimalFormat("#.00");
+            double itemTotalAmount = 0;
             String toPayOrderStatus = "O";
             String toReceiveOrderStatus = "S";
             String finishOrderStatus = "F";
@@ -179,12 +183,16 @@ public class OrderServiceImpl implements OrderService {
                 if(imageEntityList != null && imageEntityList.size() > 0){
                     itemEntity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
                 }
+
+                itemTotalAmount = Double.parseDouble(orderHistoryEntity.getItemAmount());
                 orderHistoryEntity.setItemEntity(itemEntity);
                 ConvertObjectUtils.convertJavaBean(orderHistoryVO, orderHistoryEntity);
                 orderHistoryVO.setOrderID(orderHistoryEntity.getOrderID());
                 orderHistoryVO.setCustomerID(orderHistoryEntity.getCustomerID());
+                orderHistoryVO.setOrderAmount(decimalFormat.format(Double.parseDouble(orderHistoryEntity.getOrderAmount())));
                 orderHistoryVO.setItemID(orderHistoryEntity.getItemID());
                 orderHistoryVO.setItemCount(orderHistoryEntity.getItemCount());
+                orderHistoryVO.setItemTotalAmount(String.valueOf(decimalFormat.format(itemTotalAmount)));
                 orderHistoryVO.setShippingAddressID(orderHistoryEntity.getShippingAddressID());
                 orderHistoryVO.setExpressCompanyID(orderHistoryEntity.getExpressCompanyID());
                 ItemVO itemVO = buildViewModel.buildItemViewModel(itemEntity);

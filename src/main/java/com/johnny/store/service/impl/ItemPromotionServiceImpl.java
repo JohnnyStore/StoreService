@@ -1,6 +1,7 @@
 package com.johnny.store.service.impl;
 
 import com.johnny.store.common.ConvertObjectUtils;
+import com.johnny.store.common.DateUtils;
 import com.johnny.store.common.LogUtils;
 import com.johnny.store.common.StoreException;
 import com.johnny.store.constant.ImageObjectType;
@@ -9,7 +10,6 @@ import com.johnny.store.constant.ResponseCodeConsts;
 import com.johnny.store.dto.ItemPromotionDTO;
 import com.johnny.store.dto.UnifiedResponse;
 import com.johnny.store.entity.ImageEntity;
-import com.johnny.store.entity.ItemPromotionEntity;
 import com.johnny.store.entity.ItemPromotionEntity;
 import com.johnny.store.manager.UnifiedResponseManager;
 import com.johnny.store.mapper.ImageMapper;
@@ -96,6 +96,38 @@ public class ItemPromotionServiceImpl implements ItemPromotionService{
                 modelList.add(model);
             }
             return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse findCurrentList(int categoryID) {
+        try {
+            List<ItemPromotionVO> modelList = new ArrayList<>();
+            String currentDate = DateUtils.getCurrentDateTime();
+
+            List<ItemPromotionEntity> entityList =  itemPromotionMapper.searchCurrentList(currentDate, categoryID);
+            if(entityList == null){
+                return UnifiedResponseManager.buildSuccessResponse(0, null);
+            }
+            for (ItemPromotionEntity entity : entityList) {
+                List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.NORMAL);
+                if(imageEntityList != null && imageEntityList.size() > 0){
+                    entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+                }
+
+                ItemPromotionVO model = new ItemPromotionVO();
+                ConvertObjectUtils.convertJavaBean(model, entity);
+                model.setItemPromotionID(entity.getItemPromotionID());
+                model.setItemID(entity.getItemID());
+                modelList.add(model);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(entityList.size(), modelList);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());

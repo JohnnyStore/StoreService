@@ -21,7 +21,7 @@ public class LogUtils {
             String logDateTime = DateUtils.getCurrentDateTime();
             String logDir = ConfigManager.getSystemSetting(ConfigFileConsts.SYSTEM_SETTING_KEY_FILE_DIR);
             String logName = logDateTime.replace('-', ' ').replace(':', ' ').concat(".json");
-            String logPath = logDir.concat("\\").concat(logName);
+            //String logPath = logDir.concat("\\").concat(logName);
 
             systemLogSetting.setPriority(PriorityEnum.High.toString());
             systemLogSetting.setErrorTime(logDateTime);
@@ -32,8 +32,8 @@ public class LogUtils {
             systemLogSetting.setErrorDetail(getStackTrace(ex));
 
             String log4Json = JsonUtils.getJsonStr(systemLogSetting);
-            FileUtils.createFolder(logDir);
-            FileUtils.createFile(logPath, log4Json);
+//            FileUtils.createFolder(logDir);
+            FileUtils.write(logDir, logName, log4Json);
         }catch (Exception e){
             System.out.println("process exception log error: " + getStackTrace(e));
         }
@@ -50,7 +50,7 @@ public class LogUtils {
             String logDateTime = DateUtils.getCurrentDateTime();
             String logDir = ConfigManager.getSystemSetting(ConfigFileConsts.SYSTEM_SETTING_KEY_FILE_DIR);
             String logName = logDateTime.replace('-', ' ').replace(':', ' ').concat(".json");
-            String logPath = logDir.concat(logName);
+            //String logPath = logDir.concat(logName);
 
             systemLogSetting.setPriority(PriorityEnum.Normal.toString());
             systemLogSetting.setErrorTime(DateUtils.getCurrentDateTime());
@@ -61,8 +61,8 @@ public class LogUtils {
             systemLogSetting.setErrorDetail(getStackTrace(ex));
 
             String log4Json = JsonUtils.getJsonStr(systemLogSetting);
-            FileUtils.createFolder(logDir);
-            FileUtils.createFile(logPath, log4Json);
+//            FileUtils.createFolder(logDir);
+            FileUtils.write(logDir, logName, log4Json);
         }catch (Exception e){
             System.out.println("process exception log error: " + getStackTrace(e));
         }
