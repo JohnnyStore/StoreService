@@ -185,7 +185,7 @@
         <![CDATA[ AND A.EndDate >= #{arg0} ]]>
         AND B.CategoryID = #{arg1}
         ORDER BY A.InDate DESC
-        LIMIT 0, 8;
+        LIMIT 0, 7;
     </select>
 
     <insert id="insert" parameterType="com.johnny.store.entity.ItemPromotionEntity" >
