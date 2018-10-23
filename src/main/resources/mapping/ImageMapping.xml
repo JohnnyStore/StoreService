@@ -32,7 +32,7 @@
     WHERE ObjectID = #{arg0,jdbcType=INTEGER}
       AND ObjectType = #{arg1,jdbcType=VARCHAR}
       AND ImageType = #{arg2,jdbcType=VARCHAR}
-    ORDER BY InDate DESC;
+    ORDER BY InDate;
   </select>
 
   <select id="searchList4Item" resultMap="BaseResultMap">
