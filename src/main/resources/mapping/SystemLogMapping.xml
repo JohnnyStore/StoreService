@@ -42,7 +42,7 @@
             LastEditUser,
             DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM SystemLog
-        ORDER BY InDate DESC
+        ORDER BY ErrorTime DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
     <select id="search" resultMap="SystemLogResultMap">
