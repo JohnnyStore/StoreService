@@ -74,15 +74,29 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
     public UnifiedResponse find(int id) {
         try {
             ShippingAddressVO model = null;
+            CountryVO countryVO = new CountryVO();
+            ProvinceVO provinceVO = new ProvinceVO();
+            CityVO cityVO = new CityVO();
             ShippingAddressEntity entity = shippingAddressMapper.search(id);
+            CountryEntity countryEntity = countryMapper.search(entity.getShippingCountryID());
+            ProvinceEntity provinceEntity = provinceMapper.search(entity.getShippingProvinceID());
+            CityEntity cityEntity = cityMapper.search(entity.getShippingCityID());
             if(entity != null){
                 model = new ShippingAddressVO();
                 ConvertObjectUtils.convertJavaBean(model, entity);
+                ConvertObjectUtils.convertJavaBean(countryVO, countryEntity);
+                ConvertObjectUtils.convertJavaBean(provinceVO, provinceEntity);
+                ConvertObjectUtils.convertJavaBean(cityVO, cityEntity);
+
                 model.setShippingID(entity.getShippingID());
                 model.setCustomerID(entity.getCustomerID());
                 model.setShippingCountryID(entity.getShippingCountryID());
+                model.setCountryVO(countryVO);
                 model.setShippingProvinceID(entity.getShippingProvinceID());
+                model.setProvinceVO(provinceVO);
                 model.setShippingCityID(entity.getShippingCityID());
+                model.setCityVO(cityVO);
+                model.setDefaultAddress(entity.isDefaultAddress());
             }
             return UnifiedResponseManager.buildSuccessResponse(model);
         } catch (StoreException ex){
@@ -156,9 +170,41 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
             shippingAddressEntity.setShippingCountryID(shippingAddressDTO.getShippingCountryID());
             shippingAddressEntity.setShippingProvinceID(shippingAddressDTO.getShippingProvinceID());
             shippingAddressEntity.setShippingCityID(shippingAddressDTO.getShippingCityID());
+            shippingAddressEntity.setDefaultAddress(shippingAddressDTO.isDefaultAddress());
             shippingAddressEntity.setInUser(shippingAddressDTO.getLoginUser());
             shippingAddressEntity.setLastEditUser(shippingAddressDTO.getLoginUser());
+
+            if(shippingAddressDTO.isDefaultAddress()){
+                shippingAddressMapper.updateDefaultAddressToFalse(shippingAddressEntity);
+            }
             int affectRow = shippingAddressMapper.insert(shippingAddressEntity);
+            return UnifiedResponseManager.buildSuccessResponse(affectRow);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse changeInfo(ShippingAddressDTO shippingAddressDTO) {
+        try {
+            ShippingAddressEntity shippingAddressEntity = new ShippingAddressEntity();
+            ConvertObjectUtils.convertJavaBean(shippingAddressEntity, shippingAddressDTO);
+            shippingAddressEntity.setCustomerID(shippingAddressDTO.getCustomerID());
+            shippingAddressEntity.setShippingID(shippingAddressDTO.getShippingID());
+            shippingAddressEntity.setShippingCountryID(shippingAddressDTO.getShippingCountryID());
+            shippingAddressEntity.setShippingProvinceID(shippingAddressDTO.getShippingProvinceID());
+            shippingAddressEntity.setShippingCityID(shippingAddressDTO.getShippingCityID());
+            shippingAddressEntity.setDefaultAddress(shippingAddressDTO.isDefaultAddress());
+            shippingAddressEntity.setLastEditUser(shippingAddressDTO.getLoginUser());
+
+            if(shippingAddressDTO.isDefaultAddress()){
+                shippingAddressMapper.updateDefaultAddressToFalse(shippingAddressEntity);
+            }
+            int affectRow = shippingAddressMapper.update(shippingAddressEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);

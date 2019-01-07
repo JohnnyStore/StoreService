@@ -17,7 +17,11 @@ public interface ShippingAddressMapper {
 
     int insert(ShippingAddressEntity entity);
 
+    int update(ShippingAddressEntity entity);
+
     int updateDefaultAddress(ShippingAddressEntity entity);
+
+    int updateDefaultAddressToFalse(ShippingAddressEntity entity);
 
     int delete(int colorID);
 }

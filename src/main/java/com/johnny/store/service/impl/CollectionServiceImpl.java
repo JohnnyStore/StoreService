@@ -72,6 +72,37 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
+    public UnifiedResponse findListByItem(int customerID, int itemID, String status) {
+        try {
+            List<CollectionVO> modelList = new ArrayList<>();
+            List<CollectionEntity> entityList =  collectionMapper.searchByItem(customerID, itemID, status);
+            for (CollectionEntity collectionEntity : entityList) {
+                ItemEntity itemEntity = itemMapper.search(collectionEntity.getItemID());
+                List<ImageEntity> imageEntityList = imageMapper.searchList(collectionEntity.getItemID(), ImageObjectType.ITEM, ImageType.NORMAL);
+                if(imageEntityList != null && imageEntityList.size() > 0){
+                    itemEntity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
+                }
+                CollectionVO collectionVO = new CollectionVO();
+                ItemVO itemVO = buildViewModel.buildItemViewModel(itemEntity);
+                ConvertObjectUtils.convertJavaBean(collectionVO, collectionEntity);
+
+                collectionVO.setCollectionID(collectionEntity.getCollectionID());
+                collectionVO.setItemID(collectionEntity.getItemID());
+                collectionVO.setCustomerID(collectionEntity.getCustomerID());
+                collectionVO.setItemVO(itemVO);
+                modelList.add(collectionVO);
+            }
+            return UnifiedResponseManager.buildSuccessResponse(modelList.size(), modelList);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
     public UnifiedResponse findList(int pageNumber, int pageSize) {
         return null;
     }
@@ -133,9 +164,9 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public UnifiedResponse delete(int id) {
+    public UnifiedResponse delete(int itemID) {
         try {
-            int affectRow = collectionMapper.delete(id);
+            int affectRow = collectionMapper.delete(itemID);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (Exception ex) {
             LogUtils.processExceptionLog(ex);

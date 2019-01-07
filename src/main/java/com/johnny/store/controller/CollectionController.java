@@ -19,6 +19,13 @@ public class CollectionController {
         return collectionServiceImpl.findList(pageNumber, pageSize, customerID, status);
     }
 
+    @RequestMapping(value = "/api/collection/item/{customerID}/{itemID}/{status}", method = RequestMethod.GET)
+    public UnifiedResponse getAll(@PathVariable("customerID") int customerID,
+                                  @PathVariable("itemID") int itemID,
+                                  @PathVariable("status") String status){
+        return collectionServiceImpl.findListByItem(customerID, itemID, status);
+    }
+
     @RequestMapping(value="/api/collection", method = RequestMethod.PUT)
     public UnifiedResponse change(@RequestBody CollectionDTO dto){
         return collectionServiceImpl.change(dto);
@@ -29,8 +36,8 @@ public class CollectionController {
         return collectionServiceImpl.add(dto);
     }
 
-    @RequestMapping(value="/api/collection/{collectionId}", method = RequestMethod.DELETE)
-    public UnifiedResponse delete(@PathVariable("collectionId") int collectionId){
-        return collectionServiceImpl.delete(collectionId);
+    @RequestMapping(value="/api/collection/{itemID}", method = RequestMethod.DELETE)
+    public UnifiedResponse delete(@PathVariable("itemID") int itemID){
+        return collectionServiceImpl.delete(itemID);
     }
 }

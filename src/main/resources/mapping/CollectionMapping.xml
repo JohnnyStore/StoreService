@@ -37,6 +37,33 @@
         ORDER BY InDate DESC
         LIMIT #{arg0,jdbcType=INTEGER}, #{arg1,jdbcType=INTEGER};
     </select>
+    <select id="searchByItem" resultMap="BaseResultMap">
+        SELECT
+        CollectionID,
+        ItemID,
+        CustomerID,
+        Status,
+        (CASE Status WHEN 'I' THEN '已收藏'
+        WHEN 'S' THEN '加入购物车'
+        WHEN 'D' THEN '已删除'
+        END) AS StatusText,
+        InUser,
+        DATE_FORMAT(InDate, '%Y-%m-%d %H:%i:%s') AS InDate,
+        LastEditUser,
+        DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
+        FROM Collection
+        WHERE 1 = 1
+        <if test="arg0 != 0">
+            and CustomerID=#{arg0}
+        </if>
+        <if test="arg1 != null">
+            and ItemID=#{arg1}
+        </if>
+        <if test="arg2 != null">
+            and Status=#{arg2}
+        </if>
+        ORDER BY InDate DESC;
+    </select>
     <insert id="insert" parameterType="com.johnny.store.entity.CollectionEntity" >
         INSERT INTO Collection (
         ItemID,
@@ -61,6 +88,6 @@
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
         DELETE FROM Collection
-        WHERE CollectionID = #{collectionID,jdbcType=INTEGER}
+        WHERE ItemID = #{itemID,jdbcType=INTEGER}
     </delete>
 </mapper>

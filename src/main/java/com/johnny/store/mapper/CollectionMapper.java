@@ -8,6 +8,8 @@ import java.util.List;
 public interface CollectionMapper{
     List<CollectionEntity> searchList(int startIndex, int pageSize, int customerID, String status);
 
+    List<CollectionEntity> searchByItem(int customerID, int itemID, String status);
+
     int insert(CollectionEntity entity);
 
     int update(CollectionEntity entity);

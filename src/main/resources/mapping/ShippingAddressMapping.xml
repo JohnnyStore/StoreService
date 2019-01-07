@@ -85,6 +85,7 @@
       ShippingStreet,
       Consignee,
       Cellphone,
+      DefaultAddress,
       InUser,
       LastEditUser
     )
@@ -96,15 +97,34 @@
       #{shippingStreet, jdbcType=VARCHAR},
       #{consignee, jdbcType=VARCHAR},
       #{cellphone, jdbcType=VARCHAR},
+      #{defaultAddress,jdbcType=BOOLEAN},
       #{inUser, jdbcType=VARCHAR},
       #{lastEditUser, jdbcType=VARCHAR}
     )
   </insert>
+  <update id="update" parameterType="com.johnny.store.entity.ShippingAddressEntity" >
+    UPDATE ShippingAddress SET
+      ShippingCountryID = #{shippingCountryID,jdbcType=INTEGER},
+      ShippingProvinceID = #{shippingProvinceID,jdbcType=INTEGER},
+      ShippingCityID = #{shippingCityID,jdbcType=INTEGER},
+      ShippingStreet = #{shippingStreet,jdbcType=VARCHAR},
+      Consignee = #{consignee,jdbcType=VARCHAR},
+      Cellphone = #{cellphone,jdbcType=VARCHAR},
+      DefaultAddress = #{defaultAddress,jdbcType=BOOLEAN},
+      LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+    WHERE ShippingID = #{shippingID,jdbcType=INTEGER}
+  </update>
   <update id="updateDefaultAddress" parameterType="com.johnny.store.entity.ShippingAddressEntity" >
     UPDATE ShippingAddress SET
       DefaultAddress = #{defaultAddress,jdbcType=BOOLEAN},
       LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
     WHERE ShippingID = #{shippingID,jdbcType=INTEGER}
+  </update>
+  <update id="updateDefaultAddressToFalse" parameterType="com.johnny.store.entity.ShippingAddressEntity" >
+    UPDATE ShippingAddress SET
+      DefaultAddress = false,
+      LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+    WHERE CustomerID = #{customerID,jdbcType=INTEGER}
   </update>
   <delete id="delete" parameterType="java.lang.Integer" >
     DELETE FROM ShippingAddress

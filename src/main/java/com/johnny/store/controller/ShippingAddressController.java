@@ -31,6 +31,11 @@ public class ShippingAddressController {
         return shippingAddressServiceImpl.add(dto);
     }
 
+    @RequestMapping(value="/api/shippingAddress/change", method = RequestMethod.PUT)
+    public UnifiedResponse changeInfo(@RequestBody ShippingAddressDTO dto){
+        return shippingAddressServiceImpl.changeInfo(dto);
+    }
+
     @RequestMapping(value="/api/shippingAddress", method = RequestMethod.PUT)
     public UnifiedResponse change(@RequestBody ShippingAddressDTO dto){
         return shippingAddressServiceImpl.change(dto);
