@@ -60,7 +60,9 @@
         DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM ShoppingCart
         WHERE CustomerID=#{arg0}
-        AND Status = 'I'
+        <if test="arg1 != null">
+            and Status=#{arg1}
+        </if>
         ORDER BY InDate DESC;
     </select>
     <select id="searchTotalCount" resultType="java.lang.Integer">
@@ -107,6 +109,13 @@
         Status = #{status, jdbcType=VARCHAR},
         LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
         WHERE ShoppingCartID = #{shoppingCartID,jdbcType=INTEGER}
+    </update>
+    <update id="resetStatus" parameterType="com.johnny.store.entity.ShoppingCartEntity" >
+        UPDATE ShoppingCart SET
+        Status = 'I',
+        LastEditUser = #{lastEditUser,jdbcType=VARCHAR}
+        WHERE CustomerID = #{customerID,jdbcType=INTEGER}
+        AND Status = 'C'
     </update>
     <delete id="delete" parameterType="java.lang.Integer" >
         DELETE FROM ShoppingCart

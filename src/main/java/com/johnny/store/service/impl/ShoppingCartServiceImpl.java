@@ -100,10 +100,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public UnifiedResponse findList4Customer(int customerID) {
+    public UnifiedResponse findList4Customer(int customerID, String status) {
         try{
             List<ShoppingCartVO> modelList = new ArrayList<>();
-            List<ShoppingCartEntity> entityList =  shoppingCartMapper.searchList4Customer(customerID);
+            List<ShoppingCartEntity> entityList =  shoppingCartMapper.searchList4Customer(customerID, status.equals("A") ? null : status);
             if(entityList == null){
                 return UnifiedResponseManager.buildSuccessResponse(0, null);
             }
@@ -186,8 +186,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public UnifiedResponse change(Object dto) {
+    public UnifiedResponse resetStatus(Object dto) {
         try {
+
             ShoppingCartDTO shoppingCartDTO = (ShoppingCartDTO)dto;
             ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity();
             ConvertObjectUtils.convertJavaBean(shoppingCartEntity, shoppingCartDTO);
@@ -197,6 +198,32 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             shoppingCartEntity.setShoppingCount(shoppingCartDTO.getShoppingCount());
             shoppingCartEntity.setStatus(shoppingCartDTO.getStatus());
             shoppingCartEntity.setLastEditUser(shoppingCartDTO.getLoginUser());
+
+            int affectRow = shoppingCartMapper.resetStatus(shoppingCartEntity);
+            return UnifiedResponseManager.buildSuccessResponse(affectRow);
+        } catch (StoreException ex){
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ex.getErrorCode());
+        } catch (Exception ex) {
+            LogUtils.processExceptionLog(ex);
+            return UnifiedResponseManager.buildFailedResponse(ResponseCodeConsts.UnKnownException);
+        }
+    }
+
+    @Override
+    public UnifiedResponse change(Object dto) {
+        try {
+
+            ShoppingCartDTO shoppingCartDTO = (ShoppingCartDTO)dto;
+            ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity();
+            ConvertObjectUtils.convertJavaBean(shoppingCartEntity, shoppingCartDTO);
+            shoppingCartEntity.setShoppingCartID(shoppingCartDTO.getShoppingCartID());
+            shoppingCartEntity.setItemID(shoppingCartDTO.getItemID());
+            shoppingCartEntity.setCustomerID(shoppingCartDTO.getCustomerID());
+            shoppingCartEntity.setShoppingCount(shoppingCartDTO.getShoppingCount());
+            shoppingCartEntity.setStatus(shoppingCartDTO.getStatus());
+            shoppingCartEntity.setLastEditUser(shoppingCartDTO.getLoginUser());
+
             int affectRow = shoppingCartMapper.update(shoppingCartEntity);
             return UnifiedResponseManager.buildSuccessResponse(affectRow);
         } catch (StoreException ex){

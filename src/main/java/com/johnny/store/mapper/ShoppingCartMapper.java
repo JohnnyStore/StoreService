@@ -19,11 +19,13 @@ public interface ShoppingCartMapper {
 
     List<ShoppingCartEntity> searchList(int startIndex, int pageSize, int customerID, String status);
 
-    List<ShoppingCartEntity> searchList4Customer(int customerID);
+    List<ShoppingCartEntity> searchList4Customer(int customerID, String status);
 
     int insert(ShoppingCartEntity entity);
 
     int update(ShoppingCartEntity entity);
+
+    int resetStatus(ShoppingCartEntity entity);
 
     int updateStatus(ShoppingCartEntity entity);
 

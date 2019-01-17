@@ -12,7 +12,9 @@ import com.johnny.store.dto.UnifiedResponse;
 public interface ShoppingCartService extends BaseService {
     UnifiedResponse findList(int pageNumber, int pageSize, int customerID, String status);
 
-    UnifiedResponse findList4Customer(int customerID);
+    UnifiedResponse findList4Customer(int customerID, String status);
 
     UnifiedResponse changeStatus(Object dto);
+
+    UnifiedResponse resetStatus(Object dto);
 }
