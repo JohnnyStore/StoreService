@@ -60,6 +60,7 @@
         DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
         FROM ShoppingCart
         WHERE CustomerID=#{arg0}
+        AND Status IN ('I', 'C')
         <if test="arg1 != null">
             and Status=#{arg1}
         </if>
