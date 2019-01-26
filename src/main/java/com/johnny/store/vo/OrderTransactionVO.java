@@ -8,6 +8,7 @@ public class OrderTransactionVO {
     private int itemCount;
     private double itemAmount;
     private String currencyType;
+    private Boolean customerReviewed;
     private String inUser;
     private String inDate;
     private String lastEditUser;
@@ -99,5 +100,13 @@ public class OrderTransactionVO {
 
     public void setCurrencyType(String currencyType) {
         this.currencyType = currencyType;
+    }
+
+    public Boolean getCustomerReviewed() {
+        return customerReviewed;
+    }
+
+    public void setCustomerReviewed(Boolean customerReviewed) {
+        this.customerReviewed = customerReviewed;
     }
 }

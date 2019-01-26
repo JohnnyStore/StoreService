@@ -26,7 +26,7 @@
     LastEditUser,
     DATE_FORMAT(LastEditDate, '%Y-%m-%d %H:%i:%s') AS LastEditDate
     FROM OrderTransaction
-    WHERE OrderID = #{orderID}
+      WHERE OrderID = #{orderID}
     ORDER BY OrderTransactionID ASC;
   </select>
   <select id="search" resultMap="BaseResultMap">

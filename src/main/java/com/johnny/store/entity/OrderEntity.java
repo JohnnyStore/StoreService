@@ -9,6 +9,7 @@ public class OrderEntity {
 	private int shippingAddressID;
 	private String orderStatus;
 	private String orderStatusText;
+	private String OrderStatusTextEn;
 	private int expressCompanyID;
 	private String trackingNumber;
 	private String refundReason;
@@ -144,5 +145,13 @@ public class OrderEntity {
 
 	public void setCurrencyType(String currencyType) {
 		this.currencyType = currencyType;
+	}
+
+	public String getOrderStatusTextEn() {
+		return OrderStatusTextEn;
+	}
+
+	public void setOrderStatusTextEn(String orderStatusTextEn) {
+		OrderStatusTextEn = orderStatusTextEn;
 	}
 }

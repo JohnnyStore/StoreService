@@ -124,6 +124,14 @@
         </if>
     </select>
 
+    <select id="searchTotalCountOfCustomer" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1) AS TotalCount
+        FROM CustomerReview
+        WHERE CustomerID=#{arg0}
+        AND ItemID=#{arg1};
+    </select>
+
     <insert id="insert" parameterType="com.johnny.store.entity.ItemReviewEntity" >
         INSERT INTO CustomerReview (
         CustomerID,

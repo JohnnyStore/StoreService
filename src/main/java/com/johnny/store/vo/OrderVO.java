@@ -13,6 +13,7 @@ public class OrderVO {
     private ShippingAddressVO shippingAddressVO;
     private String orderStatus;
     private String orderStatusText;
+    private String OrderStatusTextEn;
     private int expressCompanyID;
     private ExpressCompanyVO expressCompanyVO;
     private List<OrderTransactionVO> orderTransactionList;
@@ -182,5 +183,13 @@ public class OrderVO {
 
     public void setCurrencyType(String currencyType) {
         this.currencyType = currencyType;
+    }
+
+    public String getOrderStatusTextEn() {
+        return OrderStatusTextEn;
+    }
+
+    public void setOrderStatusTextEn(String orderStatusTextEn) {
+        OrderStatusTextEn = orderStatusTextEn;
     }
 }

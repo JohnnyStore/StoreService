@@ -12,6 +12,8 @@ import java.util.List;
 public interface ItemReviewMapper {
     int searchTotalCount(int customerID,String itemCode,String reviewLevel,String reviewStatus);
 
+    int searchTotalCountOfCustomer(int customerID, int itemID);
+
     List<ItemReviewEntity> searchList(int startIndex, int pageSize, int customerID, String itemCode, String reviewLevel, String reviewStatus);
 
     List<ItemReviewEntity> searchList4Item(int startIndex, int pageSize, int itemID, String reviewLevel);

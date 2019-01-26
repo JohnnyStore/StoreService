@@ -49,6 +49,9 @@ public class OrderServiceImpl implements OrderService {
     private ItemMapper itemMapper;
 
     @Autowired
+    private ItemReviewMapper itemReviewMapper;
+
+    @Autowired
     private CountryMapper countryMapper;
 
     @Autowired
@@ -135,10 +138,10 @@ public class OrderServiceImpl implements OrderService {
             String finishOrderStatus = "F";
             String refundOrderStatus = "R";
             String searchBeginDate = recentMonth == 0 ? null : DateUtils.getRecentMonthDateTime(recentMonth);
-            List<OrderHistoryVO> orderHistoryVOList = new ArrayList<>();
-            List<OrderHistoryEntity> orderHistoryEntityList = new ArrayList<>();
-            List<OrderHistoryEntity> refundOrderHistoryEntityList;
-            List<OrderHistoryEntity> finishOrderHistoryEntityList;
+
+            List<OrderEntity> orderEntityList = new ArrayList<>();
+            List<OrderEntity> refundOrderEntityList;
+            List<OrderEntity> finishOrderEntityList;
             int startIndex = (pageNumber - 1) * pageSize;
 
             //全部订单
@@ -148,11 +151,11 @@ public class OrderServiceImpl implements OrderService {
             //待收货
             int toReceiveOrderCount = orderMapper.searchHistoryListTotalCount(customerID, toReceiveOrderStatus, searchBeginDate);
             //已完成
-            int finishOrderCount = orderMapper.searchHistoryListTotalCount(customerID, finishOrderStatus, searchBeginDate);
+            //int finishOrderCount = orderMapper.searchHistoryListTotalCount(customerID, finishOrderStatus, searchBeginDate);
             //已退款
-            int refundOrderCount = orderMapper.searchHistoryListTotalCount(customerID, refundOrderStatus, searchBeginDate);
+            //int refundOrderCount = orderMapper.searchHistoryListTotalCount(customerID, refundOrderStatus, searchBeginDate);
             //待评论
-            int toReviewOrderCount = finishOrderCount + refundOrderCount;
+            int toReviewOrderCount = orderMapper.searchReviewOrderTotalCount(customerID);
 
             if(totalCount == 0){
                 return UnifiedResponseManager.buildSuccessResponse(0,0,0,0, null);
@@ -160,47 +163,22 @@ public class OrderServiceImpl implements OrderService {
 
             switch (orderStatus){
                 case "N"://全部订单信息
-                    orderHistoryEntityList =  orderMapper.searchHistoryList4Customer(startIndex, pageSize, customerID, allOrderStatus, searchBeginDate);
+                    orderEntityList =  orderMapper.searchList4Customer(startIndex, pageSize, customerID, allOrderStatus, searchBeginDate);
                     break;
                 case "O"://待付款订单信息
-                    orderHistoryEntityList =  orderMapper.searchHistoryList4Customer(startIndex, pageSize, customerID, toPayOrderStatus, searchBeginDate);
+                    orderEntityList =  orderMapper.searchList4Customer(startIndex, pageSize, customerID, toPayOrderStatus, searchBeginDate);
                     break;
                 case "S"://待收获订单信息
-                    orderHistoryEntityList =  orderMapper.searchHistoryList4Customer(startIndex, pageSize, customerID, toReceiveOrderStatus, searchBeginDate);
+                    orderEntityList =  orderMapper.searchList4Customer(startIndex, pageSize, customerID, toReceiveOrderStatus, searchBeginDate);
                     break;
                 case "F"://待评价订单信息
-                    finishOrderHistoryEntityList =  orderMapper.searchHistoryList4Customer(startIndex, pageSize, customerID, finishOrderStatus, searchBeginDate);
-                    refundOrderHistoryEntityList =  orderMapper.searchHistoryList4Customer(startIndex, pageSize, customerID, refundOrderStatus, searchBeginDate);
-                    orderHistoryEntityList.addAll(finishOrderHistoryEntityList);
-                    orderHistoryEntityList.addAll(refundOrderHistoryEntityList);
+                    orderEntityList =  orderMapper.searchList4CustomerReview(startIndex, pageSize, customerID, searchBeginDate);
                     break;
             }
 
-            for (OrderHistoryEntity orderHistoryEntity : orderHistoryEntityList) {
-                OrderHistoryVO orderHistoryVO = new OrderHistoryVO();
-                ItemEntity itemEntity = itemMapper.search(orderHistoryEntity.getItemID());
-                List<ImageEntity> imageEntityList = imageMapper.searchList(orderHistoryEntity.getItemID(), ImageObjectType.ITEM, ImageType.THUMBNAIL);
-                if(imageEntityList != null && imageEntityList.size() > 0){
-                    itemEntity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
-                }
+            List<OrderVO> orderVOList = buildOrderVOList(orderEntityList);
 
-                itemTotalAmount = Double.parseDouble(orderHistoryEntity.getItemAmount());
-                orderHistoryEntity.setItemEntity(itemEntity);
-                ConvertObjectUtils.convertJavaBean(orderHistoryVO, orderHistoryEntity);
-                orderHistoryVO.setOrderID(orderHistoryEntity.getOrderID());
-                orderHistoryVO.setCustomerID(orderHistoryEntity.getCustomerID());
-                orderHistoryVO.setOrderAmount(decimalFormat.format(Double.parseDouble(orderHistoryEntity.getOrderAmount())));
-                orderHistoryVO.setItemID(orderHistoryEntity.getItemID());
-                orderHistoryVO.setItemCount(orderHistoryEntity.getItemCount());
-                orderHistoryVO.setItemTotalAmount(String.valueOf(decimalFormat.format(itemTotalAmount)));
-                orderHistoryVO.setShippingAddressID(orderHistoryEntity.getShippingAddressID());
-                orderHistoryVO.setExpressCompanyID(orderHistoryEntity.getExpressCompanyID());
-                ItemVO itemVO = buildViewModel.buildItemViewModel(itemEntity);
-                orderHistoryVO.setItemVO(itemVO);
-                orderHistoryVOList.add(orderHistoryVO);
-            }
-
-            return UnifiedResponseManager.buildSuccessResponse(totalCount, toPayOrderCount, toReceiveOrderCount, toReviewOrderCount, orderHistoryVOList);
+            return UnifiedResponseManager.buildSuccessResponse(totalCount, toPayOrderCount, toReceiveOrderCount, toReviewOrderCount, orderVOList);
         } catch (StoreException ex){
             LogUtils.processExceptionLog(ex);
             return UnifiedResponseManager.buildErrorOrderHistoryResponse(ex.getErrorCode());
@@ -321,10 +299,12 @@ public class OrderServiceImpl implements OrderService {
             for (OrderTransactionEntity orderTransactionEntity : orderTransactionEntityList) {
                 OrderTransactionVO orderTransactionVO = new OrderTransactionVO();
                 ItemEntity itemEntity = itemMapper.search(orderTransactionEntity.getItemID());
+                int customerReviewCount = itemReviewMapper.searchTotalCountOfCustomer(customerEntity.getCustomerID(), orderTransactionEntity.getItemID());
                 List<ImageEntity> imageEntityList = imageMapper.searchList(orderTransactionEntity.getItemID(), ImageObjectType.ITEM, ImageType.THUMBNAIL);
                 if(imageEntityList != null && imageEntityList.size() > 0){
                     itemEntity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
                 }
+
                 ItemVO itemVO = buildViewModel.buildItemViewModel(itemEntity);
                 ConvertObjectUtils.convertJavaBean(orderTransactionVO, orderTransactionEntity);
                 orderTransactionVO.setOrderTransactionID(orderTransactionEntity.getOrderTransactionID());
@@ -334,6 +314,7 @@ public class OrderServiceImpl implements OrderService {
                 orderTransactionVO.setItemAmount(orderTransactionEntity.getItemAmount());
                 orderTransactionVO.setCurrencyType(orderTransactionEntity.getCurrencyType());
                 orderTransactionVO.setItemVO(itemVO);
+                orderTransactionVO.setCustomerReviewed(customerReviewCount > 0);
                 orderTransactionVOList.add(orderTransactionVO);
             }
             orderVO.setOrderTransactionList(orderTransactionVOList);
