@@ -13,10 +13,15 @@ public class DateUtils {
     final static String DEFAULT_PATTERN = "MM-dd-yyyy HH:mm:ss";
 
 
+
     public static String getCurrentDateTime(){
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return simpleDateFormat.format(date);
+    }
+
+    public static String getCurrentDataTime2(){
+        return new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss:SSS").format(new Date()).replace("/", "").replace(":", "");
     }
 
     public static Date convert(String value) throws ParseException {

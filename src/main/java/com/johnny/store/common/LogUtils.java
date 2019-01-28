@@ -18,7 +18,7 @@ public class LogUtils {
         try{
             System.out.println("process exception log: " + getStackTrace(ex));
             SystemLogSetting systemLogSetting = new SystemLogSetting();
-            String logDateTime = DateUtils.getCurrentDateTime();
+            String logDateTime = DateUtils.getCurrentDataTime2();
             String logDir = ConfigManager.getSystemSetting(ConfigFileConsts.SYSTEM_SETTING_KEY_FILE_DIR);
             String logName = logDateTime.replace('-', ' ').replace(':', ' ').concat(".json");
             //String logPath = logDir.concat("\\").concat(logName);
@@ -47,7 +47,7 @@ public class LogUtils {
         try{
             System.out.println("process exception log: " + getStackTrace(ex));
             SystemLogSetting systemLogSetting = new SystemLogSetting();
-            String logDateTime = DateUtils.getCurrentDateTime();
+            String logDateTime = DateUtils.getCurrentDataTime2();
             String logDir = ConfigManager.getSystemSetting(ConfigFileConsts.SYSTEM_SETTING_KEY_FILE_DIR);
             String logName = logDateTime.replace('-', ' ').replace(':', ' ').concat(".json");
             //String logPath = logDir.concat(logName);
