@@ -109,8 +109,7 @@
         WHERE A.Status = 'A'
         <![CDATA[ AND A.StartDate <= #{arg0} ]]>
         <![CDATA[ AND A.EndDate >= #{arg0} ]]>
-        ORDER BY A.InDate DESC
-        LIMIT 0, 8;
+        ORDER BY A.InDate DESC;
     </select>
     <select id="search" resultMap="BaseResultMapOfItemHot">
         SELECT

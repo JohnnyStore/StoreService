@@ -78,16 +78,25 @@ public class ItemHotServiceImpl implements ItemHotService{
     }
 
     @Override
-    public UnifiedResponse findCurrentList() {
+    public UnifiedResponse findCurrentList(String source) {
         try {
             List<ItemHotVO> modelList = new ArrayList<>();
             String currentDate = DateUtils.getCurrentDateTime();
+            int maxCount = 0;
+            int totalCount = 0;
 
+            if ("M".equals(source)){
+                maxCount = 99999;
+            }else{
+                maxCount = 8;
+            }
             List<ItemHotEntity> entityList =  itemHotMapper.searchCurrentList(currentDate);
             if(entityList == null){
                 return UnifiedResponseManager.buildSuccessResponse(0, null);
             }
+
             for (ItemHotEntity entity : entityList) {
+                totalCount++;
                 List<ImageEntity> imageEntityList = imageMapper.searchList(entity.getItemID(), ImageObjectType.ITEM, ImageType.NORMAL);
                 if(imageEntityList != null && imageEntityList.size() > 0){
                     entity.setItemImageUrl(imageEntityList.get(0).getImageSrc());
@@ -98,6 +107,9 @@ public class ItemHotServiceImpl implements ItemHotService{
                 model.setItemHotID(entity.getItemHotID());
                 model.setItemID(entity.getItemID());
                 modelList.add(model);
+                if(totalCount >= maxCount){
+                    break;
+                }
             }
             return UnifiedResponseManager.buildSuccessResponse(entityList.size(), modelList);
         } catch (StoreException ex){
